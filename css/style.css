@@ -29,3 +29,16 @@ em {
 	padding-right: .25em;
 }
 
+.home-img {
+	width: 100%;
+}
+.home-img-desc {
+	position: relative;
+	margin-top: -120px;
+	margin-bottom: 60px;
+	color: white;
+}
+
+#nav-footer {
+	background-color: white!important;
+}
