@@ -42,7 +42,8 @@ em {
 	background-color: white!important;
 	border-color: white!important;
 }
-#nav-footer .ui-btn{color: #c9c9c9!important; }
+#nav-footer .ui-btn{color: #c9c9c9!important; font-weight: normal!important;}
+#nav-footer .ui-btn-active{color: #ff2c61!important; font-weight: normal!important;}
 .ui-btn-signup, .ui-btn-signin {
 	background: white!important;
 	border: none!important;
