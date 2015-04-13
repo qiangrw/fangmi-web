@@ -29,16 +29,35 @@ em {
 	padding-right: .25em;
 }
 
-.home-img {
-	width: 100%;
-}
+
+
+.home-img {	width: 100%;}
 .home-img-desc {
 	position: relative;
 	margin-top: -120px;
 	margin-bottom: 60px;
 	color: white;
 }
-
 #nav-footer {
 	background-color: white!important;
+	border-color: white!important;
 }
+#nav-footer .ui-btn{color: #c9c9c9!important; }
+.ui-btn-signup, .ui-btn-signin {
+	background: white!important;
+	border: none!important;
+	color: #858585!important;
+	font-weight: normal!important;
+}
+.ui-btn-signup{color: #ff286c!important;}
+#logo {
+	background-color: white!important;
+	background-image: url(img/logo.png)!important;
+	background-repeat: no-repeat!important;
+	background-size: 60px 40px;
+	width: 60px;
+	border: none!important;
+	color: white!important;
+	
+}
+#search-form {  margin-top: -20px;}

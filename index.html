@@ -26,19 +26,19 @@
         <div data-role="page">
             <!-- HEADER -->
             <div data-role="header">
-                <a href="#" class="ui-btn-left ui-btn ui-btn-inline ui-mini ui-corner-all
-                    ui-btn-icon-left ui-icon-grid">Logo</a>
+                <a href="#" id="logo" class="ui-btn-left ui-btn ui-btn-inline ui-mini ui-corner-all
+                    ui-btn-icon-left">&nbsp;</a>
                 <h6>房蜜</h6>
                 <div data-role="controlgroup" data-type="horizontal" class="ui-mini ui-btn-right">
-                    <a href="#" class="ui-btn">注册</a>
-                    <a href="#" class="ui-btn">登录</a>
+                    <a href="#" class="ui-btn ui-btn-signup">注册</a>
+                    <a href="#" class="ui-btn ui-btn-signin">登录</a>
                 </div>
             </div>
             <!-- ./HEADER -->
 
             <!-- MAIN -->
             <div role="main" class="ui-content">
-				<form action="#">
+				<form id="search-form" action="#">
 				     <input type="search" placeholder="学校，房型，租客" name="keywords" id="search" value="">
 				</form>
 
@@ -62,6 +62,16 @@
 						</div>
                     </center>
                 </div>
+				
+				<div class="ui-grid-solo">
+                    <center>
+						<img class="home-img" src="images/home/thu.png"></img>
+						<div class="home-img-desc">
+							<h2>清华大学</h2>
+							<p>107 套房源</p>
+						</div>
+                    </center>
+                </div>
             </div>  
             <!-- ./MAIN -->
 
@@ -69,7 +79,7 @@
         <!-- ./PAGE -->
 
         <div id="nav-footer" data-role="footer" data-position="fixed">
-            <div data-role="navbar" data-iconpos="bottom">
+            <div data-role="navbar" data-iconpos="top">
                 <ul>
                     <li><a href="#" data-icon="grid" class="ui-btn-active">房蜜</a></li>
                     <li><a href="#" data-icon="grid">个人账户</a></li>
