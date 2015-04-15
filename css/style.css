@@ -61,8 +61,25 @@ em {
 	color: white!important;
 	
 }
+.grey-header {color: grey!important;}
 #search-form {  margin-top: -20px;}
 
 
 .grid-one-third { width: 32%; display: inline-block; vertical-align:middle;}
 .grid-two-third { width: 64%; display: inline-block; vertical-align:middle;}
+
+.ui-icon-home:after {
+  background-color: transparent;
+  background-image: url("../images/nav/funmi.png")!important;
+  background-size: 22px 22px;
+}
+.ui-btn-active.ui-icon-home:after {
+  background-color: transparent;
+  background-image: url("../images/nav/funmi-active.png")!important;
+  background-size: 22px 22px;
+}
+
+.text-left {text-align: left;}
+.text-right {text-align: right;}
+.pull-left {float: left;}
+.pull-right {float: right;}
