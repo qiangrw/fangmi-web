@@ -62,3 +62,7 @@ em {
 	
 }
 #search-form {  margin-top: -20px;}
+
+
+.grid-one-third { width: 32%; display: inline-block; vertical-align:middle;}
+.grid-two-third { width: 64%; display: inline-block; vertical-align:middle;}
