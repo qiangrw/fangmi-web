@@ -26,7 +26,7 @@
         <div data-role="page">
             <!-- HEADER -->
             <div data-role="header">
-				<a href="index.html" data-icon="back" data-iconpos="notext" data-shadow="true" data-iconshadow="true">返回</a>
+				<a href="index.html" class="ui-btn-transparent" data-icon="back" data-iconpos="notext" data-shadow="true" data-iconshadow="true">返回</a>
                 <h2 class="grey-header">房蜜</h2>
 				<link rel="stylesheet" href="css/carousel.css">
 				<script src="js/carousel.js"></script>
@@ -37,13 +37,13 @@
 							args : { "scrollInterval" : 600,"itemWidth":400 },
 							value : [
 									{ "title" : "Tron.Legacy",
-									  "image" : "images/home/thu.png"
+									  "image" : "images/home/thu.jpg"
 									},
 									{ "title" : "Yogi Bear",
-									  "image" : "images/home/thu.png"
+									  "image" : "images/home/pku.jpg"
 									},
 									{ "title" : "The Chronicles of Narnia: The Voyage of the Dawn Treader",
-									  "image" : "images/home/thu.png"
+									  "image" : "images/home/thu.jpg"
 									}
 							]
 						});	
@@ -79,16 +79,18 @@
 							</div>
 						</div>
 					</div>
-					<div class="ui-grid-solo" style="margin-top: -80px;">
-							<span><a href="#" class="ui-btn ui-corner-all ui-icon-tag ui-btn-icon-notext ui-btn-c ui-btn-inline"></a>
-							紫金庄园6号楼605室</span>
-							<span class="pull-right" style="line-height: 2.5; color: pink; font-weight: bold;">2500/每月</span>
-					</div>
-					<div class="ui-grid-solo">
-							<span>内置mini游泳池！</span>
-							<span class="pull-right">合租/三室一厅</span>
-					</div>
                 </div>
+				<div class="ui-grid-solo" style="margin-top: 0px; z-index:10000">
+						<span>
+						<a href="detail.html" class="ui-btn ui-corner-all ui-icon-tag ui-btn-icon-notext ui-btn-c ui-btn-inline"></a>
+						<a href="detail.html">紫金庄园6号楼605室</a>
+						</span>
+						<span class="pull-right pink" style="line-height: 2.5; font-weight: bold;">2500/每月</span>
+				</div>
+				<div class="ui-grid-solo">
+						<span>内置mini游泳池！</span>
+						<span class="pull-right">合租/三室一厅</span>
+				</div>
 
             </div>  
             <!-- ./MAIN -->
