@@ -169,3 +169,19 @@ td.val {color:#717171; font-weight: bold; }
 .keywords-label.green {background: #a0d468; }
 .keywords-label.red {background: #e5786d; }
 table td, table th,  table td *, table th * { vertical-align: top; }
+.round-icon { 
+    width: 12px; height: 12px; 
+    display: inline-block; 
+    padding: 2px 2px;
+    border: 2px solid #ffa9b4; 
+    background: #ffa9b4; 
+    border-radius: 10px; 
+}
+.round-icon.disabled {
+    background: white; 
+    border-color: white; 
+}
+.round-icon.abled {
+    background-color: #f2f2f2; 
+    border: 2px solid #ffa9b4;
+}

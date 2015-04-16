@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>房蜜</title>
+        <link rel="shortcut icon" href="favicon.ico">
+        <link rel="stylesheet" href="css/themes/flat/jquery.mobile.flatui.css">
+        <link rel="stylesheet" href="css/style.css">
+        <script src="js/jquery.min.js"></script>
+        <script src="js/jquery.mobile-1.4.5.min.js"></script>
+        <script src="js/jquery.validate.min.js"></script>
+        <script src="js/messages_zh.js"></script>
+        <script src="js/md5.js"></script>
+        <script src="js/main.js"></script>
+        <script>
+            $(function() {
+                $( "[data-role='navbar']" ).navbar();
+                $( "[data-role='header'], [data-role='footer']" ).toolbar();
+            });
+        </script>
+    </head>
+
+    <body>
+        <div data-role="page">
+            <!-- HEADER -->
+            <div data-role="header">
+				<a href="detail.html" class="ui-btn-transparent" data-icon="back" data-iconpos="notext" data-shadow="true" data-iconshadow="true">返回</a>
+                <h2 class="grey-header">约房时间</h2>
+            </div>
+            <!-- ./HEADER -->
+
+            <!-- MAIN -->
+            <div role="main" class="ui-content">
+                <h3 class="padding-div">约房时间表（本周）</h3>
+
+                <div class="ui-grid-solo" style="background: white!important; padding: 4px 4px; margin-top:10px;">
+                    <p>日历实现</p>
+
+                </div>
+                <br /> <br />
+                <table style="width:100%; text-align: center;">
+                    <tr>
+                        <td>可预约 <span class="round-icon abled">&nbsp;</span></td>
+                        <td>不可预约 <span class="round-icon disabled">&nbsp;</span></td>
+                        <td>已选中 <span class="round-icon">&nbsp;</span></td>
+                    </tr>
+                </table>
+                <br /> <br />
+                <div class="ui-grid-solo padding-desc" style="padding: 4px 4px; margin-top:10px;">
+                    <a href="reserve.html" class="ui-btn ui-corner-all">确定预约</a>
+                </div>
+                
+            </div>  
+            <!-- ./MAIN -->
+
+        </div>
+        <!-- ./PAGE -->
+
+        <div id="nav-footer" data-role="footer" data-position="fixed">
+            <div data-role="navbar" data-iconpos="top">
+                <ul>
+                    <li><a href="index.html" data-icon="home">房蜜</a></li>
+                    <li><a href="user.html" data-icon="user">个人账户</a></li>
+                    <li><a href="about.html" data-icon="info">关于房蜜</a></li>
+                    <li><a href="setting.html" data-icon="gear">设置</a></li>
+                </ul>
+            </div><!-- /navbar -->
+        </div><!-- /footer -->
+    </body>
+</html>
