@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>北京大学</title>
+        <link rel="shortcut icon" href="favicon.ico">
+        <link rel="stylesheet" href="css/themes/flat/jquery.mobile.flatui.css">
+        <link rel="stylesheet" href="css/style.css">
+        <script src="js/jquery.min.js"></script>
+        <script src="js/jquery.mobile-1.4.5.min.js"></script>
+        <script src="js/jquery.validate.min.js"></script>
+        <script src="js/messages_zh.js"></script>
+        <script src="js/md5.js"></script>
+        <script src="js/main.js"></script>
+        <script>
+            $(function() {
+                $( "[data-role='navbar']" ).navbar();
+                $( "[data-role='header'], [data-role='footer']" ).toolbar();
+            });
+        </script>
+    </head>
+
+    <body>
+
+        <div data-role="page">
+            <!-- HEADER -->
+            <div data-role="header">
+				<a href="detail.html" class="ui-btn-transparent" data-icon="back" data-iconpos="notext" data-shadow="true" data-iconshadow="true">返回</a>
+                <h2 class="grey-header">北京大学</h2>
+            </div>
+            <!-- ./HEADER -->
+
+            <!-- MAIN -->
+            <div role="main" class="ui-content">
+                <div class="ui-grid-solo">
+                    <img src="images/map/map.jpg" style="height: 100%;" alt="" />
+                </div>
+            </div>  
+
+        </div>
+        <!-- ./PAGE -->
+
+    </body>
+</html>
