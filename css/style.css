@@ -155,7 +155,17 @@ label.error {
 #search-form .ui-input-search{background:#fff;border-color:#ff3057;color:#333}
 .text-left {text-align: left;}
 .text-right {text-align: right;}
+.text-lg  {font-size: 1.2em;}
 .pull-left {float: left;}
 .pull-right {float: right;}
 .pink {color: #ff3075}
 .ui-btn-transparent, .ui-btn-transparent:visited, .ui-btn-transparent:hover { background:transparent!important; border-color: transparent!important; }
+
+td.val {color:#717171; font-weight: bold; }
+.keywords-label {padding: 4px 8px; background-color: #ffa3db; margin: 2px 10px; 
+                font-size: 0.8em; display: inline-block; color: white; border-radius: 4px;  }
+.keywords-label.blue {background: #7fd9ff; }
+.keywords-label.yellow {background: #fcb355; }
+.keywords-label.green {background: #a0d468; }
+.keywords-label.red {background: #e5786d; }
+table td, table th,  table td *, table th * { vertical-align: top; }
