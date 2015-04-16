@@ -26,169 +26,168 @@
         <div data-role="page">
             <!-- HEADER -->
             <div data-role="header">
-				<a href="houselist.html" class="ui-btn-transparent" data-icon="back" data-iconpos="notext" data-shadow="true" data-iconshadow="true">返回</a>
+                <a href="houselist.html" class="ui-btn-transparent" data-icon="back" data-iconpos="notext" data-shadow="true" data-iconshadow="true">返回</a>
                 <h2 class="grey-header">合租详情页</h2>
-				<a href="share.html" class="ui-btn-transparent" data-icon="share" data-iconpos="notext" data-shadow="true" data-iconshadow="true">分享</a>
-				<link rel="stylesheet" href="css/carousel.css">
-				<script src="js/carousel.js"></script>
-				<script>
-					$(function(){
-						var carousel = new $.widgets.Carousel( {
-							uuid : "carousel",
-							args : { "scrollInterval" : 600,"itemWidth":400 },
-							value : [
-									{ "title" : "Tron.Legacy",
-									  "image" : "images/home/thu.jpg"
-									},
-									{ "title" : "Yogi Bear",
-									  "image" : "images/home/pku.jpg"
-									},
-									{ "title" : "The Chronicles of Narnia: The Voyage of the Dawn Treader",
-									  "image" : "images/home/thu.jpg"
-									}
-							]
-						});	
-					})
-										  
-				</script>
+                <a href="share.html" class="ui-btn-transparent" data-icon="share" data-iconpos="notext" data-shadow="true" data-iconshadow="true">分享</a>
+                <link rel="stylesheet" href="css/carousel.css">
+                <script src="js/carousel.js"></script>
+                <script>
+                    $(function(){
+                        var carousel = new $.widgets.Carousel( {
+                            uuid : "carousel",
+                            args : { "scrollInterval" : 600,"itemWidth":400 },
+                            value : [
+                            { "title" : "Tron.Legacy",
+                                "image" : "images/home/thu.jpg"
+                            },
+                            { "title" : "Yogi Bear",
+                                "image" : "images/home/pku.jpg"
+                            },
+                            { "title" : "The Chronicles of Narnia: The Voyage of the Dawn Treader",
+                                "image" : "images/home/thu.jpg"
+                            }
+                            ]
+                        });	
+                    })
+
+                </script>
             </div>
             <!-- ./HEADER -->
 
             <!-- MAIN -->
             <div role="main" class="ui-content">
-				<div class="ui-grid-solo">
-					<div style="width:100%; height:300px; min-height: 300px;">
-						<!-- start carousel widget html --> 
-						<div style="width:100%">
-							<div id="carousel" class="carousel">							
-								<div id="carousel_scrollpane" class="carousel-content">
-									<div id="carousel_content" class="carousel-content-scroller"> </div>
-								</div>
-								<div id="carousel_nav" class="carousel-nav" style="display:none!important;">
-									<div id="carousel_mid" class="carousel-mid"></div>
-								</div>
-							</div>
-						</div><!-- end carousel widget html -->
-						<!-- template used for the carousel items -->
-						<div id="carousel_template" style="display:none">
-							<div class="carousel-item">
-								<div id="carousel_item_@{id}" >
-									<div style="float:left; width: 100%; height:auto;">
-										<img style="width:100%; height:auto;" src="@{image}" />
-									</div>				      								
-								</div>
-							</div>
-						</div>
-					</div>
+                <div class="ui-grid-solo">
+                    <!--<div style="width:100%; height:300px; min-height: 300px;">
+                        <div style="width:100%">
+                            <div id="carousel" class="carousel">							
+                                <div id="carousel_scrollpane" class="carousel-content">
+                                    <div id="carousel_content" class="carousel-content-scroller"> </div>
+                                </div>
+                                <div id="carousel_nav" class="carousel-nav" style="display:none!important;">
+                                    <div id="carousel_mid" class="carousel-mid"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="carousel_template" style="display:none">
+                            <div class="carousel-item">
+                                <div id="carousel_item_@{id}" >
+                                    <div style="float:left; width: 100%; height:auto;">
+                                        <img style="width:100%; height:auto;" src="@{image}" />
+                                    </div>				      								
+                                </div>
+                            </div>
+                        </div>
+                    </div>-->
+                    <center> <img class="home-img" src="images/home/pku.jpg"></img> </center>
                 </div>
-				
-				<div class="ui-grid-solo" style="margin-top: -80px;">
-					<div class="pull-left">
-						<strong>紫金庄园6号楼605室</strong> <br>
-						实名房源100%认证
-					</div>
-					<div class="pull-right">								
-						<a href="#" class="ui-btn ui-corner-all ui-icon-fav ui-btn-icon-notext ui-btn-c ui-btn-inline ui-btn-transparent ui-btn-active"></a>
-						1200人已收藏
-					</div>
-				</div>
-				
-				<div class="ui-grid-solo">
-					<table style="width: 100%">
-					<tr><td>租金：</td><td>1300/月</td></tr>
-					<tr><td>房型：</td><td>三室一厅</td><td>租房方式：</td><td>合租</td></tr>
-					<tr><td>入住时间：</td><td>随时</td><td>付款方式：</td><td>月付</td></tr>
-					</table>
-				</div>
-				
-				<div class="ui-grid-solo" style="background: white!important; padding: 4px 4px; margin-top:10px;">
-					<span class="keywords-label">美女超多</span>
-					<span class="keywords-label">性价比超高</span>
-					<span class="keywords-label">性价比超高</span>
-					<span class="keywords-label">性价比超高</span>
-					<span class="keywords-label">性价比超高</span>
-					<span class="keywords-label">性价比超高</span>
-				</div>
-				
-				<h3>单间信息</h3>
-				<div class="ui-grid-solo" style="background: white!important; padding: 4px 4px; margin-top:10px;">
-					<table style="width: 100%; text-align: center;">
-					<tr><td>主卧-18</td><td>次卧-15</td><td>次卧-14</td></tr>
-					<tr><td>1600/月</td><td>1600/月</td><td>1600/月</td></tr>
-					<tr><td>可入住</td><td>可入住</td><td>不可入住</td></tr>
-					</table>
-				</div>
-				
-				<h3>周边高校</h3>
-				<div class="ui-grid-solo" style="background: white!important; padding: 4px 4px; margin-top:10px;">
-					<table style="width: 100%; text-align: center;">
-					<tr><td>图片</td><td>图片</td><td>图片</td></tr>
-					<tr><td>北京大学</td><td>北京大学</td><td>北京大学</td></tr>
-					</table>
-				</div>
-				
-				<h3>小地图</h3>
-				<div class="ui-grid-solo">
-					<center>
-						<img class="home-img" src="images/house/map.jpg"></img>
+
+                <div class="ui-grid-solo">
+                    <div class="pull-left">
+                        <strong>紫金庄园6号楼605室</strong> <br>
+                        实名房源100%认证
+                    </div>
+                    <div class="pull-right">								
+                        <a href="#" class="ui-btn ui-corner-all ui-icon-fav ui-btn-icon-notext ui-btn-c ui-btn-inline ui-btn-transparent ui-btn-active"></a>
+                        1200人已收藏
+                    </div>
+                </div>
+
+                <div class="ui-grid-solo">
+                    <table style="width: 100%">
+                        <tr><td>租金：</td><td>1300/月</td></tr>
+                        <tr><td>房型：</td><td>三室一厅</td><td>租房方式：</td><td>合租</td></tr>
+                        <tr><td>入住时间：</td><td>随时</td><td>付款方式：</td><td>月付</td></tr>
+                    </table>
+                </div>
+
+                <div class="ui-grid-solo" style="background: white!important; padding: 4px 4px; margin-top:10px;">
+                    <span class="keywords-label">美女超多</span>
+                    <span class="keywords-label">性价比超高</span>
+                    <span class="keywords-label">性价比超高</span>
+                    <span class="keywords-label">性价比超高</span>
+                    <span class="keywords-label">性价比超高</span>
+                    <span class="keywords-label">性价比超高</span>
+                </div>
+
+                <h3>单间信息</h3>
+                <div class="ui-grid-solo" style="background: white!important; padding: 4px 4px; margin-top:10px;">
+                    <table style="width: 100%; text-align: center;">
+                        <tr><td>主卧-18</td><td>次卧-15</td><td>次卧-14</td></tr>
+                        <tr><td>1600/月</td><td>1600/月</td><td>1600/月</td></tr>
+                        <tr><td>可入住</td><td>可入住</td><td>不可入住</td></tr>
+                    </table>
+                </div>
+
+                <h3>周边高校</h3>
+                <div class="ui-grid-solo" style="background: white!important; padding: 4px 4px; margin-top:10px;">
+                    <table style="width: 100%; text-align: center;">
+                        <tr><td>图片</td><td>图片</td><td>图片</td></tr>
+                        <tr><td>北京大学</td><td>北京大学</td><td>北京大学</td></tr>
+                    </table>
+                </div>
+
+                <h3>小地图</h3>
+                <div class="ui-grid-solo">
+                    <center>
+                        <img class="home-img" src="images/house/map.jpg"></img>
                     </center>
-					<table style="width: 100%; text-align: left; background: white;">
-					<tr><td width=50>地址：</td><td>保福寺桥南</td></tr>
-					<tr><td>交通：</td><td>82路，23路，2323路,82路，23路，2323路,82路，23路，2323路</td></tr>
-					</table>
-				</div>
-				
-				<h3>房间设备</h3>
-				<div class="ui-grid-solo" style="background: white!important; padding: 4px 4px; margin-top:10px;">
-					<table style="width: 100%; text-align: center; background: white;">
-					<tr>
-						<td>
-							<img src="images/device/Wifi.png"></img>
-						</td>
-						<td>
-							<img src="images/device/Xbox-one.png"></img>
-						</td>
-					</tr>
-					<tr>
-						<td>
-							<img src="images/device/Wifi.png"></img>
-						</td>
-						<td>
-							<img src="images/device/Xbox-one.png"></img>
-						</td>
-					</tr>
-					</table>
-				</div>
-				
-				<h3>关于房东</h3>
-				<div class="ui-grid-solo" style="background: white!important; padding: 4px 4px; margin-top:10px;">
-					<div class="grid-one-third">
-						<center>
-							<img src="images/user/user_profile.png" width="80%"></img>
-						</center>
-					</div>
-					<div class="grid-two-third">
-						<table>
-							<tr><th style="text-align:right;">昵称:</th><td id="nickname">qiangrw</td></tr>
-							<tr><th>手机号:</th><td id="phone">13688888888</td></tr>
-						</table>
-					</div>
-				</div>
-				
-				<h3>关于室友</h3>
-				<div class="ui-grid-solo" style="background: white!important; padding: 4px 4px; margin-top:10px;">
-					<div class="grid-one-third">
-						<center>
-							<img src="images/user/user_profile.png" width="80%"></img>
-						</center>
-					</div>
-					<div class="grid-two-third">
-						<table>
-							<tr><th style="text-align:right;">昵称:</th><td id="nickname">qiangrw</td></tr>
-							<tr><th>手机号:</th><td id="phone">13688888888</td></tr>
-						</table>
-					</div>
-				</div>
+                    <table style="width: 100%; text-align: left; background: white;">
+                        <tr><td width=50>地址：</td><td>保福寺桥南</td></tr>
+                        <tr><td>交通：</td><td>82路，23路，2323路,82路，23路，2323路,82路，23路，2323路</td></tr>
+                    </table>
+                </div>
+
+                <h3>房间设备</h3>
+                <div class="ui-grid-solo" style="background: white!important; padding: 4px 4px; margin-top:10px;">
+                    <table style="width: 100%; text-align: center; background: white;">
+                        <tr>
+                            <td>
+                                <img src="images/device/Wifi.png"></img>
+                            </td>
+                            <td>
+                                <img src="images/device/Xbox-one.png"></img>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <img src="images/device/Wifi.png"></img>
+                            </td>
+                            <td>
+                                <img src="images/device/Xbox-one.png"></img>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+
+                <h3>关于房东</h3>
+                <div class="ui-grid-solo" style="background: white!important; padding: 4px 4px; margin-top:10px;">
+                    <div class="grid-one-third">
+                        <center>
+                            <img src="images/user/user_profile.png" width="80%"></img>
+                        </center>
+                    </div>
+                    <div class="grid-two-third">
+                        <table>
+                            <tr><th style="text-align:right;">昵称:</th><td id="nickname">qiangrw</td></tr>
+                            <tr><th>手机号:</th><td id="phone">13688888888</td></tr>
+                        </table>
+                    </div>
+                </div>
+
+                <h3>关于室友</h3>
+                <div class="ui-grid-solo" style="background: white!important; padding: 4px 4px; margin-top:10px;">
+                    <div class="grid-one-third">
+                        <center>
+                            <img src="images/user/user_profile.png" width="80%"></img>
+                        </center>
+                    </div>
+                    <div class="grid-two-third">
+                        <table>
+                            <tr><th style="text-align:right;">昵称:</th><td id="nickname">qiangrw</td></tr>
+                            <tr><th>手机号:</th><td id="phone">13688888888</td></tr>
+                        </table>
+                    </div>
+                </div>
             </div>  
             <!-- ./MAIN -->
 

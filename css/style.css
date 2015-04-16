@@ -1,7 +1,3 @@
-#slider-type .ui-slider {width: 100%;}
-.pull-right { float:right; }
-.tag {height: 12px; margin-bottom: 2px; }
-
 label.error {
 		color: red;
 		font-size: 16px;
@@ -23,18 +19,10 @@ label.error {
 		margin-left: 22%;
 	}
 }
-em {
-	color: red;
-	font-weight: bold;
-	padding-right: .25em;
-}
 
 
 
-.home-img {	
-	width: 100%;
-	border-radius: 6px;
-}
+.home-img {	width: 100%; }
 .home-img-desc {
 	position: relative;
 	margin-top: -170px;
@@ -64,7 +52,7 @@ em {
 	color: white!important;
 	
 }
-.grey-header {color: #717171!important; font-weight: normal; }
+.grey-header {color: #717171!important; font-weight: normal; font-size: 1.2em; text-decoration: none!important;} 
 #search-form {  margin-top: -20px;}
 
 
@@ -142,6 +130,27 @@ em {
   background-image: url("../images/icon/back-active.png")!important;
   background-size: 21px 46px;
 }
+.ui-icon-tag:after {
+  background-color: transparent;
+  background-image: url("../images/icon/tag.png")!important;
+  background-size: 22px 22px;
+}
+.ui-btn-active.ui-icon-tag:after {
+  background-color: transparent;
+  background-image: url("../images/icon/tag-active.png")!important;
+  background-size: 22px 22px;
+}
+.ui-icon-loc:after {
+  background-color: transparent;
+  background-image: url("../images/icon/tag.png")!important;
+  background-size: 11px 11px;
+}
+.ui-btn-active.ui-icon-loc:after {
+  background-color: transparent;
+  background-image: url("../images/icon/tag-active.png")!important;
+  background-size: 11px 11px;
+}
+.padding-div { padding-left: 8px; padding-right: 8px; }
 
 #search-form .ui-input-search{background:#fff;border-color:#ff3057;color:#333}
 .text-left {text-align: left;}
@@ -149,7 +158,4 @@ em {
 .pull-left {float: left;}
 .pull-right {float: right;}
 .pink {color: #ff3075}
-.ui-btn-transparent, .ui-btn-transparent:visited, .ui-btn-transparent:hover {
-	background:transparent!important;
-	border-color: transparent!important;
-}
+.ui-btn-transparent, .ui-btn-transparent:visited, .ui-btn-transparent:hover { background:transparent!important; border-color: transparent!important; }
