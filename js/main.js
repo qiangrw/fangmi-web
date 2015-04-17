@@ -12,6 +12,10 @@ $(function(){
     }
 	
 });
+$(document).on('pageinit', function() {
+	$( "[data-role='navbar']" ).navbar();
+    $( "[data-role='header'], [data-role='footer']" ).toolbar();
+});
 
 $('#choose-date-page').on('pageinit', function() {
 	bindAble();

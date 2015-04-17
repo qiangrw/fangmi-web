@@ -219,6 +219,9 @@ table td, table th,  table td *, table th * { vertical-align: top; }
     font-weight: normal!important;
 }
 .navbar-stack li { line-height: 1.3!important;}
+.navbar-image img {z-index: 999; border-radius: 100px!important;  padding: 10px 10px; background: transparent;}
+.navbar-image li  a{  padding-top: 20px;}
+
 .form-table th { vertical-align: middle; color: #717171; font-weight: normal;}
 .form-table .ui-btn { border-color: #bbb!important;}
 .reserve-table {width: 100%;}
