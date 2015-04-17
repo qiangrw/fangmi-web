@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>房蜜</title>
+        <link rel="shortcut icon" href="favicon.ico">
+        <link rel="stylesheet" href="css/themes/flat/jquery.mobile.flatui.css">
+        <link rel="stylesheet" href="css/style.css">
+        <script src="js/jquery.min.js"></script>
+        <script src="js/jquery.mobile-1.4.5.min.js"></script>
+        <script src="js/jquery.validate.min.js"></script>
+        <script src="js/messages_zh.js"></script>
+        <script src="js/md5.js"></script>
+        <script src="js/main.js"></script>
+        <script>
+            $(function() {
+                $( "[data-role='navbar']" ).navbar();
+                $( "[data-role='header'], [data-role='footer']" ).toolbar();
+            });
+        </script>
+    </head>
+
+    <body>
+        <div data-role="page">
+            <!-- HEADER -->
+            <div data-role="header">
+				<a href="choose_date.html" class="ui-btn-transparent" data-icon="back" data-iconpos="notext" data-shadow="true" data-iconshadow="true">返回</a>
+                <h2 class="grey-header">预约结果</h2>
+            </div>
+            <!-- ./HEADER -->
+
+            <!-- MAIN -->
+            <div role="main" class="ui-content">
+                <div class="ui-grid-solo padding-div" style="background: white!important; padding: 4px 4px; margin-top:10px;">
+				<center>
+                    <h1 class="succ-header">恭喜您预约成功</h1>
+					<p>您将于本<span>周六下午</span>前去看房，
+					房东会准时恭候，如有变动，请提前联系房东取消或更改时间，谢谢！</p>
+				</center>
+                </div>
+				
+				<p class="padding-div">共
+					<span id="person-count" class="pink">8</span>
+					个小伙伴将与您一起看房
+				</p>
+                <div class="ui-grid-solo  white-div">
+                    <div class="grid-one-third">
+                        <center>
+                            <img src="images/user/user_profile.png" width="80%"></img>
+                        </center>
+                    </div>
+                    <div class="grid-two-third">
+                        <div class="pull-right"> 
+                            <a href="#"><span class="keywords-label blue">聊一聊</span></a>
+                        </div>
+                        <table>
+                            <tr><td>强哥哥</td></tr>
+                            <tr><td>天蝎座</td></tr>
+                            <tr><td>清华计算机技术系</td></tr>
+                        </table>
+                    </div>
+                </div>
+				
+				
+                
+                <div class="ui-grid-solo white-div">
+                    <div class="grid-one-third">
+                        <center>
+                            <img src="images/user/user_profile.png" width="80%"></img>
+                        </center>
+                    </div>
+                    <div class="grid-two-third">
+                        <div class="pull-right"> 
+                            <a href="#"><span class="keywords-label blue">聊一聊</span></a>
+                        </div>
+                        <table>
+                            <tr><td>强哥哥</td></tr>
+                            <tr><td>天蝎座</td></tr>
+                            <tr><td>清华计算机技术系</td></tr>
+                        </table>
+                    </div>
+                </div>
+                           
+
+            </div>  
+            <!-- ./MAIN -->
+
+        </div>
+        <!-- ./PAGE -->
+
+        <div id="nav-footer" data-role="footer" data-position="fixed">
+            <div data-role="navbar" data-iconpos="top">
+                <ul>
+                    <li><a href="index.html" data-icon="home">房蜜</a></li>
+                    <li><a href="user.html" data-icon="user">个人账户</a></li>
+                    <li><a href="about.html" data-icon="info">关于房蜜</a></li>
+                    <li><a href="setting.html" data-icon="gear">设置</a></li>
+                </ul>
+            </div><!-- /navbar -->
+        </div><!-- /footer -->
+    </body>
+</html>
