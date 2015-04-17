@@ -33,8 +33,8 @@ label.error {
 	background-color: white!important;
 	border-color: white!important;
 }
-#nav-footer .ui-btn{color: #c9c9c9!important; font-weight: normal!important; font-family: "microsoft yahei"!important;}
-#nav-footer .ui-btn-active{color: #ff2c61!important; font-weight: normal!important; font-family: "microsoft yahei"!important;}
+#nav-footer .ui-btn{color: #c9c9c9!important; font-weight: normal!important; font-family: "microsoft yahei"!important; border:none!important;} 
+#nav-footer .ui-btn-active{color: #ff2c61!important; font-weight: normal!important; font-family: "microsoft yahei"!important;border:none!important;}
 .ui-btn-signup, .ui-btn-signin {
 	background: white!important;
 	border: none!important;
