@@ -196,7 +196,7 @@ table td, table th,  table td *, table th * { vertical-align: top; }
     color: #717171!important;
     font-weight: normal!important;
 }
-.navbar-stack li {
-    line-height: 1.3!important;
-}
+.navbar-stack li { line-height: 1.3!important;}
+.form-table th { vertical-align: middle; color: #717171; font-weight: normal;}
+.form-table .ui-btn { border-color: #bbb!important;}
 
