@@ -185,3 +185,7 @@ table td, table th,  table td *, table th * { vertical-align: top; }
     background-color: #f2f2f2; 
     border: 2px solid #ffa9b4;
 }
+.border-bottom {
+    border-bottom: 1px solid grey;
+}
+
