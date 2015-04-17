@@ -10,7 +10,28 @@ $(function(){
         } else {
         }
     }
+	
+	
+	
+	bindAble();
+	bindSelected();
 });
+
+function bindAble()
+{
+	$(".reserve-table .able").click(function(){
+		$(this).removeClass("able").addClass("selected");
+		bindSelected();
+	});
+}
+function bindSelected()
+{
+	$(".reserve-table .selected").click(function(){
+		$(this).removeClass("selected").addClass("able");
+		bindAble();
+	});
+}
+
 
 function getParameter(name) {
     var url = document.location.href;
