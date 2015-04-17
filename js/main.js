@@ -11,8 +11,9 @@ $(function(){
         }
     }
 	
-	
-	
+});
+
+$('#choose-date-page').on('pageinit', function() {
 	bindAble();
 	bindSelected();
 });
