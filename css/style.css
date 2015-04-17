@@ -143,6 +143,26 @@ label.error {
   background-image: url("../images/icon/tag-active.png")!important;
   background-size: 22px 22px;
 }
+.ui-icon-edit:after {
+  background-color: transparent;
+  background-image: url("../images/icon/edit.png")!important;
+  background-size: 18px 18px;
+}
+.ui-btn-active.ui-icon-edit:after {
+  background-color: transparent;
+  background-image: url("../images/icon/edit-active.png")!important;
+  background-size: 18px 18px;
+}
+.ui-icon-mail:after {
+  background-color: transparent;
+  background-image: url("../images/icon/mail.png")!important;
+  background-size: 18px 14px;
+}
+.ui-btn-active.ui-icon-mail:after {
+  background-color: transparent;
+  background-image: url("../images/icon/mail.png")!important;
+  background-size: 18px 14px;
+}
 .ui-icon-loc:after {
   background-color: transparent;
   background-image: url("../images/icon/loc.png")!important;
