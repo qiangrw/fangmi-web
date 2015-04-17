@@ -21,7 +21,7 @@ label.error {
 }
 
 
-
+.ui-btn {  font-weight: normal!important;}
 .home-img {	width: 100%; }
 .home-img-desc {
 	position: relative;
