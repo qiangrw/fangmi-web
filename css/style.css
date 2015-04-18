@@ -265,9 +265,11 @@ table td, table th,  table td *, table th * { vertical-align: top; }
 .navbar-image img {z-index: 999; border-radius: 100px!important;  padding: 10px 10px; background: transparent;}
 .navbar-image li  a{  padding-top: 20px; line-height: 1.8!important;}
 
-.form-table {width: 100%;}
+.form-table {width: 100%;   padding-right: 1em;}
 .form-table th { vertical-align: middle; color: #717171; font-weight: normal;}
+.form-table td { vertical-align: middle;}
 .form-table .ui-btn { border-color: #bbb!important;}
+.sel-table td {text-align: right; line-height: 2;}
 .reserve-table {width: 100%;}
 .reserve-table th, .reserve-table td {text-align: center; vertical-align: middle;}
 .reserve-table tbody td {  height: 50px; font-size: 0.7em; }
@@ -275,3 +277,8 @@ table td, table th,  table td *, table th * { vertical-align: top; }
 .info-table {width: 100%; margin-bottom: 10px;}
 
 .div-link {margin: 0!important; text-decoration: none!important}
+.multi-input-cell .ui-input-text {
+	width: 35%;
+	display: inline-block;
+	vertical-align: middle;
+}
