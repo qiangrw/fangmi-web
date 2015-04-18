@@ -21,35 +21,34 @@
             <!-- HEADER -->
             <div data-role="header">
                 <a href="post_type.html" class="ui-btn-transparent" data-icon="back" data-iconpos="notext" data-shadow="true" data-iconshadow="true">返回</a>
-                <h2 class="grey-header">发布整租房</h2>
+                <h2 class="grey-header">出租房屋</h2>
 				<script src="js/main.js"></script>
             </div>
             <!-- ./HEADER -->
 
             <!-- MAIN -->
             <div role="main" class="ui-content">
-				<div class="ui-grid-solo white-div padding-div">
+				<div class="ui-grid-solo white-div padding-div">				
                     <table class="form-table">
                         <tr>
 							<th width=100>设置标题</th>
-							<td><input type="text" name="field1" id="field1" value=""></td>
+							<td colspan=2><input type="text" name="field1" id="field1" value="" placeholder="输入房间名，如主卧、次卧"></td>
 						</tr>
 						<tr>
-							<th width=100>房屋特色</th>
-							<td><input type="text" name="field2" id="field2" value=""></td>
-						</tr>
-						<tr>
-							<th width=100>房屋类型</th>
-							<td class="multi-input-cell">
-								<input type="text" name="field3" id="field3" value="">
-								室
-								<input type="text" name="field4" id="field4" value="">
-								厅
+							<th width=100>租金</th>
+							<td>
+								<input type="text" name="field2" id="field2" value="">
 							</td>
+							<td>元/月</td>
+						</tr>
+						<tr>
+							<th width=100>面积</th>
+							<td><input type="text" name="field1" id="sid" value=""></td>
+							<td>平米</td>
 						</tr>
 						<tr>
 							<th width=100>详细地址</th>
-							<td><input type="text" name="field5" id="field5" value=""></td>
+							<td colspan=2><input type="text" name="field5" id="field5" value=""></td>
 						</tr>
 						<tr>
 							<th width=100>房屋图片</th>
@@ -61,10 +60,10 @@
 				
 				<div class="ui-grid-solo white-div padding-div">
                     <table class="form-table sel-table">
-                        <!--<tr>
+                        <tr>
 							<th width=100>出租房屋</th>
 							<td><a href="#">点击编辑</a></td>
-						</tr>-->
+						</tr>
 						<tr>
 							<th width=100>入住时间</th>
 							<td><a href="set_entrance_date.html">点击编辑</a></td>
