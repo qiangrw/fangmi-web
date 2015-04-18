@@ -276,6 +276,7 @@ table td, table th,  table td *, table th * { vertical-align: top; }
 .reserve-table tbody td {  height: 50px; font-size: 0.7em; }
 .reserve-table tbody{   border-bottom:1pt solid black; }
 .info-table {width: 100%; margin-bottom: 10px;}
+.share-table img {width: 50%; padding: 20px 20px;}
 
 .div-link {margin: 0!important; text-decoration: none!important}
 .div-link h2 {color: white!important; }

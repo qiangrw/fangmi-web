@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>房蜜</title>
+        <link rel="shortcut icon" href="favicon.ico">
+        <link rel="stylesheet" href="css/themes/flat/jquery.mobile.flatui.css">
+        <link rel="stylesheet" href="css/style.css">
+        <script src="js/jquery.min.js"></script>
+        <script src="js/jquery.mobile-1.4.5.min.js"></script>
+        <script src="js/jquery.validate.min.js"></script>
+        <script src="js/messages_zh.js"></script>
+        <script src="js/md5.js"></script>
+    </head>
+
+    <body>
+        <div id="devices" data-role="page" data-dialog="true">
+			<script src="js/main.js"></script>
+			<script>
+				$(function(){
+					$("#share-to-wechat").click(function(){
+						$(".jiathis_button_weixin").trigger("click");
+					});
+					$("#share-to-sina").click(function(){
+						$(".jiathis_button_tsina").trigger("click");
+					});
+					$("#share-to-qq").click(function(){
+						$(".jiathis_button_qzone").trigger("click");
+					});
+				})
+			</script>
+            <div id="share-page" data-role="header" data-theme="c">
+                <h1>分享到社交网络</h1>
+                <div id="share-more-div" class="ui-grid-solo" style="background: white!important; padding: 4px 4px; margin-top:10px;">
+                    <table class="share-table" style="width: 100%; text-align: center; background: white;">
+                        <tr>
+                            <td>
+							<a href="#wechat" id="share-to-wechat"  title="转发至朋友圈">
+                                <img src="images/share/wechat_friends.png"></img>
+							</a>
+                            </td>
+							<td>
+							<a href="#sina" id="share-to-sina"  title="转发至新浪微博">
+                                <img src="images/share/weibo.png"></img>
+							</a>
+                            </td>
+							<td>
+							<a href="#qq" id="share-to-qq" title="转发至QQ空间">
+                                <img src="images/share/qq_space.png"></img>
+							</a>
+                            </td>
+                        </tr>
+                    </table>
+                </div>  
+				
+				<!-- JiaThis Button BEGIN -->
+				<div class="jiathis_style" style="background: white; display: none;">
+					<a class="jiathis_button_qzone"></a>
+					<a class="jiathis_button_tsina"></a>
+					<a class="jiathis_button_weixin"></a>
+					<a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jtico jtico_jiathis" target="_blank"></a>
+					<a class="jiathis_counter_style"></a>
+				</div>
+				<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js" charset="utf-8"></script>
+				<!-- JiaThis Button END -->
+				
+			
+            </div>
+        </div><!-- /content -->
+
+
+    </body>
+</html>

@@ -12,7 +12,6 @@ $(function(){
         } else {
         }
     }
-	$('#tags').tagsInput();
 });
 $(document).on('pageinit', function() {
 	$("[data-role='navbar']").navbar();
