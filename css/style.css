@@ -193,6 +193,8 @@ label.error {
 	background-color: transparent!important; 
 	color: #ff3075!important;
 	border-color: #ff3075!important;
+	text-decoration: none!important;
+	font-weight: normal!important;
 }
 .padding-div { padding-left: 10px; padding-right: 10px; }
 .white-div {background: white!important; padding: 4px 4px; margin-top:10px;}
@@ -269,7 +271,7 @@ table td, table th,  table td *, table th * { vertical-align: top; }
 .reserve-table {width: 100%;}
 .reserve-table th, .reserve-table td {text-align: center; vertical-align: middle;}
 .reserve-table tbody td {  height: 50px; font-size: 0.7em; }
-.reserve-table tbody{
-  border-bottom:1pt solid black;
-}
+.reserve-table tbody{   border-bottom:1pt solid black; }
+
+.info-table {width: 100%; margin-bottom: 10px;}
 

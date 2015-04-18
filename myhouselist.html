@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>房蜜</title>
+        <link rel="shortcut icon" href="favicon.ico">
+        <link rel="stylesheet" href="css/themes/flat/jquery.mobile.flatui.css">
+        <link rel="stylesheet" href="css/style.css">
+        <script src="js/jquery.min.js"></script>
+        <script src="js/jquery.mobile-1.4.5.min.js"></script>
+        <script src="js/jquery.validate.min.js"></script>
+        <script src="js/messages_zh.js"></script>
+        <script src="js/md5.js"></script>
+        <script src="js/main.js"></script>
+        <script>
+            $(function() {
+                $( "[data-role='navbar']" ).navbar();
+                $( "[data-role='header'], [data-role='footer']" ).toolbar();
+            });
+        </script>
+    </head>
+
+    <body>
+        <div data-role="page">
+            <!-- HEADER -->
+            <div data-role="header">
+				<a href="landlord.html" class="ui-btn-transparent" data-icon="back" data-iconpos="notext" data-shadow="true" data-iconshadow="true">返回</a>
+                <h2 class="grey-header">我的房子</h2>
+            </div>
+            <!-- ./HEADER -->
+
+            <!-- MAIN -->
+            <div role="main">
+				<p class="padding-div">正在招租</p>
+                <div class="ui-grid-solo white-div">
+                    <h2 class="grey-header padding-div ">海淀区紫金庄园5号楼605室</h2>
+					<table class="info-table">
+						<tr>
+							<td>房型：</td>
+							<td>三室一厅</td>
+							<td>出租方式：</td>
+							<td>合租</td>
+						</tr>
+						<tr>
+							<td>租金：</td>
+							<td>2500元/月</td>
+							<td></td>
+							<td></td>
+						</tr>
+						<tr>
+							<td>预约人数</td>
+							<td>2 人</td>
+							<td><a id="get_captcha" href="reserve_detail.html" class="ui-btn-captcha">查看预约详情</a></td>
+							<td></td>
+						</tr>
+					</table>
+					<div class="ui-grid-a">
+						<div class="ui-block-a"><a class="ui-btn ui-corner-all ui-btn-d">取消发布</a></div>
+						<div class="ui-block-b"><a class="ui-btn ui-corner-all">信息管理</a></div>
+					</div>
+                </div>
+				
+				<div class="ui-grid-solo white-div">
+                    <h2 class="grey-header padding-div ">海淀区紫金庄园5号楼605室</h2>
+					<table class="info-table">
+						<tr>
+							<td>房型：</td>
+							<td>三室一厅</td>
+							<td>出租方式：</td>
+							<td>合租</td>
+						</tr>
+						<tr>
+							<td>租金：</td>
+							<td>2500元/月</td>
+							<td></td>
+							<td></td>
+						</tr>
+						<tr>
+							<td>预约人数</td>
+							<td>2 人</td>
+							<td><a id="get_captcha" href="reserve_detail.html" class="ui-btn-captcha">查看预约详情</a></td>
+							<td></td>
+						</tr>
+					</table>
+					<div class="ui-grid-a">
+						<div class="ui-block-a"><a href="#" class="ui-btn ui-corner-all ui-btn-d">取消发布</a></div>
+						<div class="ui-block-b"><a href="#" class="ui-btn ui-corner-all">信息管理</a></div>
+					</div>
+                </div>
+				
+				
+
+				
+				<p class="padding-div">已出租</p>
+				<div class="ui-grid-solo padding-div white-div">
+                    <h2 class="grey-header padding-div ">海淀区紫金庄园5号楼605室</h2>
+					<table class="info-table">
+						<tr>
+							<td>房型：</td>
+							<td>三室一厅</td>
+							<td>出租方式：</td>
+							<td>合租</td>
+						</tr>
+						<tr>
+							<td>租金：</td>
+							<td>2500元/月</td>
+							<td></td>
+							<td></td>
+						</tr>
+					</table>
+					<a href="#" class="ui-btn ui-corner-all ui-btn-d">查看详情</a>
+                </div>
+				<br><br>
+				
+            </div>  
+            <!-- ./MAIN -->
+
+        </div>
+        <!-- ./PAGE -->
+
+        <div id="nav-footer" data-role="footer" data-position="fixed">
+            <div data-role="navbar" data-iconpos="top">
+                <ul>
+                    <li><a href="index.html" data-icon="home">房蜜</a></li>
+                    <li><a href="user.html" data-icon="user">个人账户</a></li>
+                    <li><a href="about.html" data-icon="info">关于房蜜</a></li>
+                    <li><a href="setting.html" data-icon="gear">设置</a></li>
+                </ul>
+            </div><!-- /navbar -->
+        </div><!-- /footer -->
+    </body>
+</html>
