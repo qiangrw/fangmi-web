@@ -1,6 +1,4 @@
 $(function(){
-	
-	
     var config = {
         api_url: "http://webkdd.org/"
     };
@@ -12,6 +10,8 @@ $(function(){
         } else {
         }
     }
+	$("[data-role='navbar']").navbar();
+    $("[data-role='header'], [data-role='footer']").toolbar();
 });
 $(document).on('pageinit', function() {
 	$("[data-role='navbar']").navbar();
@@ -31,6 +31,10 @@ $('#about-page').on('pageinit', function() {
 $('#setting-page').on('pageinit', function() {
 	$("[data-icon=gear]").addClass("ui-btn-active");
 });
+$('#message-detail-page').on('pageinit', function() {
+
+});
+
 
 $('#choose-date-page').on('pageinit', function() {
 	bindAble();

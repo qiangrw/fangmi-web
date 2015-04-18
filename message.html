@@ -13,13 +13,6 @@
         <script src="js/jquery.validate.min.js"></script>
         <script src="js/messages_zh.js"></script>
         <script src="js/md5.js"></script>
-        <script src="js/main.js"></script>
-        <script>
-            $(function() {
-                $( "[data-role='navbar']" ).navbar();
-                $( "[data-role='header'], [data-role='footer']" ).toolbar();
-            });
-        </script>
     </head>
 
     <body>
@@ -29,6 +22,7 @@
             <div data-role="header">
                 <a href="user.html" class="ui-btn-transparent" data-icon="back" data-iconpos="notext" data-shadow="true" data-iconshadow="true">返回</a>
                 <h2 class="grey-header">查看信息</h2>
+				<script src="js/main.js"></script>
             </div>
             <!-- ./HEADER -->
 
@@ -39,7 +33,7 @@
 				<ul class="padding-div navbar-stack navbar-image" data-role="listview" data-icon="false" data-theme="c">
 					<li>
 						<img src="images/user/user_profile.png"></img>
-						<a href="#" class="border-bottom">
+						<a href="message_detail.html" class="border-bottom">
 							  <strong><span>预约记录</span></strong> <br>
 							  <span>你好</span>
 						<span id="fav-cnt" class="ui-li-count my-list-count">上午 12:00</span>
@@ -48,7 +42,7 @@
 					
 					<li>
 						<img src="images/user/user_profile.png"></img>
-						<a href="#" class="border-bottom">
+						<a href="message_detail.html" class="border-bottom">
 							  <strong><span>预约记录</span></strong> <br>
 							  <span>你好</span>
 						<span id="fav-cnt" class="ui-li-count my-list-count">
@@ -61,7 +55,7 @@
 				<ul class="padding-div navbar-stack navbar-image" data-role="listview" data-icon="false" data-theme="c">
 					<li>
 						<img src="images/user/msg_default.jpg"></img>
-						<a href="#" class="border-bottom">
+						<a href="message_detail.html" class="border-bottom">
 							  <strong><span>房密提醒</span></strong> <br>
 							  <span>提醒1</span>
 						<span id="fav-cnt" class="ui-li-count my-list-count">上午 12:00</span>
@@ -69,7 +63,7 @@
 					</li>
 					<li>
 						<img src="images/user/msg_default.jpg"></img>
-						<a href="#" class="border-bottom">
+						<a href="message_detail.html" class="border-bottom">
 							  <strong><span>房密提醒</span></strong> <br>
 							  <span>提醒2</span>
 						<span id="fav-cnt" class="ui-li-count my-list-count">上午 12:00</span>
@@ -87,7 +81,7 @@
             <div data-role="navbar" data-iconpos="top">
                 <ul>
                     <li><a href="index.html" data-icon="home">房蜜</a></li>
-                    <li><a href="user.html" data-icon="user" class="ui-btn-active">个人账户</a></li>
+                    <li><a href="user.html" data-icon="user">个人账户</a></li>
                     <li><a href="about.html" data-icon="info">关于房蜜</a></li>
                     <li><a href="setting.html" data-icon="gear">设置</a></li>
                 </ul>
