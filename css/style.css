@@ -272,6 +272,6 @@ table td, table th,  table td *, table th * { vertical-align: top; }
 .reserve-table th, .reserve-table td {text-align: center; vertical-align: middle;}
 .reserve-table tbody td {  height: 50px; font-size: 0.7em; }
 .reserve-table tbody{   border-bottom:1pt solid black; }
-
 .info-table {width: 100%; margin-bottom: 10px;}
 
+.div-link {margin: 0!important; text-decoration: none!important}

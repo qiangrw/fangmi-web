@@ -27,32 +27,38 @@
         <div data-role="page">
             <!-- HEADER -->
             <div data-role="header">
-                <a href="user.html" class="ui-btn-transparent" data-icon="back" data-iconpos="notext" data-shadow="true" data-iconshadow="true">返回</a>
-                <h6 class="grey-header">我是房东</h6>
+                <a href="landloard.html" class="ui-btn-transparent" data-icon="back" data-iconpos="notext" data-shadow="true" data-iconshadow="true">返回</a>
+                <h2 class="grey-header">发布房源</h2>
             </div>
             <!-- ./HEADER -->
 
             <!-- MAIN -->
             <div role="main" class="ui-content">
-				<br><br>
-				<ul class="padding-div navbar-stack" data-role="listview" data-icon="false" data-theme="c">
-					<li>
-						<a href="post_type.html">发布新房源</a>
-					</li>
-				</ul>
-				<br><br><br>
-				
-				<ul class="padding-div navbar-stack" data-role="listview" data-icon="false"  data-theme="c">
-					<li>
-						<a href="myhouselist.html">我的房子</a>
-					</li>
+				<div class="ui-grid-solo">
+				<a href="post.html?type=whole" class="div-link">
+				<center>
+					<img class="home-img" src="images/house/whole.jpg"></img>
 					
-					<li>
-						<a href="reservation.html">我的预约</a>
-					</li>
-				</ul>
-				<br><br><br>
+				</center>
+				<div class="padding-div home-img-desc" style="margin-top: -146px!important;">
+					<h2>整套出租</h2>
+					<p>便捷管理，爱惜房屋</p>
+				</div>
+				</a>
+                </div>
 				
+				<div class="ui-grid-solo">
+				<a href="post.html?type=single" class="div-link">
+				<center>
+					<img class="home-img" src="images/house/single.jpg"></img>
+				</center>
+				<div class="padding-div home-img-desc" style="margin-top: -146px!important;">
+					<h2>单间出租</h2>
+					<p>经济实惠，朋友多多</p>
+				</div>
+				</a>
+				</div>
+
 
 				
             </div>  
@@ -65,7 +71,7 @@
             <div data-role="navbar" data-iconpos="top">
                 <ul>
                     <li><a href="index.html" data-icon="home">房蜜</a></li>
-                    <li><a href="user.html" data-icon="user" class="ui-btn-active">个人账户</a></li>
+                    <li><a href="user.html" data-icon="user">个人账户</a></li>
                     <li><a href="about.html" data-icon="info">关于房蜜</a></li>
                     <li><a href="setting.html" data-icon="gear">设置</a></li>
                 </ul>
