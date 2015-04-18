@@ -21,6 +21,10 @@ $('#choose-date-page').on('pageinit', function() {
 	bindAble();
 	bindSelected();
 });
+$('#set-date-page').on('pageinit', function() {
+	bindSetEmpty();
+	bindSetAble();
+});
 
 function bindAble()
 {
@@ -34,6 +38,21 @@ function bindSelected()
 	$(".reserve-table .selected").click(function(){
 		$(this).removeClass("selected").addClass("able");
 		bindAble();
+	});
+}
+
+function bindSetEmpty()
+{
+	$(".reserve-table .able").click(function(){
+		$(this).removeClass("able").addClass("empty");
+		bindSetAble();
+	});
+}
+function bindSetAble()
+{
+	$(".reserve-table .empty").click(function(){
+		$(this).removeClass("empty").addClass("able");
+		bindSetEmpty();
 	});
 }
 

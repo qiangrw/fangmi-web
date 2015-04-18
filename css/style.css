@@ -270,6 +270,7 @@ table td, table th,  table td *, table th * { vertical-align: top; }
 .form-table td { vertical-align: middle;}
 .form-table .ui-btn { border-color: #bbb!important;}
 .sel-table td {text-align: right; line-height: 2;}
+.sel-table  a {text-decoration: none!important; color:#ff3075!important; font-weight: normal!important; }
 .reserve-table {width: 100%;}
 .reserve-table th, .reserve-table td {text-align: center; vertical-align: middle;}
 .reserve-table tbody td {  height: 50px; font-size: 0.7em; }
@@ -277,6 +278,7 @@ table td, table th,  table td *, table th * { vertical-align: top; }
 .info-table {width: 100%; margin-bottom: 10px;}
 
 .div-link {margin: 0!important; text-decoration: none!important}
+.div-link h2 {color: white!important; }
 .multi-input-cell .ui-input-text {
 	width: 35%;
 	display: inline-block;
