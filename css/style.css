@@ -153,7 +153,7 @@ label.error {
 }
 .ui-btn-active.ui-icon-tag:after {
   background-color: transparent;
-  background-image: url("../images/icon/tag-active.png")!important;
+  background-image: url("../images/icon/tag.png")!important;
   background-size: 22px 22px;
 }
 .ui-icon-edit:after {
@@ -259,10 +259,11 @@ table td, table th,  table td *, table th * { vertical-align: top; }
     color: #717171!important;
     font-weight: normal!important;
 }
-.navbar-stack li { line-height: 1.3!important;}
+.navbar-stack li { line-height: 1.8!important;}
 .navbar-image img {z-index: 999; border-radius: 100px!important;  padding: 10px 10px; background: transparent;}
-.navbar-image li  a{  padding-top: 20px;}
+.navbar-image li  a{  padding-top: 20px; line-height: 1.8!important;}
 
+.form-table {width: 100%;}
 .form-table th { vertical-align: middle; color: #717171; font-weight: normal;}
 .form-table .ui-btn { border-color: #bbb!important;}
 .reserve-table {width: 100%;}
