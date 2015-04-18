@@ -21,40 +21,56 @@
             <!-- HEADER -->
             <div data-role="header">
                 <a href="setting.html" class="ui-btn-transparent" data-icon="back" data-iconpos="notext" data-shadow="true" data-iconshadow="true">返回</a>
-                <h2 class="grey-header">忘记密码</h2>
+                <h2 class="grey-header">登录</h2>
 				<script src="js/main.js"></script>
             </div>
             <!-- ./HEADER -->
 
             <!-- MAIN -->
             <div role="main" class="ui-content">
+				<div class="ui-grid-solo">
+					<br><br>
+					<center>
+					<a href="index.html">
+						<img width="15%" src="images/nav/funmi-active.png"></img>
+					<a>
+					</center>
+				</div>
+				
 				<div class="ui-grid-solo white-div">
                     <table class="form-table">
 						<tr>
-							<th width=120>手机号</th>
+							<th width=80>手机号</th>
 							<td><input type="text" name="phone" id="phone" value=""></td>
-							<td><a id="get_captcha" href="#" class="ui-btn ui-btn-mini ui-corner-all ui-btn-inline ui-btn-captcha">获取验证码</a></td>
-						</tr>
-                        <tr>
-							<th width=120>手机验证码</th>
-							<td colspan=2><input type="text" name="captcha" id="captcha" value=""></td>
 						</tr>
 						<tr>
-							<th>输入新密码</th>
-							<td colspan=2><input type="password" name="newpassword" id="newpassword" value=""></td>
-						</tr>
-						<tr>
-							<th>确认新密码</th>
-							<td colspan=2><input type="password" name="newpassword2" id="newpassword2" value=""></td>
+							<th>密码</th>
+							<td><input type="password" name="newpassword" id="newpassword" value=""></td>
 						</tr>
                     </table>
                 </div>
 				<br>
 				<div class="ui-grid-solo padding-div">
-					<a id="submit_change_password" href="setting.html" class="ui-btn ui-corner-all">确定</a>
+					<a id="submit_login" href="index.html" class="ui-btn ui-corner-all">登录</a>
 				</div>
+				<div class="ui-grid-solo padding-div">
+				<p>
+					<center>合作登录</center>
+					
+				</p>
+				<p>
+					<center>
+					<a href="index.html">
+						<img width="15%" src="images/share/wechat.png"></a>
+					<a>
+					</center>
+					<a id="submit_login" href="signup.html" class="ui-btn ui-corner-all ui-btn-d">注册</a>
+				</p>
 				
+				
+				</div>
 
+			
 				
             </div>  
             <!-- ./MAIN -->
