@@ -12,13 +12,6 @@
         <script src="js/jquery.validate.min.js"></script>
         <script src="js/messages_zh.js"></script>
         <script src="js/md5.js"></script>
-        <script src="js/main.js"></script>
-        <script>
-            $(function() {
-                $( "[data-role='navbar']" ).navbar();
-                $( "[data-role='header'], [data-role='footer']" ).toolbar();
-            });
-        </script>
     </head>
 
     <body>
@@ -32,7 +25,27 @@
 
             <!-- MAIN -->
             <div role="main" class="ui-content">
-                <h3 class="padding-div">设置入住时间</h3>
+                <h3 class="padding-div">主卧</h3>
+                <div class="ui-grid-solo padding-div white-div">
+					<table class="form-table">
+						<tr>
+							
+							<td>
+							<select data-theme="c" name="gender" id="gender" data-native-menu="false" style="border-color:grey!important;">
+							    <option value="standard">随时入住</option>
+							    <option value="rush">设定时间</option>
+							</select>
+							</td>
+						</tr>
+						<tr>
+							<td>
+								<input type="date" name="date" id="date" value="">
+							</td>
+						</tr>
+					</table>
+                </div>
+				
+				<h3 class="padding-div">次卧</h3>
                 <div class="ui-grid-solo padding-div white-div">
 					<table class="form-table">
 						<tr>

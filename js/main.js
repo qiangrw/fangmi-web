@@ -1,4 +1,7 @@
 $(function(){
+	$( "[data-role='navbar']" ).navbar();
+    $( "[data-role='header'], [data-role='footer']" ).toolbar();
+	
     var config = {
         api_url: "http://webkdd.org/"
     };
@@ -10,11 +13,24 @@ $(function(){
         } else {
         }
     }
-	
 });
 $(document).on('pageinit', function() {
 	$( "[data-role='navbar']" ).navbar();
     $( "[data-role='header'], [data-role='footer']" ).toolbar();
+});
+
+
+$('#index-page').on('pageinit', function() {
+	$("#nav-footer [data-icon=home]").addClass("ui-btn-active");
+});
+$('#user-page').on('pageinit', function() {
+	$("#nav-footer [data-icon=user]").addClass("ui-btn-active");
+});
+$('#about-page').on('pageinit', function() {
+	$("#nav-footer [data-icon=info]").addClass("ui-btn-active");
+});
+$('#setting-page').on('pageinit', function() {
+	$("[data-icon=gear]").addClass("ui-btn-active");
 });
 
 $('#choose-date-page').on('pageinit', function() {

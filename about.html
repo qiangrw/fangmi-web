@@ -12,18 +12,11 @@
         <script src="js/jquery.validate.min.js"></script>
         <script src="js/messages_zh.js"></script>
         <script src="js/md5.js"></script>
-        <script src="js/main.js"></script>
-        <script>
-            $(function() {
-                $( "[data-role='navbar']" ).navbar();
-                $( "[data-role='header'], [data-role='footer']" ).toolbar();
-            });
-        </script>
     </head>
 
     <body>
 
-        <div data-role="page">
+        <div id="about-page" data-role="page">
             <!-- HEADER -->
             <div data-role="header">
                 <a href="#" id="logo" class="ui-btn-left ui-btn ui-btn-inline ui-mini ui-corner-all
@@ -32,6 +25,7 @@
                 <div data-role="controlgroup" data-type="horizontal" class="ui-mini ui-btn-right">
                     <a href="signup.html" class="ui-btn ui-btn-signup">注册</a>
                     <a href="signin.html" class="ui-btn ui-btn-signin">登录</a>
+					<script src="js/main.js"></script>
                 </div>
             </div>
             <!-- ./HEADER -->
