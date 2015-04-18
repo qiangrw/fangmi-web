@@ -61,7 +61,10 @@ label.error {
 .grid-two-third { width: 64%; display: inline-block; vertical-align:middle;}
 
 .ui-icon-loc.ui-btn {
- background:transparent!important;border:none;color:white!important; font-family:"microsoft yahei";}
+ background:transparent!important;
+ border:none;color:white!important; 
+ font-family:"microsoft yahei";
+}
 .ui-icon-home:after {
   background-color: transparent;
   background-image: url("../images/nav/funmi.png")!important;
@@ -172,6 +175,14 @@ label.error {
   background-color: transparent;
   background-image: url("../images/icon/loc.png")!important;
   background-size: 11px 11px;
+}
+.ui-btn-captcha {
+	font-size: 0.5em!important; 
+	line-height: 1.5; 
+	top: 4px; 
+	background-color: transparent!important; 
+	color: #ff3075!important;
+	border-color: #ff3075!important;
 }
 .padding-div { padding-left: 10px; padding-right: 10px; }
 .white-div {background: white!important; padding: 4px 4px; margin-top:10px;}
