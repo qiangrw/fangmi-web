@@ -65,6 +65,16 @@ label.error {
  border:none;color:white!important; 
  font-family:"microsoft yahei";
 }
+.ui-icon-leave:after {
+  background-color: transparent;
+  background-image: url("../images/icon/leave.png")!important;
+  background-size: 18px 18px;
+}
+.ui-btn-active.ui-icon-leave:after {
+  background-color: transparent;
+  background-image: url("../images/icon/leave.png")!important;
+  background-size: 18px 18px;
+}
 .ui-icon-home:after {
   background-color: transparent;
   background-image: url("../images/nav/funmi.png")!important;
