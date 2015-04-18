@@ -1,6 +1,5 @@
 $(function(){
-	$( "[data-role='navbar']" ).navbar();
-    $( "[data-role='header'], [data-role='footer']" ).toolbar();
+	
 	
     var config = {
         api_url: "http://webkdd.org/"
@@ -13,10 +12,11 @@ $(function(){
         } else {
         }
     }
+	$('#tags').tagsInput();
 });
 $(document).on('pageinit', function() {
-	$( "[data-role='navbar']" ).navbar();
-    $( "[data-role='header'], [data-role='footer']" ).toolbar();
+	$("[data-role='navbar']").navbar();
+    $("[data-role='header'], [data-role='footer']").toolbar();
 });
 
 
@@ -40,6 +40,10 @@ $('#choose-date-page').on('pageinit', function() {
 $('#set-date-page').on('pageinit', function() {
 	bindSetEmpty();
 	bindSetAble();
+});
+
+$('#set-keywords-page').on('pageinit', function() {
+	$('#tags').tagsInput();
 });
 
 function bindAble()
