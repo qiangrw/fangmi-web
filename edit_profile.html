@@ -14,12 +14,6 @@
         <script src="js/messages_zh.js"></script>
         <script src="js/md5.js"></script>
         <script src="js/main.js"></script>
-        <script>
-            $(function() {
-                $( "[data-role='navbar']" ).navbar();
-                $( "[data-role='header'], [data-role='footer']" ).toolbar();
-            });
-        </script>
     </head>
 
     <body>
@@ -29,6 +23,7 @@
             <div data-role="header">
                 <a href="user.html" class="ui-btn-transparent" data-icon="back" data-iconpos="notext" data-shadow="true" data-iconshadow="true">返回</a>
                 <h2 class="grey-header">个人资料</h2>
+                <script src="js/app/edit_profile.js"></script>
             </div>
             <!-- ./HEADER -->
 
@@ -60,25 +55,35 @@
 						<tr>
 							<th>星&nbsp;&nbsp;&nbsp;&nbsp;座</th>
 							<td>
-								<select data-theme="c" name="constellation" id="constellation" data-native-menu="false" style="border-color:grey!important;">
-								    <option value="standard">巨蟹座</option>
-								    <option value="rush">狮子座</option>
-								</select>
-							</td>
-						</tr>
-						<tr>
-							<th>个性签名</th>
-							<td><input type="text" name="desc" id="desc" value="美貌与才华集一身!"></td>
-						</tr>
+                                <select data-theme="c" name="constellation" id="constellation" data-native-menu="false" style="border-color:grey!important;">
+                                    <option value="0" >白羊座</option>
+                                    <option value="1" >金牛座</option>
+                                    <option value="2" >双子座</option>
+                                    <option value="3" >巨蟹座</option>
+                                    <option value="4" >狮子座</option>
+                                    <option value="5" >处女座</option>
+                                    <option value="6" >天秤座</option>
+                                    <option value="7" >天蝎座</option>
+                                    <option value="8" >射手座</option>
+                                    <option value="9" >魔羯座</option>
+                                    <option value="10" >水瓶座</option>
+                                    <option value="11" >双鱼座</option>
+                                </select>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>个性签名</th>
+                            <td><input type="text" name="desc" id="desc" value="美貌与才华集一身!"></td>
+                        </tr>
                     </table>
                 </div>
-				<br><br>
-				<div class="ui-grid-solo padding-div">
-				<a id="submit_edit_profile" href="user.html" class="ui-btn ui-corner-all">确定</a>
-				</div>
-				
+                <br><br>
+                <div class="ui-grid-solo padding-div">
+                    <a id="submit_edit_profile" href="user.html" class="ui-btn ui-corner-all">确定</a>
+                </div>
 
-				
+
+
             </div>  
             <!-- ./MAIN -->
 
