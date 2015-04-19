@@ -1,6 +1,6 @@
 $(function(){
     var config = {
-        api_url: "http://webkdd.org/"
+        api_url: "http://123.57.207.201:8080/"
     };
     localStorage.setItem('config', JSON.stringify(config));
     var user   = JSON.parse(localStorage.getItem('user'));
@@ -34,7 +34,6 @@ $('#setting-page').on('pageinit', function() {
 $('#message-detail-page').on('pageinit', function() {
 
 });
-
 
 $('#choose-date-page').on('pageinit', function() {
 	bindAble();
