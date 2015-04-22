@@ -16,10 +16,19 @@ $(function(){
 $(document).on('pageinit', function() {
 	$("[data-role='navbar']").navbar();
     $("[data-role='header'], [data-role='footer']").toolbar();
+	
+});
+$(document).on('pagebeforeshow', function() {
+    var id = $.mobile.activePage.attr('id');
+    $("#nav-footer li a").removeClass("ui-btn-now");
+    if (id == "index-page") $("#nav-footer [data-icon='home']").addClass("ui-btn-now");
+    if (id == "user-page") $("#nav-footer [data-icon='user']").addClass("ui-btn-now");
+    if (id == "about-page") $("#nav-footer [data-icon='info']").addClass("ui-btn-now");
+    if (id == "setting-page") $("#nav-footer [data-icon='gear']").addClass("ui-btn-now");
 });
 
 
-$('#index-page').on('pageinit', function() {
+$('#index-page').on('pagebeforeshow', function() {
 	$("#nav-footer [data-icon=home]").addClass("ui-btn-active");
 });
 $('#user-page').on('pageinit', function() {
