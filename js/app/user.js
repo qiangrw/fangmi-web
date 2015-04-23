@@ -5,8 +5,7 @@ $('#user-page').on('pagebeforeshow', function() {
         $( ":mobile-pagecontainer" ).pagecontainer( "change", "signin.html", { role: "page" } );
         return;
     }
-    alert("get");
-    // get user info
+    
     $.ajax({
         type: 'GET',
         url: config.api_url + "api/account",
@@ -16,7 +15,9 @@ $('#user-page').on('pagebeforeshow', function() {
         success: function(data) {
             if (data.message = "OK") {
                 $.extend(user, data);
+                user.avatar = config.api_url + user.avatar;
                 localStorage.setItem('user', JSON.stringify(user));
+                Tempo.prepare("user-info").render(user);
             } else {
                 alert("验证失败，请重新登录");
                 $( ":mobile-pagecontainer" ).pagecontainer( "change", "signin.html", { role: "page" } );
