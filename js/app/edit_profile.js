@@ -1,6 +1,5 @@
 function set_user_data(user)
 {
-    $("#nickname").val(user.nickname);
     user.gender = user.gender ? 1 : 0;
     $("#gender").val(user.gender);
     $("#gender option[value='"+user.gender+"']").attr('selected', 'selected');
@@ -8,10 +7,11 @@ function set_user_data(user)
     $("#horoscope").val(user.horoscope);
     $("#horoscope option[value='"+user.horoscope+"']").attr('selected', 'selected');
     $('#horoscope').selectmenu('refresh', true);
+    $("#nickname").val(user.nickname);
     $("#status").val(user.status);
 }
 
-$('#edit-profile-page').on('pagebeforeshow', function() {
+$('#edit-profile-page').on('pageinit', function() {
     var config = JSON.parse(localStorage.getItem('config'));
     var user  = JSON.parse(localStorage.getItem('user'));
     if (user == null) {

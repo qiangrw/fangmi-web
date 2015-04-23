@@ -1,4 +1,4 @@
-$('#user-page').on('pagebeforeshow', function() {
+$('#user-page').on('pageinit', function() {
     var config = JSON.parse(localStorage.getItem('config'));
     var user  = JSON.parse(localStorage.getItem('user'));
     if (user == null) {
