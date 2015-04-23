@@ -27,15 +27,6 @@
             <div data-role="header" data-theme="c">
                 <h2 class="grey-header">设定看房时间</h2>
 				<script src="js/main.js"></script>
-				<script type="text/javascript" src="http://cdn.jtsage.com/external/jquery.mousewheel.min.js"></script>
-				
-				<script type="text/javascript" src="http://cdn.jtsage.com/datebox/1.4.5/jqm-datebox-1.4.5.core.min.js"></script>
-				<script type="text/javascript" src="http://cdn.jtsage.com/datebox/1.4.5/jqm-datebox-1.4.5.mode.calbox.min.js"></script>
-				<script type="text/javascript" src="http://cdn.jtsage.com/datebox/1.4.5/jqm-datebox-1.4.5.mode.datebox.min.js"></script>
-				<script type="text/javascript" src="http://cdn.jtsage.com/datebox/1.4.5/jqm-datebox-1.4.5.mode.flipbox.min.js"></script>
-				<script type="text/javascript" src="http://cdn.jtsage.com/datebox/1.4.5/jqm-datebox-1.4.5.mode.slidebox.min.js"></script>
-				<script type="text/javascript" src="http://cdn.jtsage.com/datebox/1.4.5/jqm-datebox-1.4.5.mode.customflip.min.js"></script>
-				<script type="text/javascript" src="http://cdn.jtsage.com/datebox/i18n/jqm-datebox.lang.utf8.js"></script>
             </div>
             <!-- ./HEADER -->
 
@@ -44,28 +35,71 @@
                 <h3 class="padding-div">预约时间表</h3>
 
                 <div class="ui-grid-solo padding-div" style="background: white!important; padding: 4px 4px; margin-top:10px;">
-					<div class="ui-field-contain">
-						<label for="reserve_date">预约日</label>
-						<input data-theme="a" name="reserve_date" id="reserve_date" type="text" data-role="datebox" data-options='{"mode":"datebox"}' />
-					</div>
-					<div class="ui-field-contain">
-						<label for="start_time">开始时间</label>
-						<input name="start_time" id="start_time" type="text" data-role="datebox" data-options='{"mode":"timebox"}' />
-					</div>
-					<div class="ui-field-contain">
-						<label for="end_time">结束时间</label>
-						<input name="end_time" id="end_time" type="text" data-role="datebox" data-options='{"mode":"timebox"}' />
-					</div>
-					<a href="#" class="ui-btn ui-corner-all">确认添加</a>
+                    <table class="reserve-table" style="border-bottom: 1px solid #7f7f7f;">
+					<thead>
+						<tr>
+							<td>日</td>
+							<td>一</td>
+							<td>二</td>
+							<td>三</td>
+							<td>四</td>
+							<td>五</td>
+							<td>六</td>
+						</tr>
+						<tr class="border_bottom">
+							<td>4.12</td>
+							<td>4.13</td>
+							<td>4.14</td>
+							<td>4.15</td>
+							<td>4.16</td>
+							<td>4.17</td>
+							<td>4.18</td>
+						</tr>
+					</thead>
+					</table>
+					<table class="reserve-table">
+					<tbody>
+						<tr>
+							<td><span class="empty">上午</span></td>
+							<td><span class="able">上午</span></td>
+							<td><span class="empty">上午</span></td>
+							<td><span class="empty">上午</span></td>
+							<td><span class="empty">上午</span></td>
+							<td><span class="empty">上午</span></td>
+							<td><span class="empty">上午</span></td>
+						</tr>
+						<tr>
+							<td><span class="empty">下午</span></td>
+							<td><span class="able">下午</span></td>
+							<td><span class="empty">下午</span></td>
+							<td><span class="empty">下午</span></td>
+							<td><span class="empty">下午</span></td>
+							<td><span class="empty">下午</span></td>
+							<td><span class="empty">下午</span></td>
+						</tr>
+						<tr>
+							<td><span class="empty">晚上</span></td>
+							<td><span class="empty">晚上</span></td>
+							<td><span class="empty">晚上</span></td>
+							<td><span class="empty">晚上</span></td>
+							<td><span class="empty">晚上</span></td>
+							<td><span class="able">晚上</span></td>
+							<td><span class="empty">晚上</span></td>
+						</tr>
+					</tbody>
+					
+					</table>
+					
+
                 </div>
-				
+
 				<p class="padding-div">
 					设定您方便的时间，方便房客更好的预约看房。
 				</p>
                 
-                <!--<div class="ui-grid-solo padding-desc" style="padding: 4px 4px; margin-top:10px;">
+                <div class="ui-grid-solo padding-desc" style="padding: 4px 4px; margin-top:10px;">
                     <a href="post_whole.html" class="ui-btn ui-corner-all">确定</a>
-                </div>-->
+                </div>
                 
             </div>  
             <!-- ./MAIN -->
