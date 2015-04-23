@@ -27,8 +27,9 @@
             <div data-role="header" data-theme="c">
                 <h2 class="grey-header">设定看房时间</h2>
 				<script src="js/main.js"></script>
+				<link rel="stylesheet" href="http://cdn.jtsage.com/datebox/1.4.5/jqm-datebox-1.4.5.min.css" />
 				<script type="text/javascript" src="http://cdn.jtsage.com/external/jquery.mousewheel.min.js"></script>
-				
+				<script type="text/javascript" src="http://dev.jtsage.com/jQM-DateBox/js/doc.js"></script>
 				<script type="text/javascript" src="http://cdn.jtsage.com/datebox/1.4.5/jqm-datebox-1.4.5.core.min.js"></script>
 				<script type="text/javascript" src="http://cdn.jtsage.com/datebox/1.4.5/jqm-datebox-1.4.5.mode.calbox.min.js"></script>
 				<script type="text/javascript" src="http://cdn.jtsage.com/datebox/1.4.5/jqm-datebox-1.4.5.mode.datebox.min.js"></script>
@@ -43,18 +44,18 @@
             <div role="main" class="ui-content">
                 <h3 class="padding-div">预约时间表</h3>
 
-                <div class="ui-grid-solo padding-div" style="background: white!important; padding: 4px 4px; margin-top:10px;">
+                <div class="ui-grid-solo padding-div" style="background: white!important; padding: 4px 4px; margin-top:10px;">				
 					<div class="ui-field-contain">
 						<label for="reserve_date">预约日</label>
-						<input data-theme="a" name="reserve_date" id="reserve_date" type="text" data-role="datebox" data-options='{"mode":"datebox"}' />
+						<input data-theme="a" name="reserve_date" id="reserve_date" type="text" data-role="datebox" data-options='{"mode":"flipbox"}' />
 					</div>
 					<div class="ui-field-contain">
 						<label for="start_time">开始时间</label>
-						<input name="start_time" id="start_time" type="text" data-role="datebox" data-options='{"mode":"timebox"}' />
+						<input name="start_time" id="start_time" type="text" data-role="datebox" data-options='{"mode":"timeflipbox"}' />
 					</div>
 					<div class="ui-field-contain">
 						<label for="end_time">结束时间</label>
-						<input name="end_time" id="end_time" type="text" data-role="datebox" data-options='{"mode":"timebox"}' />
+						<input name="end_time" id="end_time" type="text" data-role="datebox" data-options='{"mode":"timeflipbox"}' />
 					</div>
 					<a href="#" class="ui-btn ui-corner-all">确认添加</a>
                 </div>
