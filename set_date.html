@@ -22,52 +22,52 @@
     </head>
 
     <body>
-        <div id="set-date-page" data-role="page" data-dialog="true">
+        <div id="set-date-page" data-role="page">
             <!-- HEADER -->
-            <div data-role="header" data-theme="c">
+            <div data-role="header">
+                <a href="post_whole.html" class="ui-btn-transparent" data-icon="back" data-iconpos="notext" data-shadow="true" data-iconshadow="true">返回</a>
                 <h2 class="grey-header">设定看房时间</h2>
 				<script src="js/main.js"></script>
 				<link rel="stylesheet" href="http://cdn.jtsage.com/datebox/1.4.5/jqm-datebox-1.4.5.min.css" />
 				<script type="text/javascript" src="http://cdn.jtsage.com/external/jquery.mousewheel.min.js"></script>
-				<!--<script type="text/javascript" src="http://dev.jtsage.com/jQM-DateBox/js/doc.js"></script>-->
 				<script type="text/javascript" src="http://cdn.jtsage.com/datebox/1.4.5/jqm-datebox-1.4.5.core.min.js"></script>
-				<!--<script type="text/javascript" src="http://cdn.jtsage.com/datebox/1.4.5/jqm-datebox-1.4.5.mode.calbox.min.js"></script>-->
-				<script type="text/javascript" src="http://cdn.jtsage.com/datebox/1.4.5/jqm-datebox-1.4.5.mode.datebox.min.js"></script>
 				<script type="text/javascript" src="http://cdn.jtsage.com/datebox/1.4.5/jqm-datebox-1.4.5.mode.flipbox.min.js"></script>
-				<!--<script type="text/javascript" src="http://cdn.jtsage.com/datebox/1.4.5/jqm-datebox-1.4.5.mode.slidebox.min.js"></script>
-				<script type="text/javascript" src="http://cdn.jtsage.com/datebox/1.4.5/jqm-datebox-1.4.5.mode.customflip.min.js"></script>-->
 				<script type="text/javascript" src="http://cdn.jtsage.com/datebox/i18n/jquery.mobile.datebox.i18n.zh-CN.utf8.min.js"></script>
             </div>
             <!-- ./HEADER -->
 
             <!-- MAIN -->
             <div role="main" class="ui-content">
-                <h3 class="padding-div">预约时间表</h3>
-
-                <div class="ui-grid-solo padding-div" style="background: white!important; padding: 4px 4px; margin-top:10px;">				
-					<div class="ui-field-contain">
-						<label for="reserve_date">预约日</label>
+                <p class="padding-div" style="font-size: 0.8em;">（可添加多个时间段，方便房客更好地预约看房）</p>
+                <div class="ui-grid-solo white-div">				
+					<div class="ui-field-contain ui-field-inline">
+						<label for="reserve_date">预约日期</label>
 						<input data-theme="a" name="reserve_date" id="reserve_date" type="text" data-role="datebox" data-options='{"mode":"flipbox"}' />
 					</div>
-					<div class="ui-field-contain">
+					<div class="ui-field-contain ui-field-inline">
 						<label for="start_time">开始时间</label>
 						<input name="start_time" id="start_time" type="text" data-role="datebox" data-options='{"mode":"timeflipbox"}' />
 					</div>
-					<div class="ui-field-contain">
+					<div class="ui-field-contain ui-field-inline">
 						<label for="end_time">结束时间</label>
 						<input name="end_time" id="end_time" type="text" data-role="datebox" data-options='{"mode":"timeflipbox"}' />
 					</div>
 					<a href="#" class="ui-btn ui-corner-all">确认添加</a>
                 </div>
-				
-				<p class="padding-div">
-					设定您方便的时间，方便房客更好的预约看房。
-				</p>
+
+                <br>
+                <p class="padding-div" style="font-size: 0.8em; margin-bottom: 20px;"> 预约时间表 </p>
                 
-                <!--<div class="ui-grid-solo padding-desc" style="padding: 4px 4px; margin-top:10px;">
-                    <a href="post_whole.html" class="ui-btn ui-corner-all">确定</a>
-                </div>-->
-                
+                <div class="white-div">
+                    <ul class="padding-div navbar-stack" data-role="listview" data-icon="trash" data-theme="c">
+                        <li><a href="#">2015-04-21 (AM 08:00 - PM 10:00) </a></li>
+                        <li><a href="#">2015-04-21 (AM 08:00 - PM 10:00) </a></li>
+                        <li><a href="#">2015-04-21 (AM 08:00 - PM 10:00) </a></li>
+                    </ul>
+                </div>
+                <br>
+
+
             </div>  
             <!-- ./MAIN -->
 
