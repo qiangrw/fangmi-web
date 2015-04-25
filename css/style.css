@@ -86,42 +86,42 @@
 .ui-icon-home:after {
   background-color: transparent;
   background-image: url("../images/nav/funmi.png")!important;
-  background-size: 22px 22px;
+  background-size: 20px 20px;
 }
 .ui-btn-active.ui-icon-home:after, .ui-btn-now.ui-icon-home:after{
   background-color: transparent;
   background-image: url("../images/nav/funmi-active.png")!important;
-  background-size: 22px 22px;
+  background-size: 20px 20px;
 }
 .ui-icon-user:after {
   background-color: transparent;
   background-image: url("../images/nav/user.png")!important;
-  background-size: 22px 22px;
+  background-size: 20px 20px;
 }
 .ui-btn-active.ui-icon-user:after, .ui-btn-now.ui-icon-user:after {
   background-color: transparent;
   background-image: url("../images/nav/user-active.png")!important;
-  background-size: 22px 22px;
+  background-size: 20px 20px;
 }
 .ui-icon-gear:after {
   background-color: transparent;
   background-image: url("../images/nav/setting.png")!important;
-  background-size: 22px 22px;
+  background-size: 20px 20px;
 }
 .ui-btn-active.ui-icon-gear:after, .ui-btn-now.ui-icon-gear:after {
   background-color: transparent;
   background-image: url("../images/nav/setting-active.png")!important;
-  background-size: 22px 22px;
+  background-size: 20px 20px;
 }
 .ui-icon-info:after {
   background-color: transparent;
   background-image: url("../images/nav/about.png")!important;
-  background-size: 22px 22px;
+  background-size: 20px 20px;
 }
 .ui-btn-active.ui-icon-info:after, .ui-btn-now.ui-icon-info:after {
   background-color: transparent;
   background-image: url("../images/nav/about-active.png")!important;
-  background-size: 22px 22px;
+  background-size: 20px 20px;
 }
 .ui-icon-fav:after {
   background-color: transparent;
