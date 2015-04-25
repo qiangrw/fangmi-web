@@ -15,6 +15,7 @@ $(document).on('pagebeforeshow', function() {
     if (id == "about-page") $("#nav-footer [data-icon='info']").addClass("ui-btn-now");
     if (id == "setting-page") $("#nav-footer [data-icon='gear']").addClass("ui-btn-now");
     user   = JSON.parse(localStorage.getItem('user'));
+    hide_common_error();
 });
 
 /*
@@ -45,6 +46,65 @@ $('#user-page').on('pagebeforeshow', function() {
     }
 });
 
+$('#edit-profile-page').on('pageinit', function() {
+    var set_user_data = function(user) {
+        user.gender = user.gender ? 1 : 0;
+        $("#gender").val(user.gender);
+        $("#gender option[value='"+user.gender+"']").attr('selected', 'selected');
+        $('#gender').selectmenu('refresh', true);
+        $("#horoscope").val(user.horoscope);
+        $("#horoscope option[value='"+user.horoscope+"']").attr('selected', 'selected');
+        $('#horoscope').selectmenu('refresh', true);
+        $("#nickname").val(user.nickname);
+        $("#status").val(user.status);
+    };
+
+    if (user == null) {
+        redirect_to("signin.html");
+        return;
+    }
+
+    if (user_loaded() == false) {
+        $.ajax( { 
+            type: 'GET',
+            url: config.api_url + "api/account",
+            beforeSend: function (request) {
+              request.setRequestHeader("Authorization", "Bearer " + user.access_token);
+            },
+          success: function(data) {
+                       if (data.message = "OK") {
+                           $.extend(user, data);
+                           user.avatar = config.api_url + user.avatar;
+                           localStorage.setItem('user', JSON.stringify(user));
+                           set_user_data(user);
+                       } else redirect_to("signin.html");
+                   },
+          error: function(data) { redirect_to("signin.html"); }
+        });  
+    } else {
+        set_user_data(user);
+    }
+
+    $("#submit_edit_profile").click(function(){
+        $.ajax({
+            type: 'POST',
+            beforeSend: function (request) {
+                request.setRequestHeader("Authorization", "Bearer " + user.access_token);
+            },
+            url: config.api_url + "api/account",
+            data: $("#edit-profile-form").serialize(),
+            success: function(data) {
+                if (data.message == "OK") {
+                    $.extend(user, data);
+                    user.avatar = config.api_url + user.avatar;
+                    localStorage.setItem('user', JSON.stringify(user));
+                    show_common_error("保存成功");
+                } else  show_common_error(data.message); 
+            },
+            error: function(data) { redirect_to("signin.html"); }
+        });                 
+    });
+});  
 
 // signin.html
 $('#signin-page').on('pageinit', function() {
@@ -64,14 +124,12 @@ $('#signin-page').on('pageinit', function() {
                     show_common_error(data.message);
                 }
             },
-            error: function(data) {
-                       show_common_error("* 用户名密码错误");
-                   }
+            error: function(data) { show_common_error("* 用户名密码错误"); }
         });
     });
 });
 
- 
+
 // signup.html
 $('#signup-page').on('pageinit', function() {
     var time = 60;
@@ -104,18 +162,18 @@ $('#signup-page').on('pageinit', function() {
         event.preventDefault();
         var $phone = $("#phone").val();
         if($phone == undefined || $phone.length != 11)
-        {
-            alert("手机号码应该为11位数字。");
-            return;
-        }
-        $("#go").attr('disabled',true);
-        $("#submit-signup").attr('disabled', false);
+    {
+        alert("手机号码应该为11位数字。");
+        return;
+    }
+    $("#go").attr('disabled',true);
+    $("#submit-signup").attr('disabled', false);
 
-        var minutes = 0.1;
-        $("#go").attr("value", minutes);
-        timer_id = setInterval(settime, 1000);
+    var minutes = 0.1;
+    $("#go").attr("value", minutes);
+    timer_id = setInterval(settime, 1000);
 
-        // TODO send vcode request
+    // TODO send vcode request
     }); 
 
     $("#submit-signup").click(function(){
@@ -131,9 +189,7 @@ $('#signup-page').on('pageinit', function() {
                     show_common_error(data.message);
                 }
             },
-            error: function(data) {
-                       show_common_error('服务器错误');
-                   }
+            error: function(data) { show_common_error('服务器错误'); }
         });   
 
     });
@@ -217,14 +273,10 @@ function load_user(element) {
                      localStorage.setItem('user', JSON.stringify(user));
                      Tempo.prepare(element).render(user);
                  } else {
-                     alert("验证失败，请重新登录");
                      redirect_to("signin.html");
                  }
              },
-    error: function(data) {
-               $("#error").html("* 用户名密码错误");
-               $("#error").show();
-           }
+    error: function(data) { show_common_error("用户名密码错误"); }
     });   
 }
 
