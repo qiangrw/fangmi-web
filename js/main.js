@@ -15,6 +15,13 @@ $(document).on('pagebeforeshow', function() {
     if (id == "about-page") $("#nav-footer [data-icon='info']").addClass("ui-btn-now");
     if (id == "setting-page") $("#nav-footer [data-icon='gear']").addClass("ui-btn-now");
     user   = JSON.parse(localStorage.getItem('user'));
+    if (user != null) {
+        $(".ui-btn-signin").hide();
+        $(".ui-btn-signup").hide();
+    } else {
+        $(".ui-btn-signin").show();
+        $(".ui-btn-signup").show();
+    }
     hide_common_error();
 });
 
