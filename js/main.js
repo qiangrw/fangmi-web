@@ -129,52 +129,30 @@ $('#signin-page').on('pageinit', function() {
     });
 });
 
+// forget_password.html
+$('#forget-password-page').on('pageinit', function() {
+    set_captcha_elements();
+    $("#submit-forget").click(function(){
+        $.ajax({
+            type: 'POST',
+            url: config.api_url + "api/account/password/forget",
+            data: $("#forget-password-form").serialize(),
+            success: function(data) {
+                if (data.message == 'OK') {
+                    show_common_error("修改成功，您可以用新密码登录了.");
+                } else {
+                    show_common_error(data.message);
+                }
+            },
+            error: function(data) { show_common_error('服务器错误'); }
+        });   
+
+    });    
+});
 
 // signup.html
 $('#signup-page').on('pageinit', function() {
-    var time = 60;
-    var timer_id = setInterval(settime, 1000);
-    $("#vcode-timer").html(time);
-    clearInterval(timer_id);
-    $("#vcode-timer").html("");
-    $("#info").html("获取验证码");
-
-    var enableButton = function(){ $("#go").button('enable'); }
-    var settime = function(time){
-        time = $("#vcode-timer").html();
-        if(time == "") time = 60;
-        time -= 1;
-        $("#vcode-timer").html(time);
-        $("#info").html("秒后重新获取");
-        if(time > 0) {
-        } else {
-            time = 60;
-            $("#vcode-timer").html(time);
-            $("#go").button('enable');
-            $("#go").attr('disabled',false);
-            clearInterval(timer_id);
-            $("#vcode-timer").html("");
-            $("#info").html("获取验证码");
-        }
-    }
-
-    $("#go").click(function(event){
-        event.preventDefault();
-        var $phone = $("#phone").val();
-        if($phone == undefined || $phone.length != 11)
-    {
-        alert("手机号码应该为11位数字。");
-        return;
-    }
-    $("#go").attr('disabled',true);
-    $("#submit-signup").attr('disabled', false);
-
-    var minutes = 0.1;
-    $("#go").attr("value", minutes);
-    timer_id = setInterval(settime, 1000);
-
-    // TODO send vcode request
-    }); 
+    set_captcha_elements();
 
     $("#submit-signup").click(function(){
         $.ajax({
@@ -288,6 +266,51 @@ function show_common_error(error) {
 function hide_common_error(error) {
     $("#error").html('');
     $("#error").hide();
+}
+
+function set_captcha_elements() {
+    var time = 60;
+    var timer_id = setInterval(settime, 1000);
+    $("#vcode-timer").html(time);
+    clearInterval(timer_id);
+    $("#vcode-timer").html("");
+    $("#info").html("获取验证码");
+
+    var enableButton = function(){ $("#go").button('enable'); }
+    var settime = function(time){
+        time = $("#vcode-timer").html();
+        if(time == "") time = 60;
+        time -= 1;
+        $("#vcode-timer").html(time);
+        $("#info").html("秒后重新获取");
+        if(time > 0) {
+        } else {
+            time = 60;
+            $("#vcode-timer").html(time);
+            $("#go").button('enable');
+            $("#go").attr('disabled',false);
+            clearInterval(timer_id);
+            $("#vcode-timer").html("");
+            $("#info").html("获取验证码");
+        }
+    }
+
+    $("#go").click(function(event){
+        event.preventDefault();
+        var $phone = $("#phone").val();
+        if($phone == undefined || $phone.length != 11) {
+            alert("手机号码应该为11位数字。" + $phone);
+            return;
+        }
+        $("#go").attr('disabled',true);
+        $("#submit-signup").attr('disabled', false);
+
+        var minutes = 0.1;
+        $("#go").attr("value", minutes);
+        timer_id = setInterval(settime, 1000);
+
+        // TODO send vcode request
+    });          
 }
 
 function redirect_to(page) {
