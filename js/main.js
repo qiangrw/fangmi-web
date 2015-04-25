@@ -14,6 +14,7 @@ $(document).on('pagebeforeshow', function() {
     if (id == "user-page") $("#nav-footer [data-icon='user']").addClass("ui-btn-now");
     if (id == "about-page") $("#nav-footer [data-icon='info']").addClass("ui-btn-now");
     if (id == "setting-page") $("#nav-footer [data-icon='gear']").addClass("ui-btn-now");
+    user   = JSON.parse(localStorage.getItem('user'));
 });
 
 /*
@@ -32,7 +33,7 @@ $(document).on('pagebeforechange', function(e, data){
 */
 
 // user.html
-$('#user-page').on('pageinit', function() {
+$('#user-page').on('pagebeforeshow', function() {
     if (user == null) {
         redirect_to("signin.html");
         return;
@@ -40,7 +41,7 @@ $('#user-page').on('pageinit', function() {
     if (user_loaded()) {
         Tempo.prepare("user-info").render(user);
     } else {
-        load_user();
+        load_user("user-info");
     }
 });
 
@@ -72,18 +73,18 @@ $('#signin-page').on('pageinit', function() {
 
 // setting.html
 $('#setting-page').on('pagebeforeshow', function() {
-    if (user == null) {
-        redirect_to("signin.html");
-        return;
-    }
     $("#signout-btn").click(function(){
         localStorage.removeItem('user');
         redirect_to("signin.html");
     });
+    if (user == null) {
+        redirect_to("signin.html");
+        return;
+    }
     if (user_loaded()) {
-        Tempo.prepare("user-info").render(user);
+        Tempo.prepare("user-setting-info").render(user);
     } else {
-        load_user();
+        load_user("user-setting-info");
     }
 });   
 
@@ -134,7 +135,7 @@ function user_loaded() {
     return user.username != null;
 }
 
-function load_user() {
+function load_user(element) {
     $.ajax({
     type: 'GET',
     url: config.api_url + "api/account",
@@ -146,7 +147,7 @@ function load_user() {
                      $.extend(user, data);
                      user.avatar = config.api_url + user.avatar;
                      localStorage.setItem('user', JSON.stringify(user));
-                     Tempo.prepare("user-info").render(user);
+                     Tempo.prepare(element).render(user);
                  } else {
                      alert("验证失败，请重新登录");
                      redirect_to("signin.html");
