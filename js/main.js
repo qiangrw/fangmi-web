@@ -17,6 +17,12 @@ $(document).on('pagebeforeshow', function() {
     user   = JSON.parse(localStorage.getItem('user'));
 });
 
+$(document).on('pageinit', function() {
+    $("#signout-btn").unbind().click(function(){
+        localStorage.removeItem('user');
+        redirect_to("signin.html");
+    });
+});
 /*
 $(document).on('pagebeforechange', function(e, data){  
     var to = data.toPage, from = data.options.fromPage;
@@ -73,10 +79,6 @@ $('#signin-page').on('pageinit', function() {
 
 // setting.html
 $('#setting-page').on('pagebeforeshow', function() {
-    $("#signout-btn").click(function(){
-        localStorage.removeItem('user');
-        redirect_to("signin.html");
-    });
     if (user == null) {
         redirect_to("signin.html");
         return;
@@ -86,6 +88,10 @@ $('#setting-page').on('pagebeforeshow', function() {
     } else {
         load_user("user-setting-info");
     }
+    $("#signout-btn").unbind().click(function(){
+        localStorage.removeItem('user');
+        redirect_to("signin.html");
+    });
 });   
 
 $('#choose-date-page').on('pageinit', function() {
