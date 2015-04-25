@@ -17,12 +17,6 @@ $(document).on('pagebeforeshow', function() {
     user   = JSON.parse(localStorage.getItem('user'));
 });
 
-$(document).on('pageinit', function() {
-    $("#signout-btn").unbind().click(function(){
-        localStorage.removeItem('user');
-        redirect_to("signin.html");
-    });
-});
 /*
 $(document).on('pagebeforechange', function(e, data){  
     var to = data.toPage, from = data.options.fromPage;
@@ -75,6 +69,54 @@ $('#signin-page').on('pageinit', function() {
                    }
         });
     });
+});
+
+ 
+// signup.html
+$('#signup-page').on('pageinit', function() {
+    var time = 60;
+    var timer_id = setInterval(settime, 1000);
+    $("#vcode-timer").html(time);
+    clearInterval(timer_id);
+    $("#vcode-timer").html("");
+    $("#info").html("获取验证码");
+
+    var enableButton = function(){ $("#go").button('enable'); }
+    var settime = function(time){
+        time = $("#vcode-timer").html();
+        if(time == "") time = 60;
+        time -= 1;
+        $("#vcode-timer").html(time);
+        $("#info").html("秒后重新获取");
+        if(time > 0) {
+        } else {
+            time = 60;
+            $("#vcode-timer").html(time);
+            $("#go").button('enable');
+            $("#go").attr('disabled',false);
+            clearInterval(timer_id);
+            $("#vcode-timer").html("");
+            $("#info").html("获取验证码");
+        }
+    }
+
+    $("#go").click(function(event){
+        event.preventDefault();
+        var $phone = $("#phone").val();
+        if($phone == undefined || $phone.length != 11)
+        {
+            alert("手机号码应该为11位数字。");
+            return;
+        }
+        $("#go").attr('disabled',true);
+        $("#submit-signup").attr('disabled', false);
+
+        var minutes = 0.1;
+        $("#go").attr("value", minutes);
+        timer_id = setInterval(settime, 1000);
+
+        // TODO send vcode request
+    });         
 });
 
 // setting.html
@@ -143,7 +185,7 @@ function user_loaded() {
 
 function load_user(element) {
     $.ajax({
-    type: 'GET',
+        type: 'GET',
     url: config.api_url + "api/account",
     beforeSend: function (request) {
         request.setRequestHeader("Authorization", "Bearer " + user.access_token);
