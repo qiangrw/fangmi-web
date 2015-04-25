@@ -40,28 +40,7 @@ $('#user-page').on('pageinit', function() {
     if (user_loaded()) {
         Tempo.prepare("user-info").render(user);
     } else {
-        $.ajax({
-            type: 'GET',
-          url: config.api_url + "api/account",
-          beforeSend: function (request) {
-              request.setRequestHeader("Authorization", "Bearer " + user.access_token);
-          },
-          success: function(data) {
-                       if (data.message = "OK") {
-                           $.extend(user, data);
-                           user.avatar = config.api_url + user.avatar;
-                           localStorage.setItem('user', JSON.stringify(user));
-                           Tempo.prepare("user-info").render(user);
-                       } else {
-                           alert("验证失败，请重新登录");
-                           redirect_to("signin.html");
-                       }
-                   },
-          error: function(data) {
-                     $("#error").html("* 用户名密码错误");
-                     $("#error").show();
-                 }
-        });    
+        load_user();
     }
 });
 
@@ -101,6 +80,11 @@ $('#setting-page').on('pagebeforeshow', function() {
         localStorage.removeItem('user');
         redirect_to("signin.html");
     });
+    if (user_loaded()) {
+        Tempo.prepare("user-info").render(user);
+    } else {
+        load_user();
+    }
 });   
 
 $('#choose-date-page').on('pageinit', function() {
@@ -148,6 +132,31 @@ function bindSetAble()
 
 function user_loaded() {
     return user.username != null;
+}
+
+function load_user() {
+    $.ajax({
+    type: 'GET',
+    url: config.api_url + "api/account",
+    beforeSend: function (request) {
+        request.setRequestHeader("Authorization", "Bearer " + user.access_token);
+    },
+    success: function(data) {
+                 if (data.message = "OK") {
+                     $.extend(user, data);
+                     user.avatar = config.api_url + user.avatar;
+                     localStorage.setItem('user', JSON.stringify(user));
+                     Tempo.prepare("user-info").render(user);
+                 } else {
+                     alert("验证失败，请重新登录");
+                     redirect_to("signin.html");
+                 }
+             },
+    error: function(data) {
+               $("#error").html("* 用户名密码错误");
+               $("#error").show();
+           }
+    });   
 }
 
 function show_common_error(error) {
