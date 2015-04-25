@@ -116,7 +116,27 @@ $('#signup-page').on('pageinit', function() {
         timer_id = setInterval(settime, 1000);
 
         // TODO send vcode request
-    });         
+    }); 
+
+    $("#submit-signup").click(function(){
+        $.ajax({
+            type: 'POST',
+            url: config.api_url + "api/account/register",
+            data: $("#signup-form").serialize(),
+            success: function(data) {
+                if (data.message == 'OK') {
+                    // TODO redirect to signup success page
+                    show_common_error("注册成功，请登录.");
+                } else {
+                    show_common_error(data.message);
+                }
+            },
+            error: function(data) {
+                       show_common_error('服务器错误');
+                   }
+        });   
+
+    });
 });
 
 // setting.html
