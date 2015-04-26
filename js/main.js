@@ -144,25 +144,12 @@ $('#forget-password-page').on('pageinit', function() {
 
 // change_password.html
 $('#change-password-page').on('pageinit', function() {
-    $("#submit-change-password").click(function(){
-        $.ajax({
-            type: 'POST',
-            url: config.api_url + "api/account/password/change",
-            beforeSend: function (request) {
-                request.setRequestHeader("Authorization", "Bearer " + user.access_token);
-            },
-            data: $("#change-password-form").serialize(),
-            success: function(data) {
-                if (data.message == 'OK') {
-                    show_common_error("修改成功，您可以用新密码登录了.");
-                } else {
-                    show_common_error(data.message);
-                }
-            },
-            error: function(data) { show_common_error('服务器错误'); }
-        });   
-
-    });    
+    user_post({
+        button: "#submit-change-password",
+        form:   "#change-password-form",
+        api:    "api/account/password/change",
+        message: "修改成功，您可以用新密码登录了." 
+    });   
 });
 
 // change_password.html
