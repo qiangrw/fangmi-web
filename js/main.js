@@ -2,6 +2,10 @@
 var config = { api_url: "http://123.57.207.201:8080/" };
 localStorage.setItem('config', JSON.stringify(config));
 var user   = JSON.parse(localStorage.getItem('user'));
+var server_err_fn = function(data) { 
+    show_common_error("服务器错误，请稍后再试。"); 
+    console.log(data);
+};
 
 // Global Page before show functions
 $(document).on('pagebeforeshow', function() {
@@ -116,7 +120,7 @@ $('#signin-page').on('pageinit', function() {
                     show_common_error(data.message);
                 }
             },
-            error: function(data) { show_common_error("* 用户名密码错误"); }
+            error: server_err_fn
         });
     });
 });
@@ -136,11 +140,12 @@ $('#forget-password-page').on('pageinit', function() {
                     show_common_error(data.message);
                 }
             },
-            error: function(data) { show_common_error('服务器错误'); }
+            error: server_err_fn
         });   
 
     });    
 });
+
 
 // change_password.html
 $('#change-password-page').on('pageinit', function() {
@@ -152,7 +157,7 @@ $('#change-password-page').on('pageinit', function() {
     });   
 });
 
-// change_password.html
+// check_id.html
 $('#apply-confirm-page').on('pageinit', function() {
     user_post({
         button: "#submit-apply-confirm",
@@ -161,7 +166,57 @@ $('#apply-confirm-page').on('pageinit', function() {
         message: "审核申请发送成功，请耐心等待审核." 
     });
 });
-         
+
+// check_student.html
+$('#apply-student-page').on('pageinit', function() {
+    $(':file').change(function(){
+        var file = this.files[0];
+        var name = file.name;
+        var size = file.size;
+        var type = file.type;
+        // TODO add validation
+    });
+    function progressHandlingFunction(e){
+        if(e.lengthComputable){
+           $('progress').attr({value:e.loaded,max:e.total});
+        }
+    }
+    
+    $("#submit-apply-student").click(function() {
+        var formData = new FormData($('#apply-student-form')[0]);
+        console.log("start updaloding");
+        $.ajax({
+            url: config.api_url + "api/account/apply/student", 
+            type: 'POST',
+            xhr: function() {  
+                var myXhr = $.ajaxSettings.xhr();
+                if(myXhr.upload){ 
+                    console.log("updalod");
+                    myXhr.upload.addEventListener('progress',progressHandlingFunction, false); 
+                }
+                return myXhr;
+            },
+            beforeSend: function (request) {
+                console.log("before updalod");
+                request.setRequestHeader("Authorization", "Bearer " + user.access_token);
+            },
+            success: function(data) {
+                if (data.message = "OK") 
+                    show_common_error("审核学生信息申请发送成功，请耐心等待审核."); 
+                else  
+                    show_common_error(data.message);
+            },
+            error: server_err_fn,
+            data: formData,
+            cache: false,
+            contentType: false,
+            processData: false
+        });
+    });
+});
+
+
+
 // signup.html
 $('#signup-page').on('pageinit', function() {
     set_captcha_elements();
@@ -274,10 +329,10 @@ function user_post(pconfig) {
     $(pconfig.button).click(function(){
         $.ajax({
             type: 'POST',
-            url: config.api_url + pconfig.api,
-            beforeSend: function (request) {
-                request.setRequestHeader("Authorization", "Bearer " + user.access_token);
-            },
+        url: config.api_url + pconfig.api,
+        beforeSend: function (request) {
+            request.setRequestHeader("Authorization", "Bearer " + user.access_token);
+        },
         data: $(pconfig.form).serialize(),
         success: function(data) {
             if (data.message == 'OK') {
@@ -286,7 +341,7 @@ function user_post(pconfig) {
                 show_common_error(data.message);
             }
         },
-        error: function(data) { show_common_error('服务器错误'); }
+        error: server_err_fn
         });   
     });    
 }
