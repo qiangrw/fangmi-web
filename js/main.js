@@ -263,8 +263,67 @@ $('#choose-date-page').on('pageinit', function() {
     bindSelected();
 });
 $('#set-date-page').on('pageinit', function() {
-    bindSetEmpty();
-    bindSetAble();
+    $(".flipbox-input").datebox({
+        mode: "flipbox",
+        afterToday: true
+    });
+    $("#start_time").datebox({
+        mode: "timeflipbox"
+    });
+    $("#end_time").datebox({
+        mode: "timeflipbox"
+    });
+
+    if (whole_house.reserve_choices != null) {
+        var choices = whole_house.reserve_choices;
+        for (i=0; i<choices.length; ++i) {
+            var choice = choices[i];
+            $("#my-date-list").append(
+                '<li><a href="#">' + choice.date + 
+                ' '+ from_time(choice.time_start) + ' - ' + from_time(choice.time_end) + '</a></li>'
+            ).listview('refresh');
+        }
+    }
+
+    $("#submit-add-date").click(function() {
+        var date = $('#reserve_date').val();
+        var start = $('#start_time').val();
+        var end = $('#end_time').val();
+        if (date.length == 0 || start.length == 0 || end.length == 0) {
+            alert("请点击图标选择时间");
+            return;
+        }
+
+        $("#my-date-list").append(
+           '<li><a href="#">' + date + 
+           ' '+ start + ' - ' + end + '</a></li>'
+        ).listview('refresh');
+        $("#my-date-list li").click(function() {
+            $(this).remove();
+            $("#my-date-list").listview('refresh');
+        });
+    });
+    
+    $("#my-date-list li").click(function() {
+        $(this).remove();
+        $("#my-date-list").listview('refresh');
+    });
+
+    var reserve_choices = [];
+    $("#set-date-back").click(function() {
+        $("#my-date-list li>a").each(function(index) {
+            // assign date
+            var eles =  $(this).html().split(' ');
+            reserve_choices.push({
+                date: eles[0],
+                time_start: to_time(eles[1], eles[2]),
+                time_end:   to_time(eles[4], eles[5])
+            });
+        });
+        whole_house["reserve_choices"] = reserve_choices;
+        localStorage.setItem('whole_house', JSON.stringify(whole_house));
+        redirect_to("post_whole.html");
+    });
 });
 $('#set-keywords-page').on('pageinit', function() {
     $("#set-keywords").click(function() {
@@ -462,6 +521,29 @@ function getParameterValue(str) {
         return "";
     }
     return str.substring(start+1);
+}
+
+function to_time(time, type) {
+    var eles = time.split(':');
+    eles[0] = parseInt(eles[0]);
+    if (type == '下午' && eles[0] != 12 ) {
+        eles[0] += 12; 
+    } else if (type == '上午' && eles[0] == 12) {
+        eles[0] = 0;
+    }
+    return (eles[0] + ":" + eles[1] + ":" + "00");
+}
+
+function from_time(time) {
+    var eles = time.split(':');
+    eles[0] = parseInt(eles[0]);
+    type = '上午';
+    if (eles[0] > 12) type = '下午';
+    if (eles[0] == 0) {
+        type = '上午';
+        eles[0] = 12;
+    }
+    return (eles[0] + ":" + eles[1] + " " + type);
 }
 
 String.prototype.endWith = function (subStr) {

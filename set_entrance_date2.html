@@ -15,7 +15,7 @@
     </head>
 
     <body>
-        <div id="set-entrance-date-page" data-role="page" data-dialog="true">
+        <div id="set-entrace-date2-page" data-role="page" data-dialog="true">
             <!-- HEADER -->
             <div data-role="header" data-theme="c">
                 <h2 class="grey-header">设置入住时间</h2>
@@ -25,14 +25,35 @@
 
             <!-- MAIN -->
             <div role="main" class="ui-content">
+                <h3 class="padding-div">主卧</h3>
                 <div class="ui-grid-solo padding-div white-div">
 					<table class="form-table">
 						<tr>
 							
 							<td>
 							<select data-theme="c" name="gender" id="gender" data-native-menu="false" style="border-color:grey!important;">
-							    <option value=0>随时入住</option>
-							    <option value=1>设定时间</option>
+							    <option value="standard">随时入住</option>
+							    <option value="rush">设定时间</option>
+							</select>
+							</td>
+						</tr>
+						<tr>
+							<td>
+								<input type="date" name="date" id="date" value="">
+							</td>
+						</tr>
+					</table>
+                </div>
+				
+				<h3 class="padding-div">次卧</h3>
+                <div class="ui-grid-solo padding-div white-div">
+					<table class="form-table">
+						<tr>
+							
+							<td>
+							<select data-theme="c" name="gender" id="gender" data-native-menu="false" style="border-color:grey!important;">
+							    <option value="standard">随时入住</option>
+							    <option value="rush">设定时间</option>
 							</select>
 							</td>
 						</tr>
@@ -45,7 +66,7 @@
                 </div>
 				
 				<div class="ui-grid-solo padding-desc" style="padding: 4px 4px; margin-top:10px;">
-                    <a id="set-entrance-date" href="#" class="ui-btn ui-corner-all">确定</a>
+                    <a href="post_whole.html" class="ui-btn ui-corner-all">确定</a>
                 </div>
                 
             </div>  
