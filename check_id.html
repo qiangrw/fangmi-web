@@ -7,7 +7,6 @@
         <link rel="shortcut icon" href="favicon.ico">
         <link rel="stylesheet" href="css/themes/flat/jquery.mobile.flatui.css">
 		<link rel="stylesheet" href="css/style.css">
-        
         <script src="js/jquery.min.js"></script>
         <script src="js/jquery.mobile-1.4.5.min.js"></script>
         <script src="js/jquery.validate.min.js"></script>
@@ -18,7 +17,7 @@
 
     <body>
 
-        <div id="check-id-page" data-role="page">
+        <div id="apply-confirm-page" data-role="page">
             <!-- HEADER -->
             <div data-role="header">
                 <a href="setting.html" class="ui-btn-transparent" data-icon="back" data-iconpos="notext" data-shadow="true" data-iconshadow="true">返回</a>
@@ -29,7 +28,8 @@
 
             <!-- MAIN -->
             <div role="main" class="ui-content">
-				<div class="ui-grid-solo white-div">
+                <div class="ui-grid-solo white-div">
+                    <form id="apply-confirm-form">
                     <table class="form-table">
                         <tr>
 							<th width=120>姓&nbsp;&nbsp;&nbsp;&nbsp;名</th>
@@ -37,13 +37,16 @@
 						</tr>
 						<tr>
 							<th>身份证号</th>
-							<td><input type="text" name="idcard" id="idcard" value=""></td>
+							<td><input type="text" name="id_number" id="id_number" value=""></td>
 						</tr>
                     </table>
+                    </form>
                 </div>
+
+                <div id="error" class="ui-grid-solo padding-div error" style="display:none;"></div>
 				<br>
 				<div class="ui-grid-solo padding-div">
-					<a id="submit_check_id" href="#setting.html" class="ui-btn ui-corner-all">认证</a>
+					<a id="submit-apply-confirm" href="" class="ui-btn ui-corner-all">认证</a>
 				</div>
 				
 

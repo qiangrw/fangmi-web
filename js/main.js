@@ -25,21 +25,6 @@ $(document).on('pagebeforeshow', function() {
     hide_common_error();
 });
 
-/*
-$(document).on('pagebeforechange', function(e, data){  
-    var to = data.toPage, from = data.options.fromPage;
-    if (typeof to  === 'string') {
-        var u = $.mobile.path.parseUrl(to);
-        to = u.pathname;
-        if (user == null) {
-            if (to.endWith("user.html")) {
-                redirect_to("signin.html");
-            }
-        }
-    }
-});
-*/
-
 // user.html
 $('#user-page').on('pagebeforeshow', function() {
     if (user == null) {
@@ -180,10 +165,19 @@ $('#change-password-page').on('pageinit', function() {
     });    
 });
 
+// change_password.html
+$('#apply-confirm-page').on('pageinit', function() {
+    user_post({
+        button: "#submit-apply-confirm",
+        form:   "#apply-confirm-form",
+        api:    "api/account/apply/confirmed",
+        message: "审核申请发送成功，请耐心等待审核." 
+    });
+});
+         
 // signup.html
 $('#signup-page').on('pageinit', function() {
     set_captcha_elements();
-
     $("#submit-signup").click(function(){
         $.ajax({
             type: 'POST',
@@ -286,6 +280,28 @@ function load_user(element) {
              },
     error: function(data) { show_common_error("用户名密码错误"); }
     });   
+}
+
+
+function user_post(pconfig) {
+    $(pconfig.button).click(function(){
+        $.ajax({
+            type: 'POST',
+            url: config.api_url + pconfig.api,
+            beforeSend: function (request) {
+                request.setRequestHeader("Authorization", "Bearer " + user.access_token);
+            },
+        data: $(pconfig.form).serialize(),
+        success: function(data) {
+            if (data.message == 'OK') {
+                show_common_error(pconfig.message);
+            } else {
+                show_common_error(data.message);
+            }
+        },
+        error: function(data) { show_common_error('服务器错误'); }
+        });   
+    });    
 }
 
 function show_common_error(error) {
