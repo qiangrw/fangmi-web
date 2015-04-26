@@ -267,6 +267,16 @@ $('#set-date-page').on('pageinit', function() {
     bindSetAble();
 });
 $('#set-keywords-page').on('pageinit', function() {
+    $("#set-keywords").click(function() {
+        var tags = $("#tags").val().split(',');
+        var tag_array = [];
+        for (i=0; i<tags.length; ++i) {
+            tag_array.push( { name: tags[i] });
+        }
+        whole_house["tags"] = tag_array;
+        localStorage.setItem('whole_house', JSON.stringify(whole_house));
+        redirect_to("post_whole.html");
+    });  
     $('.input-tags').tagsInput();
 });
 $('#set-device-page').on('pageinit', function() {
