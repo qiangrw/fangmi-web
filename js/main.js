@@ -7,7 +7,15 @@ var server_err_fn = function(data) {
     console.log(data);
 };
 var whole_house = JSON.parse(localStorage.getItem('whole_house'));
-if (whole_house == null) whole_house = {};
+if (whole_house == null) {
+    whole_house = {
+        rooms: [ {
+            name: 'default', 
+            area: 0, 
+            date_entrance: null
+        }]
+    };
+}
 
 // Global Page before show functions
 $(document).on('pagebeforeshow', function() {
@@ -321,6 +329,21 @@ $('#set-date-page').on('pageinit', function() {
             });
         });
         whole_house["reserve_choices"] = reserve_choices;
+        localStorage.setItem('whole_house', JSON.stringify(whole_house));
+        redirect_to("post_whole.html");
+    });
+});
+$('#set-entrance-date-page').on('pageinit', function() {
+    if (whole_house.rooms[0].date_entrance) {
+        $('#entrance_date').val(whole_house.rooms[0].date_entrance);
+    }
+    $("#set-entrance-date").click(function() {
+        var date = $('#entrance_date').val();
+        if (date.length == 0) {
+            alert("请点击图标选择时间");
+            return;
+        }
+        whole_house.rooms[0].date_entrance = date;
         localStorage.setItem('whole_house', JSON.stringify(whole_house));
         redirect_to("post_whole.html");
     });
