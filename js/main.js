@@ -80,7 +80,7 @@ $('#edit-profile-page').on('pageinit', function() {
             },
           success: function(data) {
                        if (data.message = "OK") {
-                           $.extend(user, data);
+                           $.extend(user, data.user);
                            user.avatar = config.api_url + user.avatar;
                            localStorage.setItem('user', JSON.stringify(user));
                            set_user_data(user);
@@ -102,7 +102,7 @@ $('#edit-profile-page').on('pageinit', function() {
             data: $("#edit-profile-form").serialize(),
             success: function(data) {
                 if (data.message == "OK") {
-                    $.extend(user, data);
+                    $.extend(user, data.user);
                     user.avatar = config.api_url + user.avatar;
                     localStorage.setItem('user', JSON.stringify(user));
                     show_common_error("保存成功");
@@ -276,7 +276,7 @@ function load_user(element) {
     },
     success: function(data) {
                  if (data.message = "OK") {
-                     $.extend(user, data);
+                     $.extend(user, data.user);
                      user.avatar = config.api_url + user.avatar;
                      localStorage.setItem('user', JSON.stringify(user));
                      Tempo.prepare(element).render(user);
