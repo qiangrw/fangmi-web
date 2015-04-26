@@ -17,7 +17,7 @@
 
     <body>
 
-        <div data-role="page">
+        <div id="post-whole-page" data-role="page">
             <!-- HEADER -->
             <div data-role="header">
                 <a href="post_type.html" class="ui-btn-transparent" data-icon="back" data-iconpos="notext" data-shadow="true" data-iconshadow="true">返回</a>
@@ -34,8 +34,8 @@
             <!-- MAIN -->
             <div role="main" class="ui-content">
                 <div class="ui-grid-solo white-div padding-div">
-                    <form id="post-house-form">
                     <table class="form-table">
+                        <form id="post-house-form">
                         <tr>
 							<th width=100>设置标题</th>
 							<td><input type="text" name="title" id="title" value=""></td>
@@ -49,6 +49,10 @@
 							<td><input type="text" name="subtitle" id="subtitle" value=""></td>
 						</tr>
 						<tr>
+							<th width=100>详细地址</th>
+							<td><input type="text" name="address" id="address" value=""></td>
+						</tr>
+						<tr>
 							<th width=100>房屋类型</th>
 							<td class="multi-input-cell">
 								<input type="text" name="num_bedroom" id="num_bedroom" value="">
@@ -57,26 +61,24 @@
 								厅
 							</td>
                         </tr>
+                        </form>
+                        <form id="post-room-form">
                         <tr>
 							<th width=100>租金</th>
                             <td class="multi-input-cell">
-                                <input type="text" name="room_price" id="room_price" value="">
+                                <input type="text" name="price" id="price" value="">
                                 元/月
                             </td>
 						</tr>   
                         <tr>
 							<th width=100>面积</th>
                             <td class="multi-input-cell">
-                                <input type="text" name="room_area" id="room_price" value="">
+                                <input type="text" name="area" id="area" value="">
                                 平米
                             </td>
 						</tr>   
-						<tr>
-							<th width=100>详细地址</th>
-							<td><input type="text" name="address" id="address" value=""></td>
-						</tr>
+                        </form>
                     </table>
-                    </form>
                 </div>
 				
 				
@@ -108,7 +110,7 @@
                 <div id="error" class="ui-grid-solo padding-div error" style="display:none;"></div>
 				<br>     
 				<div class="ui-grid-solo padding-div">
-					<a id="submit_post_whole" href="" class="ui-btn ui-corner-all">提交</a>
+					<a id="submit-post-whole" href="" class="ui-btn ui-corner-all">提交</a>
 				</div>
 
 				

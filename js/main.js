@@ -270,6 +270,8 @@ $('#choose-date-page').on('pageinit', function() {
     bindAble();
     bindSelected();
 });
+
+// set_date.html
 $('#set-date-page').on('pageinit', function() {
     $(".flipbox-input").datebox({
         mode: "flipbox",
@@ -333,6 +335,8 @@ $('#set-date-page').on('pageinit', function() {
         redirect_to("post_whole.html");
     });
 });
+
+// set_entrance_date.html
 $('#set-entrance-date-page').on('pageinit', function() {
     if (whole_house.rooms[0].date_entrance) {
         $('#entrance_date').val(whole_house.rooms[0].date_entrance);
@@ -348,6 +352,8 @@ $('#set-entrance-date-page').on('pageinit', function() {
         redirect_to("post_whole.html");
     });
 });
+
+// set_keywords.html
 $('#set-keywords-page').on('pageinit', function() {
     $("#set-keywords").click(function() {
         var tags = $("#tags").val().split(',');
@@ -361,6 +367,8 @@ $('#set-keywords-page').on('pageinit', function() {
     });  
     $('.input-tags').tagsInput();
 });
+
+// set_device.html
 $('#set-device-page').on('pageinit', function() {
     $("#set-device").click(function() {
         var devices = [];
@@ -374,6 +382,38 @@ $('#set-device-page').on('pageinit', function() {
         localStorage.setItem('whole_house', JSON.stringify(whole_house));
         // TODO read from url
         redirect_to("post_whole.html");
+    });
+});
+$('#post-whole-page').on('pageinit', function() {
+    $("#submit-post-whole").click(function() {
+        // $.extend(whole_house, $("#post-house-form").serialize());
+        whole_house.title = $("#title").val();
+        whole_house.subtitle = $("#subtitle").val();
+        whole_house.address = $("#address").val();
+        whole_house.community_id = $("#community_id").val();
+        whole_house.num_bedroom = $("#num_bedroom").val();
+        whole_house.num_livingroom = $("#num_livingroom").val();
+        whole_house.type = 0;
+        whole_house.rooms[0].price =  $("#price").val();
+        whole_house.rooms[0].area =  $("#area").val();
+        console.log(whole_house);
+        // TODO add valiation
+
+        $.ajax({
+            type: 'POST',
+            beforeSend: function (request) {
+                request.setRequestHeader("Authorization", "Bearer " + user.access_token);
+            },
+            url: config.api_url + "api/apartment",
+            data: whole_house,
+            success: function(data) {
+                if (data.message == "OK") {
+                    $.extend(user, data.user);
+                    show_common_error("保存成功");
+                } else  show_common_error(data.message); 
+            },
+            error: server_err_fn
+        });  
     });
 });
 
