@@ -405,7 +405,8 @@ $('#post-whole-page').on('pageinit', function() {
                 request.setRequestHeader("Authorization", "Bearer " + user.access_token);
             },
             url: config.api_url + "api/apartment",
-            data: whole_house,
+            contentType: "application/json; charset=utf-8",
+            data: JSON.stringify(whole_house),
             success: function(data) {
                 if (data.message == "OK") {
                     $.extend(user, data.user);
