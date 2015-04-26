@@ -28,43 +28,55 @@
 
             <!-- MAIN -->
             <div role="main" class="ui-content">
-				<div class="ui-grid-solo white-div padding-div">
+                <div class="ui-grid-solo white-div padding-div">
+                    <form id="post-house-form">
                     <table class="form-table">
                         <tr>
 							<th width=100>设置标题</th>
-							<td><input type="text" name="field1" id="field1" value=""></td>
+							<td><input type="text" name="title" id="title" value=""></td>
 						</tr>
 						<tr>
-							<th width=100>房屋特色</th>
-							<td><input type="text" name="field2" id="field2" value=""></td>
+							<th width=100>所属小区</th>
+							<td><input type="text" name="community_id" id="community_id" value=""></td>
+						</tr>
+						<tr>
+							<th width=100>小区特色</th>
+							<td><input type="text" name="subtitle" id="subtitle" value=""></td>
 						</tr>
 						<tr>
 							<th width=100>房屋类型</th>
 							<td class="multi-input-cell">
-								<input type="text" name="field3" id="field3" value="">
+								<input type="text" name="num_bedroom" id="num_bedroom" value="">
 								室
-								<input type="text" name="field4" id="field4" value="">
+								<input type="text" name="num_livingroom" id="num_livingroom" value="">
 								厅
 							</td>
-						</tr>
+                        </tr>
+                        <tr>
+							<th width=100>租金</th>
+                            <td class="multi-input-cell">
+                                <input type="text" name="room_price" id="room_price" value="">
+                                元/月
+                            </td>
+						</tr>   
+                        <tr>
+							<th width=100>面积</th>
+                            <td class="multi-input-cell">
+                                <input type="text" name="room_area" id="room_price" value="">
+                                平米
+                            </td>
+						</tr>   
 						<tr>
 							<th width=100>详细地址</th>
-							<td><input type="text" name="field5" id="field5" value=""></td>
-						</tr>
-						<tr>
-							<th width=100>房屋图片</th>
-							<td colspan=2><input type="file" name="pictures" id="pictures" value=""></td>
+							<td><input type="text" name="address" id="address" value=""></td>
 						</tr>
                     </table>
+                    </form>
                 </div>
 				
 				
 				<div class="ui-grid-solo white-div padding-div">
                     <table class="form-table sel-table">
-                        <!--<tr>
-							<th width=100>出租房屋</th>
-							<td><a href="#">点击编辑</a></td>
-						</tr>-->
 						<tr>
 							<th width=100>入住时间</th>
 							<td><a href="set_entrance_date.html">点击编辑</a></td>
@@ -84,10 +96,15 @@
                     </table>
                 </div>
 				
+			    <p class="padding-div">房屋图片(支持多张上传)</p>
+                <progress style="width: 100%"></progress>
+				<input type="file" name="pic_student" id="pic_student" value="">
+                </form>
+                <div id="error" class="ui-grid-solo padding-div error" style="display:none;"></div>
+				<br>     
 				<div class="ui-grid-solo padding-div">
-					<a id="submit_post_whole" href="detail.html" class="ui-btn ui-corner-all">提交</a>
+					<a id="submit_post_whole" href="" class="ui-btn ui-corner-all">提交</a>
 				</div>
-				
 
 				
             </div>  

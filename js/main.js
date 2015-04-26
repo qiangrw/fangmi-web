@@ -6,6 +6,8 @@ var server_err_fn = function(data) {
     show_common_error("服务器错误，请稍后再试。"); 
     console.log(data);
 };
+var whole_house = JSON.parse(localStorage.getItem('whole_house'));
+if (whole_house == null) whole_house = {};
 
 // Global Page before show functions
 $(document).on('pagebeforeshow', function() {
@@ -264,9 +266,23 @@ $('#set-date-page').on('pageinit', function() {
     bindSetEmpty();
     bindSetAble();
 });
-
 $('#set-keywords-page').on('pageinit', function() {
-    $('#tags').tagsInput();
+    $('.input-tags').tagsInput();
+});
+$('#set-device-page').on('pageinit', function() {
+    $("#set-device").click(function() {
+        var devices = [];
+        $('input[data-cacheval="false"]').each(function(index) {
+            devices.push({
+                name: $(this).attr("name"),
+                count: 1
+            });
+        });
+        whole_house["devices"] = devices;
+        localStorage.setItem('whole_house', JSON.stringify(whole_house));
+        // TODO read from url
+        redirect_to("post_whole.html");
+    });
 });
 
 function bindAble()

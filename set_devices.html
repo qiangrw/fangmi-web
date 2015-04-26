@@ -11,11 +11,12 @@
         <script src="js/jquery.mobile-1.4.5.min.js"></script>
         <script src="js/jquery.validate.min.js"></script>
         <script src="js/messages_zh.js"></script>
+        <script src="js/tempo.min.js" type="text/javascript"></script>
         <script src="js/md5.js"></script>
     </head>
 
     <body>
-        <div id="set-date-page" data-role="page" data-dialog="true">
+        <div id="set-device-page" data-role="page" data-dialog="true">
             <!-- HEADER -->
             <div data-role="header" data-theme="c">
                 <h2 class="grey-header">设置房间设备</h2>
@@ -27,28 +28,28 @@
             <div role="main" class="ui-content">
                 <div class="ui-grid-solo padding-div white-div">
 					<fieldset data-role="controlgroup" data-theme="c">
-					    <input type="checkbox" name="checkbox-1a" id="checkbox-1a" checked="">
+                        <input type="checkbox" name="chuang" id="checkbox-1a">
 					    <label for="checkbox-1a">床</label>
-					    <input type="checkbox" name="checkbox-2a" id="checkbox-2a">
+					    <input type="checkbox" name="weishengjian" id="checkbox-2a">
 					    <label for="checkbox-2a">卫生间</label>
-					    <input type="checkbox" name="checkbox-3a" id="checkbox-3a">
+					    <input type="checkbox" name="chufang" id="checkbox-3a">
 					    <label for="checkbox-3a">厨房</label>
-					    <input type="checkbox" name="checkbox-4a" id="checkbox-4a">
+					    <input type="checkbox" name="xiyiji" id="checkbox-4a">
 					    <label for="checkbox-4a">洗衣机</label>
-						<input type="checkbox" name="checkbox-5a" id="checkbox-5a">
+						<input type="checkbox" name="dianshiji" id="checkbox-5a">
 					    <label for="checkbox-5a">电视机</label>
-						<input type="checkbox" name="checkbox-6a" id="checkbox-6a">
+						<input type="checkbox" name="kongtiao" id="checkbox-6a">
 					    <label for="checkbox-6a">空调</label>
-						<input type="checkbox" name="checkbox-7a" id="checkbox-7a">
+						<input type="checkbox" name="yigui" id="checkbox-7a">
 					    <label for="checkbox-7a">衣柜</label>
-						<input type="checkbox" name="checkbox-8a" id="checkbox-8a">
+						<input type="checkbox" name="zhuoyi" id="checkbox-8a">
 					    <label for="checkbox-8a">桌椅</label>
 					</fieldset>
                 </div>
 				
 				
 				<div class="ui-grid-solo padding-desc" style="padding: 4px 4px; margin-top:10px;">
-                    <a href="post_whole.html" class="ui-btn ui-corner-all">确定</a>
+                    <a id="set-device" href="#" class="ui-btn ui-corner-all">确定</a>
                 </div>
                 
             </div>  
