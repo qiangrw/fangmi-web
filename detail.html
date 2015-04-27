@@ -116,11 +116,11 @@
                     <span class="keywords-label red">现代化自动</span>-->
                 </div>
 
-                <!--<a href="#" class="ui-btn">修改房间信息</a>-->
+                <a id="edit-house-link" style="display:none" href="post_whole.html?id={{id}}" class="ui-btn">修改房间信息</a>
                 
                 <a href="choose_date.html?id={{id}}" class="ui-btn">预约看房</a>
 
-                {% if (type == 0) %} 
+                {% if (type == 1) %} 
                 <h3 class="padding-div">单间信息</h3>
                 <div class="ui-grid-solo" style="background: white!important; padding: 4px 4px; margin-top:10px;">
                     <table style="width: 100%; text-align: center;">

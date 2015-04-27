@@ -85,19 +85,36 @@ $('#houselist-page').on('pagebeforeshow', function() {
 $('#house-detail-page').on('pagebeforeshow', function() {
     var element = "house-detail";
     var id = getParameter("id");
+    var landloard = null;
     if (id == null) return;
     $.ajax({
         type: 'GET',
       url: config.api_url + "api/apartment?id=" + id,
       success: function(data) {
           if (data.message = "OK") {
-              Tempo.prepare(element)
-        .when(TempoEvent.Types.RENDER_STARTING, show_loading)
-        .when(TempoEvent.Types.RENDER_COMPLETE, hide_loading)
-        .render(data.apartment);
+              Tempo.prepare(element).when(TempoEvent.Types.RENDER_STARTING, show_loading).when(TempoEvent.Types.RENDER_COMPLETE, hide_loading).render(data.apartment);
+              landlord = data.apartment.user;
+              $.ajax( { 
+                  type: 'GET',
+                  url: config.api_url + "api/account",
+                  beforeSend: function (request) {
+                      request.setRequestHeader("Authorization", "Bearer " + user.access_token);
+                  },
+                  success: function(data) {
+                               if (data.message = "OK") {
+                                   console.log(data.user);
+                                   if (data.user.username = landlord.username) {
+                                       $("#edit-house-link").show();
+                                   }
+                                   user.avatar = config.api_url + user.avatar;
+                                   localStorage.setItem('user', JSON.stringify(user));
+                               } 
+                           }
+              }); 
+
           } 
       },
-      error: server_err_fn
+          error: server_err_fn
     }); 
 
 });
