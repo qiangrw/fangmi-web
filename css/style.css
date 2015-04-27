@@ -304,3 +304,15 @@ table td, table th,  table td *, table th * { vertical-align: top; }
 .message-text-div.text-inverse {
 	background: #52ce8f;
 }
+
+#device-item-div {
+    width: 100%;
+    display: inline-block;
+    margin: auto auto;
+}
+.device-item {
+    display: inline-block;
+    width: 25%;
+    min-height: 40px;
+    vertical-align: center;
+}

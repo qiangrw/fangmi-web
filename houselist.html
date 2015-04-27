@@ -16,35 +16,12 @@
     </head>
 
     <body>
-
         <div id="houselist-page" data-role="page">
             <!-- HEADER -->
             <div data-role="header">
 				<a href="index.html" class="ui-btn-transparent" data-icon="back" data-iconpos="notext" data-shadow="true" data-iconshadow="true">返回</a>
-                <h2 class="grey-header">北京大学</h2>
+                <h2 class="grey-header">房源列表</h2>
                 <script src="js/main.js"></script>
-				<link rel="stylesheet" href="css/carousel.css">
-				<script src="js/carousel.js"></script>
-				<script>
-					$(function(){
-						var carousel = new $.widgets.Carousel( {
-							uuid : "carousel",
-							args : { "scrollInterval" : 600,"itemWidth":400 },
-							value : [
-									{ "title" : "Tron.Legacy",
-									  "image" : "images/home/thu.jpg"
-									},
-									{ "title" : "Yogi Bear",
-									  "image" : "images/home/pku.jpg"
-									},
-									{ "title" : "The Chronicles of Narnia: The Voyage of the Dawn Treader",
-									  "image" : "images/home/thu.jpg"
-									}
-							]
-						});	
-					})
-										  
-				</script>
             </div>
             <!-- ./HEADER -->
 
@@ -54,8 +31,8 @@
                 <div class="ui-grid-solo">      
                     <center>
                         <a class="link-div" href="detail.html?id={{id}}">
-					<img class="home-img" src="images/home/pku.jpg"></img> 
-					</a>
+                            <img class="home-img" src="images/home/pku.jpg" 
+                                data-src2="http://123.57.207.201:8080/{{photos[0].photo}}"></img></a>
 					</center>
 					
                 </div>
@@ -63,14 +40,19 @@
                     <table width="100%">
                         <tr>
                             <td width=30><a class="ui-btn ui-corner-all ui-icon-loc ui-btn-icon-notext ui-btn-inline"></a></td>
-                            <td style="vertical-align: middle!important"><a href="detail.html"
-                                    class="grey-header">{{title}}</a></td> 
-                            <td style="vertical-align: middle!important" class="text-right pink"> 2500/每月 </td>
+                            <td style="vertical-align: middle!important">
+                                <a href="detail.html?id={{id}}" class="grey-header">{{title}}</a>
+                            </td> 
+                            <td style="vertical-align: middle!important" class="text-right pink">
+                                {{rooms[0].price}}/每月 </td>
                         </tr>
                         <tr>
                             <td> </td>
                             <td>{{subtitle}} </td>
-                            <td class="text-right">合租/{{num_bedroom}}室{{num_livingroom}}厅</td>
+                            <td class="text-right">
+                                {% if (type == 0) %} 整租 {% else %} 合租 {% endif %}
+                                /{{num_bedroom}}室{{num_livingroom}}厅
+                            </td>
                         </tr>
                     </table>
 				</div>

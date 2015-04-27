@@ -1,5 +1,5 @@
 // Global Page Ready Functions
-var config = { api_url: "http://123.57.207.201:8080/" };
+var config = { api_url: "http://123.57.207.201:8080/"};
 localStorage.setItem('config', JSON.stringify(config));
 var user   = JSON.parse(localStorage.getItem('user'));
 var server_err_fn = function(data) { 
@@ -7,6 +7,7 @@ var server_err_fn = function(data) {
     console.log(data);
 };
 var whole_house = JSON.parse(localStorage.getItem('whole_house'));
+var back_url = JSON.parse(localStorage.getItem('back_url'));
 if (whole_house == null) {
     whole_house = {
         rooms: [ {
@@ -16,6 +17,7 @@ if (whole_house == null) {
         }]
     };
 }
+if (back_url == null) back_url = "index.html";
 
 // Global Page before show functions
 $(document).on('pagebeforeshow', function() {
@@ -36,24 +38,50 @@ $(document).on('pagebeforeshow', function() {
         $(".ui-btn-signin").show();
         $(".ui-btn-signup").show();
     }
+    $(".back-url-link").unbind().bind(function(){
+        redirect_to(back_url);
+    });
     hide_common_error();
 });
 
 $('#houselist-page').on('pageinit', function() {
+    var base_url = config.api_url + "api/apartment/list?";
     var community_id = getParameter("community_id");
+    if (community_id) base_url += "&community_id=" + community_id;
     var element = "houselist";
-    console.log(community_id);
     $.ajax({
         type: 'GET',
-        url: config.api_url + "api/apartment/list",
+        url: base_url,
         success: function(data) {
             if (data.message = "OK") {
-                console.log(data.apartments);
-                Tempo.prepare(element).render(data.apartments);
+                Tempo.prepare(element)
+                    .when(TempoEvent.Types.RENDER_STARTING, show_loading)
+                    .when(TempoEvent.Types.RENDER_COMPLETE, hide_loading)
+                    .render(data.apartments);
             } 
         },
         error: server_err_fn
     });     
+});
+
+$('#house-detail-page').on('pageinit', function() {
+    var element = "house-detail";
+    var id = getParameter("id");
+    if (id == null) return;
+    $.ajax({
+        type: 'GET',
+        url: config.api_url + "api/apartment?id=" + id,
+        success: function(data) {
+            if (data.message = "OK") {
+                console.log(data.apartment);
+                Tempo.prepare(element)
+                    .when(TempoEvent.Types.RENDER_STARTING, show_loading)
+                    .when(TempoEvent.Types.RENDER_COMPLETE, hide_loading)
+                    .render(data.apartment);
+            } 
+        },
+        error: server_err_fn
+    }); 
 });
 
 // user.html
@@ -634,4 +662,12 @@ String.prototype.endWith = function (subStr) {
     else {
         return (this.lastIndexOf(subStr) == (this.length - subStr.length)) ? true : false;
     }
+}
+
+function show_loading(event) {
+    $.mobile.loading( "show", { text: "Loading" });
+}
+
+function hide_loading(event) {
+    $.mobile.loading( "hide" );
 }
