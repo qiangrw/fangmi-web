@@ -8,6 +8,7 @@ var server_err_fn = function(data) {
 };
 var whole_house = JSON.parse(localStorage.getItem('whole_house'));
 var back_url = JSON.parse(localStorage.getItem('back_url'));
+var cur_url;
 if (whole_house == null) {
     whole_house = {
         rooms: [ {
@@ -18,6 +19,15 @@ if (whole_house == null) {
     };
 }
 if (back_url == null) back_url = "index.html";
+if (getParameter("back_url")) {
+    back_url = getParameter("back_url");
+    localStorage.setItem('back_url', JSON.stringify(back_url));
+}
+ 
+// global functions
+var show_loading = function(event) { $.mobile.loading( "show", { text: "Loading" }); }
+var hide_loading = function(event) { $.mobile.loading( "hide" ); }
+
 
 // Global Page before show functions
 $(document).on('pagebeforeshow', function() {
@@ -25,12 +35,13 @@ $(document).on('pagebeforeshow', function() {
 	$("[data-role='navbar']").navbar();
     $("[data-role='header'], [data-role='footer']").toolbar();
     var id = $.mobile.activePage.attr('id');
+    cur_url = $.mobile.activePage.data('url');
     $("#nav-footer li a").removeClass("ui-btn-now");
     if (id == "index-page") $("#nav-footer [data-icon='home']").addClass("ui-btn-now");
     if (id == "user-page") $("#nav-footer [data-icon='user']").addClass("ui-btn-now");
     if (id == "about-page") $("#nav-footer [data-icon='info']").addClass("ui-btn-now");
     if (id == "setting-page") $("#nav-footer [data-icon='gear']").addClass("ui-btn-now");
-    user   = JSON.parse(localStorage.getItem('user'));
+    user = JSON.parse(localStorage.getItem('user'));
     if (user != null) {
         $(".ui-btn-signin").hide();
         $(".ui-btn-signup").hide();
@@ -38,16 +49,23 @@ $(document).on('pagebeforeshow', function() {
         $(".ui-btn-signin").show();
         $(".ui-btn-signup").show();
     }
-    $(".back-url-link").unbind().bind(function(){
+    hide_common_error();
+    
+    $(".back-url-link").unbind().click(function(){
         redirect_to(back_url);
     });
-    hide_common_error();
 });
 
-$('#houselist-page').on('pageinit', function() {
+$('#houselist-page').on('pagebeforeshow', function() {
+    cur_url = "houselist.html?"; 
     var base_url = config.api_url + "api/apartment/list?";
     var community_id = getParameter("community_id");
-    if (community_id) base_url += "&community_id=" + community_id;
+    if (community_id) {
+        base_url += "&community_id=" + community_id;
+        cur_url += "&community_id=" + community_id;
+    }
+    back_url = cur_url;
+    localStorage.setItem('back_url', JSON.stringify(back_url));
     var element = "houselist";
     $.ajax({
         type: 'GET',
@@ -55,32 +73,50 @@ $('#houselist-page').on('pageinit', function() {
         success: function(data) {
             if (data.message = "OK") {
                 Tempo.prepare(element)
-                    .when(TempoEvent.Types.RENDER_STARTING, show_loading)
-                    .when(TempoEvent.Types.RENDER_COMPLETE, hide_loading)
-                    .render(data.apartments);
+        .when(TempoEvent.Types.RENDER_STARTING, show_loading)
+        .when(TempoEvent.Types.RENDER_COMPLETE, hide_loading)
+        .render(data.apartments);
             } 
         },
         error: server_err_fn
     });     
 });
 
-$('#house-detail-page').on('pageinit', function() {
+$('#house-detail-page').on('pagebeforeshow', function() {
     var element = "house-detail";
     var id = getParameter("id");
     if (id == null) return;
     $.ajax({
         type: 'GET',
-        url: config.api_url + "api/apartment?id=" + id,
-        success: function(data) {
-            if (data.message = "OK") {
-                console.log(data.apartment);
-                Tempo.prepare(element)
-                    .when(TempoEvent.Types.RENDER_STARTING, show_loading)
-                    .when(TempoEvent.Types.RENDER_COMPLETE, hide_loading)
-                    .render(data.apartment);
-            } 
-        },
-        error: server_err_fn
+      url: config.api_url + "api/apartment?id=" + id,
+      success: function(data) {
+          if (data.message = "OK") {
+              Tempo.prepare(element)
+        .when(TempoEvent.Types.RENDER_STARTING, show_loading)
+        .when(TempoEvent.Types.RENDER_COMPLETE, hide_loading)
+        .render(data.apartment);
+          } 
+      },
+      error: server_err_fn
+    }); 
+
+});
+$('#choose-date-page').on('pagebeforeshow', function() {
+    var element = "choose-date-list";
+    var id = getParameter("id");
+    if (id == null) return;
+    $.ajax({
+        type: 'GET',
+      url: config.api_url + "api/apartment?id=" + id,
+      success: function(data) {
+          if (data.message = "OK") {
+              Tempo.prepare(element)
+        .when(TempoEvent.Types.RENDER_STARTING, show_loading)
+        .when(TempoEvent.Types.RENDER_COMPLETE, hide_loading)
+        .render(data.apartment.reserve_choices);
+          } 
+      },
+      error: server_err_fn
     }); 
 });
 
@@ -664,10 +700,3 @@ String.prototype.endWith = function (subStr) {
     }
 }
 
-function show_loading(event) {
-    $.mobile.loading( "show", { text: "Loading" });
-}
-
-function hide_loading(event) {
-    $.mobile.loading( "hide" );
-}

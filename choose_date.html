@@ -12,97 +12,28 @@
         <script src="js/jquery.validate.min.js"></script>
         <script src="js/messages_zh.js"></script>
         <script src="js/tempo.min.js" type="text/javascript"></script>
+        <script src="js/md5.js"></script>
     </head>
 
     <body>
-        <div id="choose-date-page" data-role="page">
+        <div id="choose-date-page" data-role="page" data-dialog="true">
             <!-- HEADER -->
-            <div data-role="header">
-				<a href="detail.html" class="ui-btn-transparent" data-icon="back" data-iconpos="notext" data-shadow="true" data-iconshadow="true">返回</a>
-                <h2 class="grey-header">约房时间</h2>
+            <div data-role="header" data-theme="c">
+                <h2 class="grey-header">选择预约时间</h2>
 				<script src="js/main.js"></script>
             </div>
             <!-- ./HEADER -->
 
             <!-- MAIN -->
             <div role="main" class="ui-content">
-                <h3 class="padding-div">预约时间表</h3>
-
-                <div class="ui-grid-solo padding-div" style="background: white!important; padding: 4px 4px; margin-top:10px;">
-                    <table class="reserve-table" style="border-bottom: 1px solid #7f7f7f;">
-					<thead>
-						<tr>
-							<td>日</td>
-							<td>一</td>
-							<td>二</td>
-							<td>三</td>
-							<td>四</td>
-							<td>五</td>
-							<td>六</td>
-						</tr>
-						<tr class="border_bottom">
-							<td>4.12</td>
-							<td>4.13</td>
-							<td>4.14</td>
-							<td>4.15</td>
-							<td>4.16</td>
-							<td>4.17</td>
-							<td>4.18</td>
-						</tr>
-					</thead>
-					</table>
-					<table class="reserve-table">
-					<tbody>
-						<tr>
-							<td><span>上午</span></td>
-							<td><span class="able">上午</span></td>
-							<td><span>上午</span></td>
-							<td><span>上午</span></td>
-							<td><span>上午</span></td>
-							<td><span>上午</span></td>
-							<td><span>上午</span></td>
-						</tr>
-						<tr>
-							<td><span>下午</span></td>
-							<td><span class="able">下午</span></td>
-							<td><span>下午</span></td>
-							<td><span>下午</span></td>
-							<td><span>下午</span></td>
-							<td><span>下午</span></td>
-							<td><span>下午</span></td>
-						</tr>
-						<tr>
-							<td><span>晚上</span></td>
-							<td><span>晚上</span></td>
-							<td><span>晚上</span></td>
-							<td><span>晚上</span></td>
-							<td><span>晚上</span></td>
-							<td><span class="able">晚上</span></td>
-							<td><span>晚上</span></td>
-						</tr>
-					</tbody>
-					
-					</table>
-					
-
+                <div id="choose-date-list" class="ui-grid-solo padding-div white-div">
+                    <fieldset data-template data-role="controlgroup" data-theme="c"> 
+                        <input type="checkbox" name="{{date}}" id="checkbox-{{_tempo.index}}"> 
+                        <label for="checkbox-{{_tempo.index}}">{{date}} {{time_start}}-{{time_end}}</label> 
+                    </fieldset>
                 </div>
-                <br /> <br />
-                <table style="width:100%; text-align: center;">
-                    <tr>
-                        <td>可预约 <span class="round-icon abled">&nbsp;</span></td>
-                        <td>已选中 <span class="round-icon">&nbsp;</span></td>
-                    </tr>
-                </table>
-				<p>
-				<center>
-							已预约人数：
-							<span id="cur-person-count">8</span>人
-							(<span id="cur-date">4月18日周六下午</span>)
-                </center>
-				</p>
-                
-                <div class="ui-grid-solo padding-desc" style="padding: 4px 4px; margin-top:10px;">
-                    <a href="reserve_result.html" class="ui-btn ui-corner-all">确定预约</a>
+				<div class="ui-grid-solo padding-desc" style="padding: 4px 4px; margin-top:10px;">
+                    <a id="set-my-reserve-date" href="#" class="ui-btn ui-corner-all">确定</a>
                 </div>
                 
             </div>  

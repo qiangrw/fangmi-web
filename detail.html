@@ -19,8 +19,8 @@
         <div id="house-detail-page" data-role="page">
             <!-- HEADER -->
             <div data-role="header">
-                <a href="houselist.html" class="ui-btn-transparent" data-icon="back" data-iconpos="notext" data-shadow="true" data-iconshadow="true">返回</a>
-                <h2 class="grey-header">合租详情页</h2>
+                <a href="#" class="ui-btn-transparent back-url-link" data-icon="back" data-iconpos="notext" data-shadow="true" data-iconshadow="true">返回</a>
+                <h2 class="grey-header">房源详情</h2>
                 <a href="share.html" class="ui-btn-transparent" data-icon="share" data-iconpos="notext" data-shadow="true" data-iconshadow="true">分享</a>
                 <script src="js/main.js"></script>
                 <link rel="stylesheet" href="css/carousel.css">
@@ -118,7 +118,7 @@
 
                 <!--<a href="#" class="ui-btn">修改房间信息</a>-->
                 
-                <a href="choose_date.html" class="ui-btn">预约看房</a>
+                <a href="choose_date.html?id={{id}}" class="ui-btn">预约看房</a>
 
                 {% if (type == 0) %} 
                 <h3 class="padding-div">单间信息</h3>
