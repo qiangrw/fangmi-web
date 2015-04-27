@@ -12,22 +12,17 @@
         <script src="js/jquery.validate.min.js"></script>
         <script src="js/messages_zh.js"></script>
         <script src="js/md5.js"></script>
-        <script src="js/main.js"></script>
-        <script>
-            $(function() {
-                $( "[data-role='navbar']" ).navbar();
-                $( "[data-role='header'], [data-role='footer']" ).toolbar();
-            });
-        </script>
+        <script src="js/tempo.min.js" type="text/javascript"></script>
     </head>
 
     <body>
 
-        <div data-role="page">
+        <div id="houselist-page" data-role="page">
             <!-- HEADER -->
             <div data-role="header">
 				<a href="index.html" class="ui-btn-transparent" data-icon="back" data-iconpos="notext" data-shadow="true" data-iconshadow="true">返回</a>
                 <h2 class="grey-header">北京大学</h2>
+                <script src="js/main.js"></script>
 				<link rel="stylesheet" href="css/carousel.css">
 				<script src="js/carousel.js"></script>
 				<script>
@@ -55,9 +50,10 @@
 
             <!-- MAIN -->
             <div role="main" class="ui-content">
+                <div id="houselist" data-template>
                 <div class="ui-grid-solo">      
                     <center>
-					<a class="link-div" href="detail.html">
+                        <a class="link-div" href="detail.html?id={{id}}">
 					<img class="home-img" src="images/home/pku.jpg"></img> 
 					</a>
 					</center>
@@ -67,35 +63,20 @@
                     <table width="100%">
                         <tr>
                             <td width=30><a class="ui-btn ui-corner-all ui-icon-loc ui-btn-icon-notext ui-btn-inline"></a></td>
-                            <td style="vertical-align: middle!important"><a href="detail.html" class="grey-header">紫金庄园6号楼605室</a></td> 
+                            <td style="vertical-align: middle!important"><a href="detail.html"
+                                    class="grey-header">{{title}}</a></td> 
                             <td style="vertical-align: middle!important" class="text-right pink"> 2500/每月 </td>
                         </tr>
                         <tr>
                             <td> </td>
-                            <td>内置mini游泳池！ </td>
-                            <td class="text-right">合租/三室一厅</td>
+                            <td>{{subtitle}} </td>
+                            <td class="text-right">合租/{{num_bedroom}}室{{num_livingroom}}厅</td>
                         </tr>
                     </table>
 				</div>
 				<br><br>
-				<div class="ui-grid-solo">                
-                    <center> <img class="home-img" src="images/home/pku.jpg"></img> </center>
-                </div>
-                <div class="ui-grid-solo">
-                    <table width="100%">
-                        <tr>
-                            <td width=30><a class="ui-btn ui-corner-all ui-icon-loc ui-btn-icon-notext ui-btn-inline"></a></td>
-                            <td style="vertical-align: middle!important"><a href="detail.html" class="grey-header">紫金庄园6号楼605室</a></td> 
-                            <td style="vertical-align: middle!important" class="text-right pink"> 2500/每月 </td>
-                        </tr>
-                        <tr>
-                            <td> </td>
-                            <td>内置mini游泳池！ </td>
-                            <td class="text-right">合租/三室一厅</td>
-                        </tr>
-                    </table>
-				</div>
             </div>  
+            </div>
             <!-- ./MAIN -->
         </div>
         <!-- ./PAGE -->
@@ -103,7 +84,7 @@
         <div id="nav-footer" data-role="footer" data-position="fixed">
             <div data-role="navbar" data-iconpos="top">
                 <ul>
-                    <li><a href="index.html" data-icon="home" class="ui-btn-active">房蜜</a></li>
+                    <li><a href="index.html" data-icon="home">房蜜</a></li>
                     <li><a href="user.html" data-icon="user">个人账户</a></li>
                     <li><a href="about.html" data-icon="info">关于房蜜</a></li>
                     <li><a href="setting.html" data-icon="gear">设置</a></li>

@@ -39,6 +39,23 @@ $(document).on('pagebeforeshow', function() {
     hide_common_error();
 });
 
+$('#houselist-page').on('pageinit', function() {
+    var community_id = getParameter("community_id");
+    var element = "houselist";
+    console.log(community_id);
+    $.ajax({
+        type: 'GET',
+        url: config.api_url + "api/apartment/list",
+        success: function(data) {
+            if (data.message = "OK") {
+                console.log(data.apartments);
+                Tempo.prepare(element).render(data.apartments);
+            } 
+        },
+        error: server_err_fn
+    });     
+});
+
 // user.html
 $('#user-page').on('pagebeforeshow', function() {
     if (user == null) {
@@ -73,10 +90,10 @@ $('#edit-profile-page').on('pageinit', function() {
     if (user_loaded() == false) {
         $.ajax( { 
             type: 'GET',
-            url: config.api_url + "api/account",
-            beforeSend: function (request) {
+          url: config.api_url + "api/account",
+          beforeSend: function (request) {
               request.setRequestHeader("Authorization", "Bearer " + user.access_token);
-            },
+          },
           success: function(data) {
                        if (data.message = "OK") {
                            $.extend(user, data.user);
@@ -188,10 +205,10 @@ $('#apply-student-page').on('pageinit', function() {
     });
     function progressHandlingFunction(e){
         if(e.lengthComputable){
-           $('progress').attr({value:e.loaded,max:e.total});
+            $('progress').attr({value:e.loaded,max:e.total});
         }
     }
-    
+
     $("#submit-apply-student").click(function() {
         var formData = new FormData($('#apply-student-form')[0]);
         console.log("start updaloding");
@@ -207,15 +224,15 @@ $('#apply-student-page').on('pageinit', function() {
                 return myXhr;
             },
             beforeSend: function (request) {
-                console.log("before updalod");
-                request.setRequestHeader("Authorization", "Bearer " + user.access_token);
-            },
+                            console.log("before updalod");
+                            request.setRequestHeader("Authorization", "Bearer " + user.access_token);
+                        },
             success: function(data) {
-                if (data.message = "OK") 
-                    show_common_error("审核学生信息申请发送成功，请耐心等待审核."); 
-                else  
-                    show_common_error(data.message);
-            },
+                         if (data.message = "OK") 
+            show_common_error("审核学生信息申请发送成功，请耐心等待审核."); 
+                         else  
+            show_common_error(data.message);
+                     },
             error: server_err_fn,
             data: formData,
             cache: false,
@@ -291,7 +308,7 @@ $('#set-date-page').on('pageinit', function() {
             $("#my-date-list").append(
                 '<li><a href="#">' + choice.date + 
                 ' '+ from_time(choice.time_start) + ' - ' + from_time(choice.time_end) + '</a></li>'
-            ).listview('refresh');
+                ).listview('refresh');
         }
     }
 
@@ -305,15 +322,15 @@ $('#set-date-page').on('pageinit', function() {
         }
 
         $("#my-date-list").append(
-           '<li><a href="#">' + date + 
-           ' '+ start + ' - ' + end + '</a></li>'
-        ).listview('refresh');
+            '<li><a href="#">' + date + 
+            ' '+ start + ' - ' + end + '</a></li>'
+            ).listview('refresh');
         $("#my-date-list li").click(function() {
             $(this).remove();
             $("#my-date-list").listview('refresh');
         });
     });
-    
+
     $("#my-date-list li").click(function() {
         $(this).remove();
         $("#my-date-list").listview('refresh');
