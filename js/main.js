@@ -396,7 +396,7 @@ $('#post-whole-page').on('pageinit', function() {
         whole_house.type = 0;
         whole_house.rooms[0].price =  $("#price").val();
         whole_house.rooms[0].area =  $("#area").val();
-        console.log(whole_house);
+
         // TODO add valiation
 
         $.ajax({
@@ -409,8 +409,8 @@ $('#post-whole-page').on('pageinit', function() {
             data: JSON.stringify(whole_house),
             success: function(data) {
                 if (data.message == "OK") {
-                    $.extend(user, data.user);
-                    show_common_error("保存成功");
+                    // TODO 上传图片
+                    show_common_error("发布成功");
                 } else  show_common_error(data.message); 
             },
             error: server_err_fn
