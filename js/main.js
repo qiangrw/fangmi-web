@@ -7,7 +7,6 @@ var server_err_fn = function(data) {
     console.log(data);
 };
 var whole_house = JSON.parse(localStorage.getItem('whole_house'));
-var back_url = JSON.parse(localStorage.getItem('back_url'));
 var cur_url;
 if (whole_house == null) {
     whole_house = {
@@ -17,11 +16,6 @@ if (whole_house == null) {
             date_entrance: null
         }]
     };
-}
-if (back_url == null) back_url = "index.html";
-if (getParameter("back_url")) {
-    back_url = getParameter("back_url");
-    localStorage.setItem('back_url', JSON.stringify(back_url));
 }
  
 // global functions
@@ -50,10 +44,6 @@ $(document).on('pagebeforeshow', function() {
         $(".ui-btn-signup").show();
     }
     hide_common_error();
-    
-    $(".back-url-link").unbind().click(function(){
-        redirect_to(back_url);
-    });
 });
 
 $('#houselist-page').on('pagebeforeshow', function() {
@@ -64,8 +54,6 @@ $('#houselist-page').on('pagebeforeshow', function() {
         base_url += "&community_id=" + community_id;
         cur_url += "&community_id=" + community_id;
     }
-    back_url = cur_url;
-    localStorage.setItem('back_url', JSON.stringify(back_url));
     var element = "houselist";
     $.ajax({
         type: 'GET',
