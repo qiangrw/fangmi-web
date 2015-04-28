@@ -90,13 +90,12 @@ $('#favlist-page').on('pagebeforeshow', function() {
         beforeSend: function (request) {
             request.setRequestHeader("Authorization", "Bearer " + user.access_token);
         },
-        // TODO fix typo after xuan fixing the issue
         success: function(data) {
                      if (data.message = "OK") {
-                         if (data.aparments.length == 0) {
+                         if (data.apartments.length == 0) {
                              redirect_to("favlist_empty");
                          }
-                         Tempo.prepare(element).when(TempoEvent.Types.RENDER_STARTING, show_loading).when(TempoEvent.Types.RENDER_COMPLETE, hide_loading).render(data.aparments);
+                         Tempo.prepare(element).when(TempoEvent.Types.RENDER_STARTING, show_loading).when(TempoEvent.Types.RENDER_COMPLETE, hide_loading).render(data.apartments);
                      } 
                  },
         error: server_err_fn
