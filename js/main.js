@@ -124,6 +124,29 @@ $('#rentlist-page').on('pagebeforeshow', function() {
     });     
 });
 
+$('#reservelist-page').on('pagebeforeshow', function() {
+    var element = "reservelist";
+    $.ajax({
+        type: 'GET',
+        url: config.api_url + "api/reserve/list?username=" + user.username,
+        beforeSend: function (request) {
+            request.setRequestHeader("Authorization", "Bearer " + user.access_token);
+        },
+        success: function(data) {
+                     console.log(data);
+                     if (data.message = "OK") {
+                         if (data.reserves.length == 0) {
+                             redirect_to("reservelist_empty.html");
+                         } else {
+                             Tempo.prepare(element).when(TempoEvent.Types.RENDER_STARTING, show_loading).when(TempoEvent.Types.RENDER_COMPLETE, hide_loading).render(data.reserves);
+                         }
+                     } 
+                 },
+        error: server_err_fn
+    });     
+});
+
+
 $('#house-detail-page').on('pagebeforeshow', function() {
     var element = "house-detail";
     var id = getParameter("id");
