@@ -60,12 +60,28 @@ $('#houselist-page').on('pagebeforeshow', function() {
         url: base_url,
         success: function(data) {
             if (data.message = "OK") {
-                Tempo.prepare(element)
-        .when(TempoEvent.Types.RENDER_STARTING, show_loading)
-        .when(TempoEvent.Types.RENDER_COMPLETE, hide_loading)
-        .render(data.apartments);
-            } 
+                Tempo.prepare(element).when(TempoEvent.Types.RENDER_STARTING, show_loading).when(TempoEvent.Types.RENDER_COMPLETE, hide_loading).render(data.apartments); } 
         },
+        error: server_err_fn
+    });     
+});
+     
+$('#favlist-page').on('pagebeforeshow', function() {
+    var element = "favhouselist";
+    $.ajax({
+        type: 'GET',
+        url: config.api_url + "api/apartment/fav",
+        beforeSend: function (request) {
+            request.setRequestHeader("Authorization", "Bearer " + user.access_token);
+        },
+        success: function(data) {
+                     if (data.message = "OK") {
+                         if (data.aparments.length == 0) {
+                             redirect_to("favlist_empty");
+                         }
+                         Tempo.prepare(element).when(TempoEvent.Types.RENDER_STARTING, show_loading).when(TempoEvent.Types.RENDER_COMPLETE, hide_loading).render(data.aparments);
+                     } 
+                 },
         error: server_err_fn
     });     
 });
