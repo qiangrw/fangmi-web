@@ -28,13 +28,13 @@
             <!-- MAIN -->
             <div id="rentlist" role="main">
 				<div class="ui-grid-solo white-div" data-template>
-                    <h2 class="grey-header padding-div ">{{address}}</h2>
+                    <h2 class="grey-header padding-div ">apartment.address</h2>
 					<p class="padding-div">
                     <span>
-                        整租
-                        （三室一厅）
+                        apartment.type
+                        （num_bedroom室num_livingroom厅）
                     </span>
-				   	<span class="pull-right">6000元/月</span>
+                    <span class="pull-right">{{room.price}}元/月</span>
 					</p>
                 </div>
             </div>  

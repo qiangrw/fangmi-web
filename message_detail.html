@@ -21,7 +21,7 @@
             <!-- HEADER -->
             <div data-role="header">
                 <a data-rel="back" class="ui-btn-transparent" data-icon="back" data-iconpos="notext" data-shadow="true" data-iconshadow="true">返回</a>
-                <h2 id="header-title" class="grey-header"></h2>
+                <h2 id="header-title" class="grey-header">消息列表</h2>
 				<a id="delete-message-link" href="#delete_message" data-theme="c" data-icon="trash" data-iconpos="notext" data-shadow="true" data-iconshadow="true">Trash</a>
 				<script src="js/main.js"></script>
             </div>
@@ -51,16 +51,16 @@
 				
 
                 <form id="post-message-form">
-				<table style="width: 100%; margin-bottom: -10px;">
+				<table class="ui-footer-fixed" style="width: 100%; margin-bottom: 60px;">
 					<tr>
                         <input type="hidden" name="type" value="1">
                         <input type="hidden" name="to_username" id="to_username" value="">
                             
-                        <td style="width: 94%; display: inline-block;">
+                        <td style="width: 96%; display: inline-block;">
                          <input id="message-content-input" name="content" type="text" value="" placeholder="输入消息回复">
                         </td>
                         <td style="vertical-align: middle!important">
-                            <a style="padding-top: 20px" id="submit-post-message" href="#" class="ui-btn-captcha">发送</a>
+                            <a id="submit-post-message" href="#" class="ui-btn ui-btn-captcha">发送</a>
                         </td>
                     </tr>
 				<table>

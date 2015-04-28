@@ -11,13 +11,13 @@ var cur_url;
 if (whole_house == null) {
     whole_house = {
         rooms: [ {
-            name: 'default', 
-            area: 0, 
-            date_entrance: null
-        }]
+                   name: 'default', 
+                   area: 0, 
+                   date_entrance: null
+               }]
     };
 }
- 
+
 // global functions
 var show_loading = function(event) { $.mobile.loading( "show", { text: "Loading" }); }
 var hide_loading = function(event) { $.mobile.loading( "hide" ); }
@@ -26,7 +26,7 @@ var hide_loading = function(event) { $.mobile.loading( "hide" ); }
 // Global Page before show functions
 $(document).on('pagebeforeshow', function() {
     // Handling navbar related logic
-	$("[data-role='navbar']").navbar();
+    $("[data-role='navbar']").navbar();
     $("[data-role='header'], [data-role='footer']").toolbar();
     var id = $.mobile.activePage.attr('id');
     cur_url = $.mobile.activePage.data('url');
@@ -81,7 +81,7 @@ $('#myhouselist-page').on('pagebeforeshow', function() {
         error: server_err_fn
     });     
 });
-       
+
 $('#favlist-page').on('pagebeforeshow', function() {
     var element = "favhouselist";
     $.ajax({
@@ -115,9 +115,9 @@ $('#rentlist-page').on('pagebeforeshow', function() {
                      if (data.message = "OK") {
                          if (data.rents.length == 0) {
                              redirect_to("rentlist_empty.html");
+                         } else {
+                             Tempo.prepare(element).when(TempoEvent.Types.RENDER_STARTING, show_loading).when(TempoEvent.Types.RENDER_COMPLETE, hide_loading).render(data.rents);
                          }
-                         // TODO change according to xuan's issue
-                         Tempo.prepare(element).when(TempoEvent.Types.RENDER_STARTING, show_loading).when(TempoEvent.Types.RENDER_COMPLETE, hide_loading).render(data.rents);
                      } 
                  },
         error: server_err_fn
@@ -224,7 +224,7 @@ $('#edit-profile-page').on('pageinit', function() {
                            localStorage.setItem('user', JSON.stringify(user));
                            set_user_data(user);
 
-                           
+
 
                        } else redirect_to("signin.html");
                    },
@@ -253,8 +253,29 @@ $('#edit-profile-page').on('pageinit', function() {
             error: function(data) { redirect_to("signin.html"); }
         });                 
     });
-});  
- 
+}); 
+
+
+// message.html
+$("#conversation-page").on('pageinit', function() {
+    var element = "conversation-list";
+    $.ajax({
+        type: 'GET',
+        url: config.api_url + "api/message/conversation",
+        beforeSend: function (request) {
+            request.setRequestHeader("Authorization", "Bearer " + user.access_token);
+        },
+        success: function(data) {
+                     if (data.message = "OK") {
+                         console.log(data);
+                         Tempo.prepare(element).when(TempoEvent.Types.RENDER_STARTING, show_loading).when(TempoEvent.Types.RENDER_COMPLETE, hide_loading).render(data.messages);
+                     } 
+                 },
+        error: server_err_fn
+    });     
+});
+
+
 // message_detail.html
 $('#message-detail-page').on('pageinit', function() {
     var to_username = getParameter("to_username");
@@ -269,12 +290,11 @@ $('#message-detail-page').on('pageinit', function() {
         beforeSend: function (request) {
             request.setRequestHeader("Authorization", "Bearer " + user.access_token);
         },
-        // TODO fix typo after xuan fixing the issue
         success: function(data) {
                      if (data.message = "OK") {
                          /*for (i = 0; i < data.messages.length; ++i) {
-                             data.messages[i].mine = data.messages[i].from_username == to_username;
-                         }*/
+                           data.messages[i].mine = data.messages[i].from_username == to_username;
+                           }*/
                          console.log(data);
                          Tempo.prepare(element).when(TempoEvent.Types.RENDER_STARTING, show_loading).when(TempoEvent.Types.RENDER_COMPLETE, hide_loading).render(data.messages);
                      } 
