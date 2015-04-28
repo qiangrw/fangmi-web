@@ -138,12 +138,34 @@ $('#reservelist-page').on('pagebeforeshow', function() {
                          if (data.reserves.length == 0) {
                              redirect_to("reservelist_empty.html");
                          } else {
-                             Tempo.prepare(element).when(TempoEvent.Types.RENDER_STARTING, show_loading).when(TempoEvent.Types.RENDER_COMPLETE, hide_loading).render(data.reserves);
+                             Tempo.prepare(element).when(TempoEvent.Types.RENDER_STARTING, show_loading)
+                                .when(TempoEvent.Types.RENDER_COMPLETE, function() {
+                                    $(".btn-cancel-reserve").click(function(){
+                                        var reserve_id = $(this).attr('rid');
+                                        $.ajax({
+                                            type: 'PUT',
+                                            beforeSend: function (request) {
+                                                request.setRequestHeader("Authorization", "Bearer " + user.access_token);
+                                            },
+                                            url: config.api_url + "api/reserve?id=" + reserve_id + "cancelled=True",
+                                            success: function(data) {
+                                                if (data.message == "OK") alert("取消成功");
+                                                else  show_common_error(data.message); 
+                                            }
+                                        });    
+
+                                        alert(reserve_id);
+                                    }); 
+                                    hide_loading();
+                                })
+    .render(data.reserves);
                          }
                      } 
                  },
         error: server_err_fn
-    });     
+    });  
+
+
 });
 
 
@@ -189,18 +211,18 @@ $('#choose-date-page').on('pagebeforeshow', function() {
     var id = getParameter("id");
     if (id == null) return;
     $.ajax({
-      type: 'GET',
+        type: 'GET',
       url: config.api_url + "api/apartment?id=" + id,
       success: function(data) {
           console.log("choose-date-page:");
           console.log(data.apartment.reserve_choices);
           if (data.message = "OK") {
               Tempo.prepare(element).when(TempoEvent.Types.RENDER_STARTING, show_loading)
-                                    .when(TempoEvent.Types.RENDER_COMPLETE, function() {
-                                        $("#choose-date-list fieldset input").checkboxradio();
-                                        hide_loading();
-                                    })
-                                    .render(data.apartment.reserve_choices);
+        .when(TempoEvent.Types.RENDER_COMPLETE, function() {
+            $("#choose-date-list fieldset input").checkboxradio();
+            hide_loading();
+        })
+    .render(data.apartment.reserve_choices);
           } 
       }
     }); 
@@ -218,12 +240,8 @@ $('#choose-date-page').on('pagebeforeshow', function() {
             },
             url: config.api_url + "api/reserve?reserve_choice_id=" + choice_id,
             success: function(data) {
-                if (data.message == "OK") {
-                    $.extend(user, data.user);
-                    user.avatar = config.api_url + user.avatar;
-                    localStorage.setItem('user', JSON.stringify(user));
-                    show_common_error("预约成功");
-                } else  show_common_error(data.message); 
+                if (data.message == "OK") show_common_error("预约成功");  
+                else  show_common_error(data.message); 
             }
         });    
 
