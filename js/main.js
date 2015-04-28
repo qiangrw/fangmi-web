@@ -255,6 +255,55 @@ $('#edit-profile-page').on('pageinit', function() {
         });                 
     });
 });  
+ 
+// message_detail.html
+$('#message-detail-page').on('pageinit', function() {
+    var to_username = getParameter("to_username");
+    if (to_username == null) return;
+    $("#to_username").val(to_username);
+    $("#header-title").val(to_username);
+
+    var element = "messagedetail-list";
+    $.ajax({
+        type: 'GET',
+        url: config.api_url + "api/message/list?filter_unread=False&from_username=" + to_username,
+        beforeSend: function (request) {
+            request.setRequestHeader("Authorization", "Bearer " + user.access_token);
+        },
+        // TODO fix typo after xuan fixing the issue
+        success: function(data) {
+                     if (data.message = "OK") {
+                         /*for (i = 0; i < data.messages.length; ++i) {
+                             data.messages[i].mine = data.messages[i].from_username == to_username;
+                         }*/
+                         console.log(data);
+                         Tempo.prepare(element).when(TempoEvent.Types.RENDER_STARTING, show_loading).when(TempoEvent.Types.RENDER_COMPLETE, hide_loading).render(data.messages);
+                     } 
+                 },
+        error: server_err_fn
+    });     
+
+
+    $("#submit-post-message").click(function(){
+        console.log($("#post-message-form").serialize());
+        $.ajax({
+            type: 'POST',
+            beforeSend: function (request) {
+                request.setRequestHeader("Authorization", "Bearer " + user.access_token);
+            },
+            url: config.api_url + "api/message",
+            data: $("#post-message-form").serialize(),
+            success: function(data) {
+                if (data.message == "OK") {
+                    // TODO not work
+                    refreshPage();
+                } else  {
+                    alert("发送失败");
+                }
+            }
+        });                 
+    });
+});  
 
 // signin.html
 $('#signin-page').on('pageinit', function() {
@@ -269,7 +318,8 @@ $('#signin-page').on('pageinit', function() {
                     hide_common_error();
                     user.access_token = data.access_token;
                     localStorage.setItem('user', JSON.stringify(user));
-                    save_user();
+                    // TODO save user or bugs may come
+                    // save_user();
                     redirect_to("index.html");
                 } else {
                     show_common_error(data.message);
@@ -785,3 +835,11 @@ String.prototype.endWith = function (subStr) {
     }
 }
 
+function refreshPage()
+{
+    jQuery.mobile.changePage(window.location.href, {
+        allowSamePageTransition: true,
+    transition: 'none',
+    reloadPage: true
+    });
+}

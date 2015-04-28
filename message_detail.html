@@ -12,32 +12,33 @@
         <script src="js/jquery.validate.min.js"></script>
         <script src="js/messages_zh.js"></script>
         <script src="js/md5.js"></script>
+        <script src="js/tempo.min.js" type="text/javascript"></script>
     </head>
 
     <body>
 
-        <div  data-role="page" style="background-image: url(images/user/msg_bg.jpg); background-size: cover;">
+        <div id="message-detail-page"  data-role="page" style="background-image: url(images/user/msg_bg.jpg); background-size: cover;">
             <!-- HEADER -->
             <div data-role="header">
-                <a href="message.html" class="ui-btn-transparent" data-icon="back" data-iconpos="notext" data-shadow="true" data-iconshadow="true">返回</a>
-                <h2 class="grey-header">萌萌哥</h2>
-				<a href="#" data-theme="c" data-icon="trash" data-iconpos="notext" data-shadow="true" data-iconshadow="true">Trash</a>
+                <a data-rel="back" class="ui-btn-transparent" data-icon="back" data-iconpos="notext" data-shadow="true" data-iconshadow="true">返回</a>
+                <h2 id="header-title" class="grey-header"></h2>
+				<a id="delete-message-link" href="#delete_message" data-theme="c" data-icon="trash" data-iconpos="notext" data-shadow="true" data-iconshadow="true">Trash</a>
 				<script src="js/main.js"></script>
             </div>
             <!-- ./HEADER -->
 
             <!-- MAIN -->
-            <div role="main" class="ui-content">
-				<div class="message-div">
+            <div id="messagedetail-list" role="main" class="ui-content">
+				<div data-template class="message-div">
 					<div class="message-img-div">
 						<img src="images/user/user_profile.png" />
 					</div>
 					<div class="message-text-div">
-						<p>你好，我是房主，你好，我是房主，你好，我是房主，你好，我是房主
-						你好，我是房主，你好，我是房主，你好，我是房主。</p>
+                        <p> {{content}}</p>
 					</div>
 				</div>
-				
+
+                <!--
 				<div class="message-div">
 					<div class="message-text-div text-inverse">
 						<p>你好，我是强哥哥，强哥哥，各个，哥。</p>
@@ -45,71 +46,25 @@
 					<div class="message-img-div">
 						<img src="images/user/user_profile.png" />
 					</div>
-				</div>
-				
-				<div class="message-div">
-					<div class="message-img-div">
-						<img src="images/user/user_profile.png" />
-					</div>
-					<div class="message-text-div">
-						<p>你好，我是房主，你好，我是房主，你好，我是房主，你好，我是房主
-						你好，我是房主，你好，我是房主，你好，我是房主。</p>
-					</div>
-				</div>
-				
-				<div class="message-div">
-					<div class="message-text-div text-inverse">
-						<p>你好，我是强哥哥，强哥哥，各个，哥。</p>
-					</div>
-					<div class="message-img-div">
-						<img src="images/user/user_profile.png" />
-					</div>
-				</div>
-				
-				<div class="message-div">
-					<div class="message-img-div">
-						<img src="images/user/user_profile.png" />
-					</div>
-					<div class="message-text-div">
-						<p>你好，我是房主，你好，我是房主，你好，我是房主，你好，我是房主
-						你好，我是房主，你好，我是房主，你好，我是房主。</p>
-					</div>
-				</div>
-				
-				<div class="message-div">
-					<div class="message-text-div text-inverse">
-						<p>你好，我是强哥哥，强哥哥，各个，哥。</p>
-					</div>
-					<div class="message-img-div">
-						<img src="images/user/user_profile.png" />
-					</div>
-				</div>
-				
-				<div class="message-div">
-					<div class="message-img-div">
-						<img src="images/user/user_profile.png" />
-					</div>
-					<div class="message-text-div">
-						<p>你好，我是房主，你好，我是房主，你好，我是房主，你好，我是房主
-						你好，我是房主，你好，我是房主，你好，我是房主。</p>
-					</div>
-				</div>
-				
-				<div class="message-div">
-					<div class="message-text-div text-inverse">
-						<p>你好，我是强哥哥，强哥哥，各个，哥。</p>
-					</div>
-					<div class="message-img-div">
-						<img src="images/user/user_profile.png" />
-					</div>
-				</div>
+                </div>
+                -->
 				
 
+                <form id="post-message-form">
 				<table style="width: 100%; margin-bottom: -10px;">
 					<tr>
-					<td><input type="text" value="" placeholder="输入消息回复"/></td>
-					</tr>
+                        <input type="hidden" name="type" value="1">
+                        <input type="hidden" name="to_username" id="to_username" value="">
+                            
+                        <td style="width: 94%; display: inline-block;">
+                         <input id="message-content-input" name="content" type="text" value="" placeholder="输入消息回复">
+                        </td>
+                        <td style="vertical-align: middle!important">
+                            <a style="padding-top: 20px" id="submit-post-message" href="#" class="ui-btn-captcha">发送</a>
+                        </td>
+                    </tr>
 				<table>
+                </form>
 
             </div>  
             <!-- ./MAIN -->
