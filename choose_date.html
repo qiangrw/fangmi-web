@@ -27,9 +27,11 @@
             <!-- MAIN -->
             <div role="main" class="ui-content">
                 <div id="choose-date-list" class="ui-grid-solo padding-div white-div">
-                    <fieldset data-template data-role="controlgroup" data-theme="c"> 
+                    <fieldset data-role="controlgroup" data-theme="c"> 
+                    <div data-template>
                         <input type="checkbox" name="{{date}}" id="checkbox-{{_tempo.index}}"> 
                         <label for="checkbox-{{_tempo.index}}">{{date}} {{time_start}}-{{time_end}}</label> 
+                    </div>
                     </fieldset>
                 </div>
 				<div class="ui-grid-solo padding-desc" style="padding: 4px 4px; margin-top:10px;">

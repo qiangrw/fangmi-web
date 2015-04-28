@@ -188,17 +188,20 @@ $('#choose-date-page').on('pagebeforeshow', function() {
     var id = getParameter("id");
     if (id == null) return;
     $.ajax({
-        type: 'GET',
+      type: 'GET',
       url: config.api_url + "api/apartment?id=" + id,
       success: function(data) {
+          console.log("choose-date-page:");
+          console.log(data.apartment.reserve_choices);
           if (data.message = "OK") {
-              Tempo.prepare(element)
-        .when(TempoEvent.Types.RENDER_STARTING, show_loading)
-        .when(TempoEvent.Types.RENDER_COMPLETE, hide_loading)
-        .render(data.apartment.reserve_choices);
+              Tempo.prepare(element).when(TempoEvent.Types.RENDER_STARTING, show_loading)
+                                    .when(TempoEvent.Types.RENDER_COMPLETE, function() {
+                                        $("#choose-date-list fieldset input").checkboxradio();
+                                        hide_loading();
+                                    })
+                                    .render(data.apartment.reserve_choices);
           } 
-      },
-      error: server_err_fn
+      }
     }); 
 });
 
@@ -502,11 +505,6 @@ $('#setting-page').on('pagebeforeshow', function() {
         redirect_to("signin.html");
     });
 });   
-
-$('#choose-date-page').on('pageinit', function() {
-    bindAble();
-    bindSelected();
-});
 
 // set_date.html
 $('#set-date-page').on('pageinit', function() {
