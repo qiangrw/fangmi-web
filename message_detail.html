@@ -29,13 +29,15 @@
 
             <!-- MAIN -->
             <div id="messagedetail-list" role="main" class="ui-content">
-				<div data-template class="message-div">
-					<div class="message-img-div">
-						<img src="images/user/user_profile.png" />
-					</div>
-					<div class="message-text-div">
-                        <p> {{content}}</p>
-					</div>
+                <div data-template class="message-div">
+                    {% if (mine == true) %}
+					<div class="message-img-div"><img src="images/user/user_profile.png" /></div>
+					<div class="message-text-div"><p>{{content}}</p></div>
+                    {% else %}
+					<div class="message-text-div"><p>{{content}}</p></div>
+					<div class="message-img-div"><img src="images/user/user_profile.png" /></div>
+
+                    {% endif %}
 				</div>
 
                 <!--

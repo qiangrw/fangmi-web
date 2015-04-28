@@ -337,7 +337,7 @@ $("#conversation-page").on('pageinit', function() {
         success: function(data) {
                      if (data.message = "OK") {
                          console.log(data);
-                         Tempo.prepare(element).when(TempoEvent.Types.RENDER_STARTING, show_loading).when(TempoEvent.Types.RENDER_COMPLETE, hide_loading).render(data.messages);
+                         Tempo.prepare(element).when(TempoEvent.Types.RENDER_STARTING, show_loading).when(TempoEvent.Types.RENDER_COMPLETE, hide_loading).render(data.conversations);
                      } 
                  },
         error: server_err_fn
@@ -353,6 +353,7 @@ $('#message-detail-page').on('pageinit', function() {
     $("#header-title").val(to_username);
 
     var element = "messagedetail-list";
+    var messages = null;
     $.ajax({
         type: 'GET',
         url: config.api_url + "api/message/list?filter_unread=False&from_username=" + to_username,
@@ -361,9 +362,10 @@ $('#message-detail-page').on('pageinit', function() {
         },
         success: function(data) {
                      if (data.message = "OK") {
-                         /*for (i = 0; i < data.messages.length; ++i) {
-                           data.messages[i].mine = data.messages[i].from_username == to_username;
-                           }*/
+                         for (i = 0; i < data.messages.length; ++i) {
+                           data.messages[i].mine = data.messages[i].from_username != to_username;
+                         }
+                         messages = data.messages;
                          console.log(data);
                          Tempo.prepare(element).when(TempoEvent.Types.RENDER_STARTING, show_loading).when(TempoEvent.Types.RENDER_COMPLETE, hide_loading).render(data.messages);
                      } 
@@ -383,8 +385,13 @@ $('#message-detail-page').on('pageinit', function() {
             data: $("#post-message-form").serialize(),
             success: function(data) {
                 if (data.message == "OK") {
-                    // TODO not work
-                    refreshPage();
+                    // TODO fix bug here
+                    Tempo.prepare(element).append(
+                        {
+                            mine: true,
+                            content: $("#message-content-input").val()
+                        }
+                        );
                 } else  {
                     alert("发送失败");
                 }
@@ -920,9 +927,10 @@ String.prototype.endWith = function (subStr) {
 
 function refreshPage()
 {
-    jQuery.mobile.changePage(window.location.href, {
-        allowSamePageTransition: true,
-    transition: 'none',
-    reloadPage: true
+    $.mobile.changePage( window.location.href, {
+        allowSamePageTransition : true,
+        transition              : 'none',
+        showLoadMsg             : false,
+        reloadPage              : true
     });
 }
