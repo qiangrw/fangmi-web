@@ -65,7 +65,23 @@ $('#houselist-page').on('pagebeforeshow', function() {
         error: server_err_fn
     });     
 });
-     
+
+$('#myhouselist-page').on('pagebeforeshow', function() {
+    cur_url = "houselist.html?"; 
+    var base_url = config.api_url + "api/apartment/list?username=" + user.username;
+    var element = "myhouselist";
+    $.ajax({
+        type: 'GET',
+        url: base_url,
+        success: function(data) {
+            console.log(data);
+            if (data.message = "OK") {
+                Tempo.prepare(element).when(TempoEvent.Types.RENDER_STARTING, show_loading).when(TempoEvent.Types.RENDER_COMPLETE, hide_loading).render(data.apartments); } 
+        },
+        error: server_err_fn
+    });     
+});
+       
 $('#favlist-page').on('pagebeforeshow', function() {
     var element = "favhouselist";
     $.ajax({
@@ -74,12 +90,35 @@ $('#favlist-page').on('pagebeforeshow', function() {
         beforeSend: function (request) {
             request.setRequestHeader("Authorization", "Bearer " + user.access_token);
         },
+        // TODO fix typo after xuan fixing the issue
         success: function(data) {
                      if (data.message = "OK") {
                          if (data.aparments.length == 0) {
                              redirect_to("favlist_empty");
                          }
                          Tempo.prepare(element).when(TempoEvent.Types.RENDER_STARTING, show_loading).when(TempoEvent.Types.RENDER_COMPLETE, hide_loading).render(data.aparments);
+                     } 
+                 },
+        error: server_err_fn
+    });     
+});
+
+$('#rentlist-page').on('pagebeforeshow', function() {
+    var element = "rentlist";
+    $.ajax({
+        type: 'GET',
+        url: config.api_url + "api/rent/list",
+        beforeSend: function (request) {
+            request.setRequestHeader("Authorization", "Bearer " + user.access_token);
+        },
+        success: function(data) {
+                     console.log(data);
+                     if (data.message = "OK") {
+                         if (data.rents.length == 0) {
+                             redirect_to("rentlist_empty.html");
+                         }
+                         // TODO change according to xuan's issue
+                         Tempo.prepare(element).when(TempoEvent.Types.RENDER_STARTING, show_loading).when(TempoEvent.Types.RENDER_COMPLETE, hide_loading).render(data.rents);
                      } 
                  },
         error: server_err_fn
@@ -185,6 +224,9 @@ $('#edit-profile-page').on('pageinit', function() {
                            user.avatar = config.api_url + user.avatar;
                            localStorage.setItem('user', JSON.stringify(user));
                            set_user_data(user);
+
+                           
+
                        } else redirect_to("signin.html");
                    },
           error: function(data) { redirect_to("signin.html"); }
@@ -227,6 +269,7 @@ $('#signin-page').on('pageinit', function() {
                     hide_common_error();
                     user.access_token = data.access_token;
                     localStorage.setItem('user', JSON.stringify(user));
+                    save_user();
                     redirect_to("index.html");
                 } else {
                     show_common_error(data.message);
@@ -573,6 +616,27 @@ function load_user(element) {
              },
     error: function(data) { show_common_error("用户名密码错误"); }
     });   
+}
+
+function save_user()
+{  
+    $.ajax({
+        type: 'GET',
+    url: config.api_url + "api/account",
+    beforeSend: function (request) {
+        request.setRequestHeader("Authorization", "Bearer " + user.access_token);
+    },
+    success: function(data) {
+                 if (data.message = "OK") {
+                     $.extend(user, data.user);
+                     user.avatar = config.api_url + user.avatar;
+                     localStorage.setItem('user', JSON.stringify(user));
+                 } else {
+                     redirect_to("signin.html");
+                 }
+             },
+    error: server_err_fn
+    });  
 }
 
 
