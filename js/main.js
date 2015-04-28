@@ -184,6 +184,7 @@ $('#house-detail-page').on('pagebeforeshow', function() {
 
 });
 $('#choose-date-page').on('pagebeforeshow', function() {
+    show_loading();
     var element = "choose-date-list";
     var id = getParameter("id");
     if (id == null) return;
@@ -203,6 +204,30 @@ $('#choose-date-page').on('pagebeforeshow', function() {
           } 
       }
     }); 
+
+    $("#submit-add-reserve").click(function() {
+        var choice_id = $('#choose-date-list input[data-cacheval="false"]').val();
+        if (!choice_id) {
+            show_common_error("请至少选择一个时间");
+            return;
+        }
+        $.ajax({
+            type: 'POST',
+            beforeSend: function (request) {
+                request.setRequestHeader("Authorization", "Bearer " + user.access_token);
+            },
+            url: config.api_url + "api/reserve?reserve_choice_id=" + choice_id,
+            success: function(data) {
+                if (data.message == "OK") {
+                    $.extend(user, data.user);
+                    user.avatar = config.api_url + user.avatar;
+                    localStorage.setItem('user', JSON.stringify(user));
+                    show_common_error("预约成功");
+                } else  show_common_error(data.message); 
+            }
+        });    
+
+    });
 });
 
 // user.html

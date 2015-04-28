@@ -29,13 +29,15 @@
                 <div id="choose-date-list" class="ui-grid-solo padding-div white-div">
                     <fieldset data-role="controlgroup" data-theme="c"> 
                     <div data-template>
-                        <input type="checkbox" name="{{date}}" id="checkbox-{{_tempo.index}}"> 
-                        <label for="checkbox-{{_tempo.index}}">{{date}} {{time_start}}-{{time_end}}</label> 
+                        <input type="radio" value="{{id}}" name="radiobox" id="radio-{{_tempo.index}}"> 
+                        <label for="radio-{{_tempo.index}}">{{date}} {{time_start}}-{{time_end}}</label> 
                     </div>
                     </fieldset>
                 </div>
+                
+                <div id="error" class="ui-grid-solo padding-div error" style="display:none;"></div>
 				<div class="ui-grid-solo padding-desc" style="padding: 4px 4px; margin-top:10px;">
-                    <a id="set-my-reserve-date" href="#" class="ui-btn ui-corner-all">确定</a>
+                    <a id="submit-add-reserve" href="#" class="ui-btn ui-corner-all">确定</a>
                 </div>
                 
             </div>  
