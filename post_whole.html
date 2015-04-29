@@ -13,6 +13,7 @@
         <script src="js/jquery.validate.min.js"></script>
         <script src="js/messages_zh.js"></script>
         <script src="js/md5.js"></script>
+        <script src="js/tempo.min.js" type="text/javascript"></script>
     </head>
 
     <body>
@@ -41,93 +42,98 @@
 							<td><input type="text" name="title" id="title" value=""></td>
 						</tr>
 						<tr>
-							<th width=100>所属小区</th>
-							<td><input type="text" name="community_id" id="community_id" value=""></td>
-						</tr>
-						<tr>
-							<th width=100>小区特色</th>
-							<td><input type="text" name="subtitle" id="subtitle" value=""></td>
-						</tr>
-						<tr>
-							<th width=100>详细地址</th>
-							<td><input type="text" name="address" id="address" value=""></td>
-						</tr>
-						<tr>
-							<th width=100>房屋类型</th>
-							<td class="multi-input-cell">
-								<input type="text" name="num_bedroom" id="num_bedroom" value="">
-								室
-								<input type="text" name="num_livingroom" id="num_livingroom" value="">
-								厅
-							</td>
+                            <th width=100>所属小区</th>
+                            <td>
+                                <select data-theme="c" name="community_id" id="community_id" data-native-menu="false" style="border-color:grey!important;">
+                                        <option>请选择小区</option>
+                                        <option data-template value="{{id}}">{{name}}</option>
+                                </select>
+                            </td>
                         </tr>
-                        </form>
-                        <form id="post-room-form">
                         <tr>
-							<th width=100>租金</th>
+                            <th width=100>小区特色</th>
+                            <td><input type="text" name="subtitle" id="subtitle" value=""></td>
+                        </tr>
+                        <tr>
+                            <th width=100>详细地址</th>
+                            <td><input type="text" name="address" id="address" value=""></td>
+                        </tr>
+                        <tr>
+                            <th width=100>房屋类型</th>
+                            <td class="multi-input-cell">
+                                <input type="text" name="num_bedroom" id="num_bedroom" value="">
+                                室
+                                <input type="text" name="num_livingroom" id="num_livingroom" value="">
+                                厅
+                            </td>
+                        </tr>
+                    </form>
+                    <form id="post-room-form">
+                        <tr>
+                            <th width=100>租金</th>
                             <td class="multi-input-cell">
                                 <input type="text" name="price" id="price" value="">
                                 元/月
                             </td>
-						</tr>   
+                        </tr>   
                         <tr>
-							<th width=100>面积</th>
+                            <th width=100>面积</th>
                             <td class="multi-input-cell">
                                 <input type="text" name="area" id="area" value="">
                                 平米
                             </td>
-						</tr>   
-                        </form>
-                    </table>
-                </div>
-				
-				
-				<div class="ui-grid-solo white-div padding-div">
-                    <table class="form-table sel-table">
-						<tr>
-							<th width=100>入住时间</th>
-							<td><a id="set-entrance-date-link" href="set_entrance_date.html">点击编辑</a></td>
-						</tr>
-						<tr>
-							<th width=100>个性标签</th>
-							<td><a id="set-keywords-link" href="set_keywords.html">点击编辑</a></td>
-						</tr>
-						<tr>
-							<th width=100>房屋设备</th>
-							<td><a id="set-devices-link" href="set_devices.html">点击编辑</a></td>
-						</tr>
-						<tr>
-							<th width=100>预约时间</th>
-							<td><a id="set-date-link" href="set_date.html">点击编辑</a></td>
-						</tr>
-                    </table>
-                </div>
-				
-			    <p class="padding-div">房屋图片(支持多张上传)</p>
-                <progress style="width: 100%"></progress>
-				<input type="file" name="pic_student" id="pic_student" value="">
-                </form>
-                <div id="error" class="ui-grid-solo padding-div error" style="display:none;"></div>
-				<br>     
-				<div class="ui-grid-solo padding-div">
-					<a id="submit-post-whole" href="" class="ui-btn ui-corner-all">提交</a>
-				</div>
-            </div>  
-            <!-- ./MAIN -->
+                        </tr>   
+                    </form>
+                </table>
+            </div>
 
+
+            <div class="ui-grid-solo white-div padding-div">
+                <table class="form-table sel-table">
+                    <tr>
+                        <th width=100>入住时间</th>
+                        <td><a id="set-entrance-date-link" href="set_entrance_date.html">点击编辑</a></td>
+                    </tr>
+                    <tr>
+                        <th width=100>个性标签</th>
+                        <td><a id="set-keywords-link" href="set_keywords.html">点击编辑</a></td>
+                    </tr>
+                    <tr>
+                        <th width=100>房屋设备</th>
+                        <td><a id="set-devices-link" href="set_devices.html">点击编辑</a></td>
+                    </tr>
+                    <tr>
+                        <th width=100>预约时间</th>
+                        <td><a id="set-date-link" href="set_date.html">点击编辑</a></td>
+                    </tr>
+                </table>
+            </div>
+
+            <p class="padding-div">房屋图片(支持多张上传)</p>
+            <progress style="width: 100%"></progress>
+            <input type="file" name="pic_student" id="pic_student" value="">
+        </form>
+        <div id="error" class="ui-grid-solo padding-div error" style="display:none;"></div>
+        <br>     
+        <div class="ui-grid-solo padding-div">
+            <a id="submit-post-whole" href="" class="ui-btn ui-corner-all">提交</a>
         </div>
-        <!-- ./PAGE -->
+    </div>  
+    <!-- ./MAIN -->
 
-        <div id="nav-footer" data-role="footer" data-position="fixed">
-            <div data-role="navbar" data-iconpos="top">
-                <ul>
-                    <li><a href="index.html" data-icon="home">房蜜</a></li>
-                    <li><a href="user.html" data-icon="user">个人账户</a></li>
-                    <li><a href="about.html" data-icon="info">关于房蜜</a></li>
-                    <li><a href="setting.html" data-icon="gear">设置</a></li>
-                </ul>
-            </div><!-- /navbar -->
-        </div><!-- /footer -->
+</div>
+<!-- ./PAGE -->
+
+<div id="nav-footer" data-role="footer" data-position="fixed">
+    <div data-role="navbar" data-iconpos="top">
+        <ul>
+            <li><a href="index.html" data-icon="home">房蜜</a></li>
+            <li><a href="user.html" data-icon="user">个人账户</a></li>
+            <li><a href="about.html" data-icon="info">关于房蜜</a></li>
+            <li><a href="setting.html" data-icon="gear">设置</a></li>
+        </ul>
+    </div><!-- /navbar -->
+</div><!-- /footer -->
 
     </body>
 </html>

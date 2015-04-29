@@ -831,7 +831,25 @@ $('#set-device-page').on('pageinit', function() {
     });
 });
 $('#post-whole-page').on('pageinit', function() {
-    // get community list 
+    // get community list   e
+    var element = "community_id";
+    show_loading();
+    $.ajax({
+        type: 'GET',
+        url: config.api_url + "api/community/list",
+        beforeSend: function (request) {
+            request.setRequestHeader("Authorization", "Bearer " + user.access_token);
+        },
+        success: function(data) {
+                     Tempo.prepare(element).when(TempoEvent.Types.RENDER_COMPLETE, function() {
+                         hide_loading();
+                         $('#community_id').selectmenu('refresh', true);
+                         $("#community_id").val(whole_house.community_id);
+                         $('#community_id').selectmenu('refresh', true);
+
+                     }).render(data.communities);
+                 }
+    });
 
     // set value if have 
     if (whole_house != null) {
@@ -840,8 +858,8 @@ $('#post-whole-page').on('pageinit', function() {
         $("#address").val(whole_house.address);
         $("#num_bedroom").val(whole_house.num_bedroom);
         $("#num_livingroom").val(whole_house.num_livingroom);
-        $("#price").val(whole_house.price);
-        $("#area").val(whole_house.area);
+        $("#price").val(whole_house.rooms[0].price);
+        $("#area").val(whole_house.rooms[0].area);
         $("#type").val(whole_house.type);
         if (whole_house.rooms[0].date_entrance != null) {
             $("#set-entrance-date-link").html("已经设置");
