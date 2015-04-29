@@ -347,8 +347,8 @@ $("#conversation-page").on('pageinit', function() {
 
 // message_detail.html
 $('#message-detail-page').on('pageinit', function() {
-    var to_username = getParameter("to_username");
-    if (to_username == null) return;
+    var from_username = getParameter("from_username");
+    if (from_username == null) return;
     $("#to_username").val(to_username);
     $("#header-title").val(to_username);
 
@@ -356,7 +356,7 @@ $('#message-detail-page').on('pageinit', function() {
     var messages = null;
     $.ajax({
         type: 'GET',
-        url: config.api_url + "api/message/list?filter_unread=False&from_username=" + to_username,
+        url: config.api_url + "api/message/list?filter_unread=False&from_username=" + from_username,
         beforeSend: function (request) {
             request.setRequestHeader("Authorization", "Bearer " + user.access_token);
         },
@@ -364,7 +364,7 @@ $('#message-detail-page').on('pageinit', function() {
                      console.log(data);
                      if (data.message = "OK") {
                          for (i = 0; i < data.messages.length; ++i) {
-                             data.messages[i].mine = data.messages[i].from_username != to_username;
+                             data.messages[i].mine = data.messages[i].from_username != from_username;
                          }
                          messages = data.messages;
                          console.log(data);
