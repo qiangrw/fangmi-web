@@ -66,6 +66,30 @@ $('#houselist-page').on('pagebeforeshow', function() {
     });     
 });
 
+ 
+$('#favlist-empty-page, #reservelist-empty-page, #rentlist-empty-page').on('pagebeforeshow', function() {
+    cur_url = "houselist.html?"; 
+    // TODO using recommend api in the future
+    var base_url = config.api_url + "api/apartment/list?";
+    var community_id = getParameter("community_id");
+    if (community_id) {
+        base_url += "&community_id=" + community_id;
+        cur_url += "&community_id=" + community_id;
+    }
+    var element = "recommend-houselist";
+    $.ajax({
+        type: 'GET',
+        url: base_url,
+        success: function(data) {
+            console.log(data);
+            if (data.message = "OK") {
+                Tempo.prepare(element).when(TempoEvent.Types.RENDER_STARTING, show_loading).when(TempoEvent.Types.RENDER_COMPLETE, hide_loading).render(data.apartments); } 
+        },
+        error: server_err_fn
+    });     
+});
+    
+
 $('#myhouselist-page').on('pagebeforeshow', function() {
     cur_url = "houselist.html?"; 
     var base_url = config.api_url + "api/apartment/list?username=" + user.username;
