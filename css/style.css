@@ -123,9 +123,20 @@
   background-image: url("../images/nav/about-active.png")!important;
   background-size: 20px 20px;
 }
-.ui-icon-fav:after {
+.ui-icon-nofav:after {
   background-color: transparent;
   background-image: url("../images/icon/fav.png")!important;
+  background-size: 22px 22px;
+}
+.ui-btn-active.ui-icon-nofav:after {
+  background-color: transparent;
+  background-image: url("../images/icon/fav.png")!important;
+  background-size: 22px 22px;
+}
+
+.ui-icon-fav:after {
+  background-color: transparent;
+  background-image: url("../images/icon/fav-active.png")!important;
   background-size: 22px 22px;
 }
 .ui-btn-active.ui-icon-fav:after {
