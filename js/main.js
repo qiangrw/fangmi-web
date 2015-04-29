@@ -19,8 +19,12 @@ if (whole_house == null) {
 }
 
 // global functions                                                                    
-var show_loading = function(event) { $.mobile.loading( "show", { text: "Loading", textVisible: true }); }
-var hide_loading = function(event) { $.mobile.loading( "hide" ); }
+var show_loading = function(event) { 
+    $('body').addClass('ui-loading');
+}
+var hide_loading = function(event) { 
+    $('body').removeClass('ui-loading');
+}
 
 
 // Global Page before show functions
@@ -55,12 +59,18 @@ $('#houselist-page').on('pagebeforeshow', function() {
         cur_url += "&community_id=" + community_id;
     }
     var element = "houselist";
+    $("#" + element).hide();
+    show_loading();
     $.ajax({
         type: 'GET',
         url: base_url,
         success: function(data) {
             if (data.message = "OK") {
-                Tempo.prepare(element).when(TempoEvent.Types.RENDER_STARTING, show_loading).when(TempoEvent.Types.RENDER_COMPLETE, hide_loading).render(data.apartments); } 
+                Tempo.prepare(element)
+                    .when(TempoEvent.Types.RENDER_COMPLETE, function() {
+                        $("#" + element).show();
+                        hide_loading(); 
+                    }).render(data.apartments); } 
         },
         error: server_err_fn
     });     
@@ -77,13 +87,18 @@ $('#favlist-empty-page, #reservelist-empty-page, #rentlist-empty-page').on('page
         cur_url += "&community_id=" + community_id;
     }
     var element = "recommend-houselist";
+    $("#" + element).hide();
+    show_loading();
     $.ajax({
         type: 'GET',
         url: base_url,
         success: function(data) {
             console.log(data);
             if (data.message = "OK") {
-                Tempo.prepare(element).when(TempoEvent.Types.RENDER_STARTING, show_loading).when(TempoEvent.Types.RENDER_COMPLETE, hide_loading).render(data.apartments); } 
+                Tempo.prepare(element).when(TempoEvent.Types.RENDER_COMPLETE, function() {
+                    hide_loading(); 
+                    $("#" + element).show();
+                }).render(data.apartments); } 
         },
         error: server_err_fn
     });     
@@ -95,14 +110,14 @@ $('#myhouselist-page').on('pagebeforeshow', function() {
     var base_url = config.api_url + "api/apartment/list?username=" + user.username;
     var element = "myhouselist";
     $("#" + element).hide();
+    show_loading();
     $.ajax({
         type: 'GET',
         url: base_url,
         success: function(data) {
             console.log(data);
             if (data.message = "OK") {
-                Tempo.prepare(element).
-                        when(TempoEvent.Types.RENDER_STARTING, show_loading)
+                Tempo.prepare(element)
                         .when(TempoEvent.Types.RENDER_COMPLETE, function(){
                                 $("#" + element).show();
                                 hide_loading();
@@ -115,6 +130,8 @@ $('#myhouselist-page').on('pagebeforeshow', function() {
 
 $('#favlist-page').on('pagebeforeshow', function() {
     var element = "favhouselist";
+    $("#" + element).hide();
+    show_loading();
     $.ajax({
         type: 'GET',
         url: config.api_url + "api/apartment/fav",
@@ -126,8 +143,12 @@ $('#favlist-page').on('pagebeforeshow', function() {
                          if (data.apartments.length == 0) {
                              redirect_to("favlist_empty");
                          }
-                         Tempo.prepare(element).when(TempoEvent.Types.RENDER_STARTING, show_loading).when(TempoEvent.Types.RENDER_COMPLETE, function() {hide_loading();  })
-                                .render(data.apartments);
+                         Tempo.prepare(element)
+                            .when(TempoEvent.Types.RENDER_COMPLETE, function() 
+                             {
+                                 hide_loading(); 
+                                 $("#" + element).show(); 
+                             }).render(data.apartments);
                      } 
                  },
         error: server_err_fn
@@ -136,6 +157,8 @@ $('#favlist-page').on('pagebeforeshow', function() {
 
 $('#rentlist-page').on('pagebeforeshow', function() {
     var element = "rentlist";
+    $("#" + element).hide();
+    show_loading();
     $.ajax({
         type: 'GET',
         url: config.api_url + "api/rent/list",
@@ -149,9 +172,10 @@ $('#rentlist-page').on('pagebeforeshow', function() {
                              redirect_to("rentlist_empty.html");
                          } else {
                              Tempo.prepare(element)
-                                    .when(TempoEvent.Types.RENDER_STARTING, show_loading)
-                                    .when(TempoEvent.Types.RENDER_COMPLETE, hide_loading)
-                                    .render(data.rents);
+                                    .when(TempoEvent.Types.RENDER_COMPLETE, function() {
+                                        hide_loading(); 
+                                        $("#" + element).show();
+                                    }).render(data.rents);
                          }
                      } 
                  },
@@ -161,6 +185,8 @@ $('#rentlist-page').on('pagebeforeshow', function() {
 
 $('#reservelist-page').on('pagebeforeshow', function() {
     var element = "reservelist";
+    $("#" + element).hide();
+    show_loading();
     $.ajax({
         type: 'GET',
         url: config.api_url + "api/reserve/list?username=" + user.username,
@@ -173,26 +199,26 @@ $('#reservelist-page').on('pagebeforeshow', function() {
                          if (data.reserves.length == 0) {
                              redirect_to("reservelist_empty.html");
                          } else {
-                             Tempo.prepare(element).when(TempoEvent.Types.RENDER_STARTING, show_loading)
-                                .when(TempoEvent.Types.RENDER_COMPLETE, function() {
-                                    $(".btn-cancel-reserve").click(function(){
-                                        var reserve_id = $(this).attr('rid');
-                                        $.ajax({
-                                            type: 'PUT',
-                                            beforeSend: function (request) {
-                                                request.setRequestHeader("Authorization", "Bearer " + user.access_token);
-                                            },
-                                            url: config.api_url + "api/reserve?id=" + reserve_id + "cancelled=True",
-                                            success: function(data) {
-                                                if (data.message == "OK") alert("取消成功");
-                                                else  show_common_error(data.message); 
-                                            }
-                                        });    
-
-                                        alert(reserve_id);
-                                    }); 
-                                    hide_loading();
-                                })
+                             Tempo.prepare(element)
+        .when(TempoEvent.Types.RENDER_COMPLETE, function() {
+            hide_loading();
+            $("#" + element).show();
+            $(".btn-cancel-reserve").click(function(){
+                var reserve_id = $(this).attr('rid');
+                $.ajax({
+                    type: 'PUT',
+                    beforeSend: function (request) {
+                        request.setRequestHeader("Authorization", "Bearer " + user.access_token);
+                    },
+                    url: config.api_url + "api/reserve?id=" + reserve_id + "cancelled=True",
+                    success: function(data) {
+                        if (data.message == "OK") alert("取消成功");
+                        else  show_common_error(data.message); 
+                    }
+                });    
+            }); 
+            hide_loading();
+        })
     .render(data.reserves);
                          }
                      } 
@@ -206,6 +232,8 @@ $('#reservelist-page').on('pagebeforeshow', function() {
 
 $('#house-detail-page').on('pagebeforeshow', function() {
     var element = "house-detail";
+    $("#" + element).hide();
+    show_loading();
     var id = getParameter("id");
     var landlord = null;
     if (id == null) return;
@@ -214,7 +242,11 @@ $('#house-detail-page').on('pagebeforeshow', function() {
       url: config.api_url + "api/apartment?id=" + id,
       success: function(data) {
           if (data.message = "OK") {
-              Tempo.prepare(element).when(TempoEvent.Types.RENDER_STARTING, show_loading).when(TempoEvent.Types.RENDER_COMPLETE, hide_loading).render(data.apartment);
+              Tempo.prepare(element).when(TempoEvent.Types.RENDER_COMPLETE, function() 
+                  { 
+                      $("#" + element).show();
+                      hide_loading(); 
+                  }).render(data.apartment);
               console.log(data.apartment);
               landlord = data.apartment.user;
               $.ajax( { 
@@ -228,7 +260,7 @@ $('#house-detail-page').on('pagebeforeshow', function() {
                                    console.log(data.user);
                                    if (data.user.username == landlord.username) {
                                        $("#edit-house-link").show();
-                                       $("#reserve-house-link").hide();
+                                       $("#reserve-house-link").show();
                                    }
                                    user.avatar = config.api_url + user.avatar;
                                    localStorage.setItem('user', JSON.stringify(user));
@@ -244,6 +276,8 @@ $('#house-detail-page').on('pagebeforeshow', function() {
 });
 $('#more-device-page').on('pagebeforeshow', function() {
     var element = "more-device-list";
+    $("#" + element).hide();
+    show_loading();
     var id = getParameter("id");
     var landlord = null;
     if (id == null) return;
@@ -253,15 +287,19 @@ $('#more-device-page').on('pagebeforeshow', function() {
       success: function(data) {
           if (data.message = "OK") {
               console.log(data.apartment);
-              Tempo.prepare(element).when(TempoEvent.Types.RENDER_STARTING, show_loading).when(TempoEvent.Types.RENDER_COMPLETE, hide_loading).render(data.apartment.devices);
+              Tempo.prepare(element).when(TempoEvent.Types.RENDER_COMPLETE, function() {
+                  $("#" + element).show();
+                  hide_loading();
+              }).render(data.apartment.devices);
           }
       }
     });
 });
 
 $('#choose-date-page').on('pagebeforeshow', function() {
-    show_loading();
     var element = "choose-date-list";
+    $("#" + element).hide();
+    show_loading();
     var id = getParameter("id");
     if (id == null) return;
     $.ajax({
@@ -271,12 +309,11 @@ $('#choose-date-page').on('pagebeforeshow', function() {
           console.log("choose-date-page:");
           console.log(data.apartment.reserve_choices);
           if (data.message = "OK") {
-              Tempo.prepare(element).when(TempoEvent.Types.RENDER_STARTING, show_loading)
-        .when(TempoEvent.Types.RENDER_COMPLETE, function() {
-            $("#choose-date-list fieldset input").checkboxradio();
-            hide_loading();
-        })
-    .render(data.apartment.reserve_choices);
+              Tempo.prepare(element).when(TempoEvent.Types.RENDER_COMPLETE, function() {
+                  $("#choose-date-list fieldset input").checkboxradio();
+                  $("#" + element).show();
+                  hide_loading();
+              }).render(data.apartment.reserve_choices);
           } 
       }
     }); 
@@ -346,9 +383,6 @@ $('#edit-profile-page').on('pageinit', function() {
                            user.avatar = config.api_url + user.avatar;
                            localStorage.setItem('user', JSON.stringify(user));
                            set_user_data(user);
-
-
-
                        } else redirect_to("signin.html");
                    },
           error: function(data) { redirect_to("signin.html"); }
@@ -382,6 +416,8 @@ $('#edit-profile-page').on('pageinit', function() {
 // message.html
 $("#conversation-page").on('pageinit', function() {
     var element = "conversation-list";
+    $("#" + element).hide();
+    show_loading();
     $.ajax({
         type: 'GET',
         url: config.api_url + "api/message/conversation",
@@ -391,7 +427,10 @@ $("#conversation-page").on('pageinit', function() {
         success: function(data) {
                      if (data.message = "OK") {
                          console.log(data);
-                         Tempo.prepare(element).when(TempoEvent.Types.RENDER_STARTING, show_loading).when(TempoEvent.Types.RENDER_COMPLETE, hide_loading).render(data.conversations);
+                         Tempo.prepare(element).when(TempoEvent.Types.RENDER_COMPLETE, function() {
+                             $("#" + element).show();
+                             hide_loading();
+                         }).render(data.conversations);
                      } 
                  },
         error: server_err_fn
@@ -407,6 +446,8 @@ $('#message-detail-page').on('pagebeforeshow', function() {
     $("#header-title").val(to_username);
 
     var element = "messagedetail-list";
+    $("#" + element).hide();
+    show_loading();
     var messages = null;
     $.ajax({
         type: 'GET',
@@ -422,7 +463,10 @@ $('#message-detail-page').on('pagebeforeshow', function() {
                          }
                          messages = data.messages;
                          console.log(data);
-                         Tempo.prepare(element).when(TempoEvent.Types.RENDER_STARTING, show_loading).when(TempoEvent.Types.RENDER_COMPLETE, hide_loading).render(data.messages);
+                         Tempo.prepare(element).when(TempoEvent.Types.RENDER_COMPLETE, function() {
+                             hide_loading(); 
+                             $("#" + element).show();
+                         }).render(data.messages);
                      } 
                  },
         error: server_err_fn
