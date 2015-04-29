@@ -346,7 +346,7 @@ $("#conversation-page").on('pageinit', function() {
 
 
 // message_detail.html
-$('#message-detail-page').on('pageinit', function() {
+$('#message-detail-page').on('pagebeforeshow', function() {
     var from_username = getParameter("from_username");
     if (from_username == null) return;
     $("#to_username").val(to_username);
