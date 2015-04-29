@@ -141,7 +141,7 @@ $('#favlist-page').on('pagebeforeshow', function() {
         success: function(data) {
                      if (data.message = "OK") {
                          if (data.apartments.length == 0) {
-                             redirect_to("favlist_empty");
+                             redirect_to("favlist_empty.html");
                          }
                          Tempo.prepare(element)
                             .when(TempoEvent.Types.RENDER_COMPLETE, function() 
@@ -237,48 +237,94 @@ $('#house-detail-page').on('pagebeforeshow', function() {
     var id = getParameter("id");
     var landlord = null;
     if (id == null) return;
-    $.ajax({
-      type: 'GET',
-      beforeSend: function (request) {
-          request.setRequestHeader("Authorization", "Bearer " + user.access_token);
-      },
-      url: config.api_url + "api/apartment?id=" + id, 
-      success: function(data) {
-          if (data.message = "OK") {
-              console.log(data);
-              Tempo.prepare(element).when(TempoEvent.Types.RENDER_COMPLETE, function() 
-                  { 
-                      $("#" + element).show();
-                      hide_loading(); 
-                  }).render(data.apartment);
-              landlord = data.apartment.user;
-              $.ajax( { 
-                  type: 'GET',
-                  url: config.api_url + "api/account",
-                  beforeSend: function (request) {
-                      request.setRequestHeader("Authorization", "Bearer " + user.access_token);
-                  },
-                  success: function(data) {
-                               if (data.message = "OK") {
-                                   console.log(data.user);
-                                   if (data.user.username == landlord.username) {
-                                       $("#edit-house-link").show();
-                                       $("#reserve-house-link").show();
-                                   }
-                                   user.avatar = config.api_url + user.avatar;
-                                   localStorage.setItem('user', JSON.stringify(user));
-                               } 
-                           }
-              }); 
+    
+    var bind_nofav = function() {
+        $(".ui-icon-nofav").click(function() {
+            // fav the house
+            var btn = $(this);
+            $.ajax({
+                type: 'POST',
+                beforeSend: function (request) {
+                    request.setRequestHeader("Authorization", "Bearer " + user.access_token);
+                },
+                url: config.api_url + "api/apartment/fav?action=append&id=" + id,
+                success: function(data) {
+                    if (data.message == "OK") {
+                        btn.removeClass("ui-icon-nofav").addClass("ui-icon-fav"); 
+                        bind_fav();
+                    }
+                }
+            });     
+        });
+    };
+    var bind_fav = function() {
+        $(".ui-icon-fav").click(function() {
+            var btn = $(this);
+            $.ajax({
+                type: 'POST',
+                beforeSend: function (request) {
+                    request.setRequestHeader("Authorization", "Bearer " + user.access_token);
+                },
+                url: config.api_url + "api/apartment/fav?action=remove&id=" + id,
+                success: function(data) {
+                    if (data.message == "OK") {
+                        btn.removeClass("ui-icon-fav").addClass("ui-icon-nofav"); 
+                        bind_nofav();
+                    }
+                }
+            }); 
 
-          } else {
-              redirect_to("signin.html");
-          }
-      },
-          error: server_err_fn
+
+        });
+    }; 
+
+    $.ajax({
+        type: 'GET',
+        beforeSend: function (request) {
+            request.setRequestHeader("Authorization", "Bearer " + user.access_token);
+        },
+        url: config.api_url + "api/apartment?id=" + id, 
+        success: function(data) {
+            if (data.message = "OK") {
+                console.log(data);
+                Tempo.prepare(element).when(TempoEvent.Types.RENDER_COMPLETE, function() 
+                    { 
+                        $("#" + element).show();
+                        bind_fav();
+                        bind_nofav();
+                        hide_loading(); 
+                    }).render(data.apartment);
+                landlord = data.apartment.user;
+                $.ajax( { 
+                    type: 'GET',
+                    url: config.api_url + "api/account",
+                    beforeSend: function (request) {
+                        request.setRequestHeader("Authorization", "Bearer " + user.access_token);
+                    },
+                    success: function(data) {
+                                 if (data.message = "OK") {
+                                     console.log(data.user);
+                                     if (data.user.username == landlord.username) {
+                                         $("#edit-house-link").show();
+                                         $("#reserve-house-link").show();
+                                     }
+                                     user.avatar = config.api_url + user.avatar;
+                                     localStorage.setItem('user', JSON.stringify(user));
+                                 } 
+                             }
+                }); 
+
+            } else {
+                redirect_to("signin.html");
+            }
+        },
+        error: server_err_fn
     }); 
 
+
+
 });
+
 $('#more-device-page').on('pagebeforeshow', function() {
     var element = "more-device-list";
     $("#" + element).hide();
@@ -853,23 +899,23 @@ function load_user(element) {
     show_loading();
     $.ajax({
         type: 'GET',
-    url: config.api_url + "api/account",
-    beforeSend: function (request) {
-        request.setRequestHeader("Authorization", "Bearer " + user.access_token);
-    },
-    success: function(data) {
-                 if (data.message = "OK") {
-                     $.extend(user, data.user);
-                     user.avatar = config.api_url + user.avatar;
-                     localStorage.setItem('user', JSON.stringify(user));
-                     Tempo.prepare(element).when(TempoEvent.Types.RENDER_COMPLETE, function() {
-                         $("#" + element).show();
-                         hide_loading();
-                     }).render(user);
-                 } else {
-                     redirect_to("signin.html");
-                 }
-             },
+        url: config.api_url + "api/account",
+        beforeSend: function (request) {
+            request.setRequestHeader("Authorization", "Bearer " + user.access_token);
+        },
+        success: function(data) {
+                     if (data.message = "OK") {
+                         $.extend(user, data.user);
+                         user.avatar = config.api_url + user.avatar;
+                         localStorage.setItem('user', JSON.stringify(user));
+                         Tempo.prepare(element).when(TempoEvent.Types.RENDER_COMPLETE, function() {
+                             $("#" + element).show();
+                             hide_loading();
+                         }).render(user);
+                     } else {
+                         redirect_to("signin.html");
+                     }
+                 },
         error: function(data) { show_common_error("用户名密码错误"); }
     });   
 }
