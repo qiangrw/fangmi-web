@@ -361,9 +361,10 @@ $('#message-detail-page').on('pageinit', function() {
             request.setRequestHeader("Authorization", "Bearer " + user.access_token);
         },
         success: function(data) {
+                     console.log(data);
                      if (data.message = "OK") {
                          for (i = 0; i < data.messages.length; ++i) {
-                           data.messages[i].mine = data.messages[i].from_username != to_username;
+                             data.messages[i].mine = data.messages[i].from_username != to_username;
                          }
                          messages = data.messages;
                          console.log(data);
@@ -385,13 +386,14 @@ $('#message-detail-page').on('pageinit', function() {
             data: $("#post-message-form").serialize(),
             success: function(data) {
                 if (data.message == "OK") {
-                    // TODO fix bug here
-                    Tempo.prepare(element).append(
-                        {
-                            mine: true,
-                            content: $("#message-content-input").val()
-                        }
-                        );
+                    var message =  { mine: true, content: $("#message-content-input").val() };
+                    $("#messagedetail-list").append(
+                    '<div class="message-div">' + 
+					'<div class="message-img-div"><img src="images/user/user_profile.png" /></div>'+
+					'<div class="message-text-div"><p>' + message.content + '</p></div>'+
+                    '</div>'
+                    );
+                    $("#message-content-input").val('');
                 } else  {
                     alert("发送失败");
                 }
@@ -929,8 +931,8 @@ function refreshPage()
 {
     $.mobile.changePage( window.location.href, {
         allowSamePageTransition : true,
-        transition              : 'none',
-        showLoadMsg             : false,
-        reloadPage              : true
+    transition              : 'none',
+    showLoadMsg             : false,
+    reloadPage              : true
     });
 }

@@ -28,61 +28,52 @@
             <!-- ./HEADER -->
 
             <!-- MAIN -->
-            <div id="messagedetail-list" role="main" class="ui-content">
-                <div data-template class="message-div">
-                    {% if (mine == true) %}
-					<div class="message-img-div"><img src="images/user/user_profile.png" /></div>
-					<div class="message-text-div"><p>{{content}}</p></div>
-                    {% else %}
-					<div class="message-text-div"><p>{{content}}</p></div>
-					<div class="message-img-div"><img src="images/user/user_profile.png" /></div>
+            <div role="main" class="ui-content">
+                <div id="messagedetail-list" style="min-height: 480px;!important;">
+                    <div data-template class="message-div">
+                        {% if (mine == true) %}
+                        <div class="message-img-div"><img src="images/user/user_profile.png" /></div>
+                        <div class="message-text-div"><p>{{content}}</p></div>
+                        {% else %}
+                        <div class="message-text-div"><p>{{content}}</p></div>
+                        <div class="message-img-div"><img src="images/user/user_profile.png" /></div>
 
-                    {% endif %}
-				</div>
-
-                <!--
-				<div class="message-div">
-					<div class="message-text-div text-inverse">
-						<p>你好，我是强哥哥，强哥哥，各个，哥。</p>
-					</div>
-					<div class="message-img-div">
-						<img src="images/user/user_profile.png" />
-					</div>
+                        {% endif %}
+                    </div>
                 </div>
-                -->
-				
+
 
                 <form id="post-message-form">
-				<table class="ui-footer-fixed" style="width: 100%; margin-bottom: 60px;">
-					<tr>
-                        <input type="hidden" name="type" value="1">
-                        <input type="hidden" name="to_username" id="to_username" value="">
-                            
-                        <td style="width: 96%; display: inline-block;">
-                         <input id="message-content-input" name="content" type="text" value="" placeholder="输入消息回复">
-                        </td>
-                        <td style="vertical-align: middle!important">
-                            <a id="submit-post-message" href="#" class="ui-btn ui-btn-captcha">发送</a>
-                        </td>
-                    </tr>
-				<table>
-                </form>
+                    <table style="width: 100%; margin-bottom: 20px;">
+                        <tr>
+                            <input type="hidden" name="type" value="1">
+                            <input type="hidden" name="to_username" id="to_username" value="">
 
-            </div>  
-            <!-- ./MAIN -->
-        </div>
-        <!-- ./PAGE -->
-		
-		<div id="nav-footer" data-role="footer" data-position="fixed" data-theme="c">
-            <div data-role="navbar" data-iconpos="top">
-                <ul>
-                    <li><a href="index.html" data-icon="home">房蜜</a></li>
-                    <li><a href="user.html" data-icon="user">个人账户</a></li>
-                    <li><a href="about.html" data-icon="info">关于房蜜</a></li>
-                    <li><a href="setting.html" data-icon="gear">设置</a></li>
-                </ul>
-            </div><!-- /navbar -->
-        </div><!-- /footer -->
+                            <td style="width: 96%; display: inline-block;">
+                                <input id="message-content-input" name="content" type="text" value="" placeholder="输入消息回复">
+                            </td>
+                            <td style="vertical-align: middle!important">
+                                <a id="submit-post-message" href="#" class="ui-btn ui-btn-captcha">发送</a>
+                            </td>
+                        </tr>
+                        <table>
+                        </form>
 
-    </body>
-</html>
+                    </div>  
+                    <!-- ./MAIN -->
+                </div>
+                <!-- ./PAGE -->
+
+                <div id="nav-footer" data-role="footer" data-position="fixed" data-theme="c">
+                    <div data-role="navbar" data-iconpos="top">
+                        <ul>
+                            <li><a href="index.html" data-icon="home">房蜜</a></li>
+                            <li><a href="user.html" data-icon="user">个人账户</a></li>
+                            <li><a href="about.html" data-icon="info">关于房蜜</a></li>
+                            <li><a href="setting.html" data-icon="gear">设置</a></li>
+                        </ul>
+                    </div><!-- /navbar -->
+                </div><!-- /footer -->
+
+            </body>
+        </html>
