@@ -334,6 +334,9 @@ $('#more-device-page').on('pagebeforeshow', function() {
     if (id == null) return;
     $.ajax({
         type: 'GET',
+      beforeSend: function (request) {
+          request.setRequestHeader("Authorization", "Bearer " + user.access_token);
+      },
       url: config.api_url + "api/apartment?id=" + id,
       success: function(data) {
           if (data.message = "OK") {
