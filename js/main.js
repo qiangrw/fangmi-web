@@ -238,16 +238,19 @@ $('#house-detail-page').on('pagebeforeshow', function() {
     var landlord = null;
     if (id == null) return;
     $.ajax({
-        type: 'GET',
-      url: config.api_url + "api/apartment?id=" + id,
+      type: 'GET',
+      beforeSend: function (request) {
+          request.setRequestHeader("Authorization", "Bearer " + user.access_token);
+      },
+      url: config.api_url + "api/apartment?id=" + id, 
       success: function(data) {
           if (data.message = "OK") {
+              console.log(data);
               Tempo.prepare(element).when(TempoEvent.Types.RENDER_COMPLETE, function() 
                   { 
                       $("#" + element).show();
                       hide_loading(); 
                   }).render(data.apartment);
-              console.log(data.apartment);
               landlord = data.apartment.user;
               $.ajax( { 
                   type: 'GET',
@@ -268,7 +271,9 @@ $('#house-detail-page').on('pagebeforeshow', function() {
                            }
               }); 
 
-          } 
+          } else {
+              redirect_to("signin.html");
+          }
       },
           error: server_err_fn
     }); 
@@ -345,8 +350,15 @@ $('#user-page').on('pagebeforeshow', function() {
         redirect_to("signin.html");
         return;
     }
+    element = "user-info";
+    $("#" + element).hide();
+    show_loading();
     if (user_loaded()) {
         Tempo.prepare("user-info").render(user);
+        Tempo.prepare(element).when(TempoEvent.Types.RENDER_COMPLETE, function() {
+            $("#" + element).show();
+            hide_loading();
+        }).render(user);
     } else {
         load_user("user-info");
     }
@@ -837,6 +849,8 @@ function user_loaded() {
 }
 
 function load_user(element) {
+    $("#" + element).hide();
+    show_loading();
     $.ajax({
         type: 'GET',
     url: config.api_url + "api/account",
@@ -848,12 +862,15 @@ function load_user(element) {
                      $.extend(user, data.user);
                      user.avatar = config.api_url + user.avatar;
                      localStorage.setItem('user', JSON.stringify(user));
-                     Tempo.prepare(element).render(user);
+                     Tempo.prepare(element).when(TempoEvent.Types.RENDER_COMPLETE, function() {
+                         $("#" + element).show();
+                         hide_loading();
+                     }).render(user);
                  } else {
                      redirect_to("signin.html");
                  }
              },
-    error: function(data) { show_common_error("用户名密码错误"); }
+        error: function(data) { show_common_error("用户名密码错误"); }
     });   
 }
 
