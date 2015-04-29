@@ -18,8 +18,8 @@ if (whole_house == null) {
     };
 }
 
-// global functions
-var show_loading = function(event) { $.mobile.loading( "show", { text: "Loading" }); }
+// global functions                                                                    
+var show_loading = function(event) { $.mobile.loading( "show", { text: "Loading", textVisible: true }); }
 var hide_loading = function(event) { $.mobile.loading( "hide" ); }
 
 
@@ -94,13 +94,20 @@ $('#myhouselist-page').on('pagebeforeshow', function() {
     cur_url = "houselist.html?"; 
     var base_url = config.api_url + "api/apartment/list?username=" + user.username;
     var element = "myhouselist";
+    $("#" + element).hide();
     $.ajax({
         type: 'GET',
         url: base_url,
         success: function(data) {
             console.log(data);
             if (data.message = "OK") {
-                Tempo.prepare(element).when(TempoEvent.Types.RENDER_STARTING, show_loading).when(TempoEvent.Types.RENDER_COMPLETE, hide_loading).render(data.apartments); } 
+                Tempo.prepare(element).
+                        when(TempoEvent.Types.RENDER_STARTING, show_loading)
+                        .when(TempoEvent.Types.RENDER_COMPLETE, function(){
+                                $("#" + element).show();
+                                hide_loading();
+                        })
+                        .render(data.apartments); } 
         },
         error: server_err_fn
     });     
@@ -119,7 +126,8 @@ $('#favlist-page').on('pagebeforeshow', function() {
                          if (data.apartments.length == 0) {
                              redirect_to("favlist_empty");
                          }
-                         Tempo.prepare(element).when(TempoEvent.Types.RENDER_STARTING, show_loading).when(TempoEvent.Types.RENDER_COMPLETE, hide_loading).render(data.apartments);
+                         Tempo.prepare(element).when(TempoEvent.Types.RENDER_STARTING, show_loading).when(TempoEvent.Types.RENDER_COMPLETE, function() {hide_loading();  })
+                                .render(data.apartments);
                      } 
                  },
         error: server_err_fn
@@ -140,7 +148,10 @@ $('#rentlist-page').on('pagebeforeshow', function() {
                          if (data.rents.length == 0) {
                              redirect_to("rentlist_empty.html");
                          } else {
-                             Tempo.prepare(element).when(TempoEvent.Types.RENDER_STARTING, show_loading).when(TempoEvent.Types.RENDER_COMPLETE, hide_loading).render(data.rents);
+                             Tempo.prepare(element)
+                                    .when(TempoEvent.Types.RENDER_STARTING, show_loading)
+                                    .when(TempoEvent.Types.RENDER_COMPLETE, hide_loading)
+                                    .render(data.rents);
                          }
                      } 
                  },
