@@ -831,6 +831,34 @@ $('#set-device-page').on('pageinit', function() {
     });
 });
 $('#post-whole-page').on('pageinit', function() {
+    // get community list 
+
+    // set value if have 
+    if (whole_house != null) {
+        $("#title").val(whole_house.title);
+        $("#subtitle").val(whole_house.subtitle);
+        $("#address").val(whole_house.address);
+        $("#num_bedroom").val(whole_house.num_bedroom);
+        $("#num_livingroom").val(whole_house.num_livingroom);
+        $("#price").val(whole_house.price);
+        $("#area").val(whole_house.area);
+        $("#type").val(whole_house.type);
+        if (whole_house.rooms[0].date_entrance != null) {
+            $("#set-entrance-date-link").html("已经设置");
+        }
+        if (whole_house.reserve_choices != null) {
+            $("#set-date-link").html("已经设置");
+        }
+        if (whole_house.tags != null) {
+            $("#set-keywords-link").html("已经设置");
+        }
+        if (whole_house.devices != null) {
+            $("#set-devices-link").html("已经设置");
+        }
+    }
+
+
+    // post a new house
     $("#submit-post-whole").click(function() {
         whole_house.title = $("#title").val();
         whole_house.subtitle = $("#subtitle").val();
@@ -841,6 +869,7 @@ $('#post-whole-page').on('pageinit', function() {
         whole_house.type = 0;
         whole_house.rooms[0].price =  $("#price").val();
         whole_house.rooms[0].area =  $("#area").val();
+        localStorage.setItem('whole_house', JSON.stringify(whole_house));
 
         // TODO add valiation
 
@@ -856,6 +885,8 @@ $('#post-whole-page').on('pageinit', function() {
                 if (data.message == "OK") {
                     // TODO 上传图片
                     show_common_error("发布成功");
+                    // delete storage
+                    // localStorage.removeItem('whole_house');
                 } else  show_common_error(data.message); 
             },
             error: server_err_fn
