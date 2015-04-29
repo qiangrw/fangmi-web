@@ -320,6 +320,8 @@ table td, table th,  table td *, table th * { vertical-align: top; }
     width: 100%;
     display: inline-block;
     margin: auto auto;
+    padding: 4px 10px; 
+    margin-top:10px;
 }
 .device-item {
     display: inline-block;

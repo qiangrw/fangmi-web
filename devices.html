@@ -12,54 +12,26 @@
         <script src="js/jquery.validate.min.js"></script>
         <script src="js/messages_zh.js"></script>
         <script src="js/md5.js"></script>
-        <script src="js/main.js"></script>
-        <script>
-            $(function() {
-                $( "[data-role='navbar']" ).navbar();
-                $( "[data-role='header'], [data-role='footer']" ).toolbar();
-            });
-        </script>
+        <script src="js/tempo.min.js" type="text/javascript"></script>
     </head>
 
     <body>
-
-
-
-        <div id="devices" data-role="page" data-dialog="true">
+        <div id="more-device-page" data-role="page" data-dialog="true">
             <div data-role="header" data-theme="c">
                 <h1>更多房间设备</h1>
-                <div id="more-device-div" class="ui-grid-solo" style="background: white!important; padding: 4px 4px; margin-top:10px;">
-                    <table style="width: 100%; text-align: center; background: white;">
-                        <tr>
-                            <td>
-                                <img src="images/device/Wifi.png"></img>
-                            </td>
-                            <td>
-                                <img src="images/device/Xbox-one.png"></img>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <img src="images/device/chuang.png"></img>
-                            </td>
-                            <td>
-                                <img src="images/device/shafa.png"></img>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <img src="images/device/yigui.png"></img>
-                            </td>
-                            <td>
-                                <img src="images/device/shujia.png"></img>
-                            </td>
-                        </tr>
-                    </table>
-                </div>  
-			
+                <script src="js/main.js"></script>
             </div>
-        </div><!-- /content -->
+            <div id="more-device-list" class="ui-grid-solo white-div">
+                <div id="device-item-div">
+                    <div data-template  class="device-item">
+                        <img src="images/device/chuang.png" data-src2="images/device/{{name}}.png"></img>
+                    </div>
+                </div>  
+            </div>  
+
+        </div>
+    </div><!-- /content -->
 
 
-    </body>
+</body>
 </html>

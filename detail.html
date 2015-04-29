@@ -118,7 +118,7 @@
 
                 <a id="edit-house-link" style="display:none" href="post_whole.html?id={{id}}" class="ui-btn">修改房间信息</a>
                 
-                <a href="choose_date.html?id={{id}}" class="ui-btn">预约看房</a>
+                <a id="reserve-house-link" href="choose_date.html?id={{id}}" class="ui-btn">预约看房</a>
 
                 {% if (type == 1) %} 
                 <h3 class="padding-div">单间信息</h3>
@@ -130,7 +130,7 @@
                                 {{price}} 元/月 <br>
                                 {{date_entrance}} <br> 
                                 <span class="pink">
-                                    可入住   
+                                    可入住
                                 <span>
                             </td>
                         </tr>
@@ -161,14 +161,12 @@
                 </div>
 
                 <h3 class="padding-div">房间设备</h3>
-                <div id="device-item-div" class="ui-grid-solo white-div" style="background:
-                    white!important; padding: 4px 10px; margin-top:10px;">
+                <div id="device-item-div" class="ui-grid-solo white-div">
                     <div class="device-item" data-template-for="devices">
-                        <img title="" src="images/device/chuang.png"></img>
+                        <img title="" src="images/device/{{name}}.png"></img>
                     </div>
                     <div class="device-item" style="padding-top: 20px;" data-after-template>
-                        <a href="devices.html" style="color: #999999; text-decoration: none;
-                            padding-top: 20px;">更多设备</a>
+                        <a href="devices.html?id={{id}}" style="color: #999999; text-decoration: none; padding-top: 20px;">更多设备</a>
                     </div>
                 </div>
 
@@ -186,7 +184,7 @@
                             <tr><th width=100>个性签名:</th><td>{{user.status}}</td></tr>
                         </table>
                     </div>
-                    <a href="message_detail.html?to_username={{user.username}}" class="ui-btn ui-corner-all">在线联系房东</a>
+                    <a href="message_detail.html?from_username={{user.username}}" class="ui-btn ui-corner-all">在线联系房东</a>
                 </div>
 
                 <!--

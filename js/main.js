@@ -196,7 +196,7 @@ $('#reservelist-page').on('pagebeforeshow', function() {
 $('#house-detail-page').on('pagebeforeshow', function() {
     var element = "house-detail";
     var id = getParameter("id");
-    var landloard = null;
+    var landlord = null;
     if (id == null) return;
     $.ajax({
         type: 'GET',
@@ -204,6 +204,7 @@ $('#house-detail-page').on('pagebeforeshow', function() {
       success: function(data) {
           if (data.message = "OK") {
               Tempo.prepare(element).when(TempoEvent.Types.RENDER_STARTING, show_loading).when(TempoEvent.Types.RENDER_COMPLETE, hide_loading).render(data.apartment);
+              console.log(data.apartment);
               landlord = data.apartment.user;
               $.ajax( { 
                   type: 'GET',
@@ -214,8 +215,9 @@ $('#house-detail-page').on('pagebeforeshow', function() {
                   success: function(data) {
                                if (data.message = "OK") {
                                    console.log(data.user);
-                                   if (data.user.username = landlord.username) {
+                                   if (data.user.username == landlord.username) {
                                        $("#edit-house-link").show();
+                                       $("#reserve-house-link").hide();
                                    }
                                    user.avatar = config.api_url + user.avatar;
                                    localStorage.setItem('user', JSON.stringify(user));
@@ -229,6 +231,23 @@ $('#house-detail-page').on('pagebeforeshow', function() {
     }); 
 
 });
+$('#more-device-page').on('pagebeforeshow', function() {
+    var element = "more-device-list";
+    var id = getParameter("id");
+    var landlord = null;
+    if (id == null) return;
+    $.ajax({
+        type: 'GET',
+      url: config.api_url + "api/apartment?id=" + id,
+      success: function(data) {
+          if (data.message = "OK") {
+              console.log(data.apartment);
+              Tempo.prepare(element).when(TempoEvent.Types.RENDER_STARTING, show_loading).when(TempoEvent.Types.RENDER_COMPLETE, hide_loading).render(data.apartment.devices);
+          }
+      }
+    });
+});
+
 $('#choose-date-page').on('pagebeforeshow', function() {
     show_loading();
     var element = "choose-date-list";
@@ -412,11 +431,11 @@ $('#message-detail-page').on('pagebeforeshow', function() {
                 if (data.message == "OK") {
                     var message =  { mine: true, content: $("#message-content-input").val() };
                     $("#messagedetail-list").append(
-                    '<div class="message-div">' + 
-					'<div class="message-img-div"><img src="images/user/user_profile.png" /></div>'+
-					'<div class="message-text-div"><p>' + message.content + '</p></div>'+
-                    '</div>'
-                    );
+                        '<div class="message-div">' + 
+                        '<div class="message-img-div"><img src="images/user/user_profile.png" /></div>'+
+                        '<div class="message-text-div"><p>' + message.content + '</p></div>'+
+                        '</div>'
+                        );
                     $("#message-content-input").val('');
                 } else  {
                     alert("发送失败");
@@ -697,7 +716,6 @@ $('#set-device-page').on('pageinit', function() {
 });
 $('#post-whole-page').on('pageinit', function() {
     $("#submit-post-whole").click(function() {
-        // $.extend(whole_house, $("#post-house-form").serialize());
         whole_house.title = $("#title").val();
         whole_house.subtitle = $("#subtitle").val();
         whole_house.address = $("#address").val();
