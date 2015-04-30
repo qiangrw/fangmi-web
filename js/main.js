@@ -870,6 +870,7 @@ $('#post-whole-page').on('pageinit', function() {
                              hide_loading();
                          }).render(data.communities);
                      } else {
+                         hide_loading();
                          redirect_to("signin.html");
                      }
                  }

@@ -28,6 +28,7 @@ $('#signin-page').on('pageinit', function() {
                     get_with_auth("api/account", signin_succ, signin_fail);
                 } else {
                     show_common_error(data.message);
+                    hide_loading();
                 }
             },
             error: server_err_fn
