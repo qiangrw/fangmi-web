@@ -7,6 +7,7 @@ var server_err_fn = function(data) {
     console.log(data);
 };
 var whole_house = JSON.parse(localStorage.getItem('whole_house'));
+var single_house = JSON.parse(localStorage.getItem('single_house'));
 var cur_url;
 if (whole_house == null) {
     whole_house = {
@@ -16,6 +17,9 @@ if (whole_house == null) {
                    date_entrance: null
                }]
     };
+}
+if (single_house == null) {
+     single_house = { };
 }
 
 // global functions                                                                    
@@ -719,19 +723,16 @@ $('#setting-page').on('pagebeforeshow', function() {
 
 // set_date.html
 $('#set-date-page').on('pageinit', function() {
-    $(".flipbox-input").datebox({
-        mode: "flipbox",
-        afterToday: true
-    });
-    $("#start_time").datebox({
-        mode: "timeflipbox"
-    });
-    $("#end_time").datebox({
-        mode: "timeflipbox"
-    });
+    var type = getParameter("type");
+    var house_type = type == 0 ? 'whole_house' : 'single_house';
+    var house = type == 0 ? whole_house : single_house;
 
-    if (whole_house.reserve_choices != null) {
-        var choices = whole_house.reserve_choices;
+    $(".flipbox-input").datebox({ mode: "flipbox", afterToday: true });
+    $("#start_time").datebox({ mode: "timeflipbox" }); 
+    $("#end_time").datebox({ mode: "timeflipbox" });
+
+    if (house.reserve_choices != null) {
+        var choices = house.reserve_choices;
         for (i=0; i<choices.length; ++i) {
             var choice = choices[i];
             $("#my-date-list").append(
@@ -741,7 +742,7 @@ $('#set-date-page').on('pageinit', function() {
         }
     }
 
-    $("#submit-add-date").click(function() {
+    $("#submit-add-date").unbind().click(function() {
         var date = $('#reserve_date').val();
         var start = $('#start_time').val();
         var end = $('#end_time').val();
@@ -766,7 +767,7 @@ $('#set-date-page').on('pageinit', function() {
     });
 
     var reserve_choices = [];
-    $("#set-date-back").click(function() {
+    $("#set-date-back").unbind().click(function() {
         $("#my-date-list li>a").each(function(index) {
             // assign date
             var eles =  $(this).html().split(' ');
@@ -776,11 +777,74 @@ $('#set-date-page').on('pageinit', function() {
                 time_end:   to_time(eles[4], eles[5])
             });
         });
-        whole_house["reserve_choices"] = reserve_choices;
-        localStorage.setItem('whole_house', JSON.stringify(whole_house));
-        redirect_to("post_whole.html");
+        house["reserve_choices"] = reserve_choices;
+        localStorage.setItem(house_type, JSON.stringify(house));
+        if (type == 0) redirect_to("post_whole.html");
+        else redirect_to("post_single.html");
     });
 });
+
+
+// set_rooms.html
+$('#set-rooms-page').on('pageinit', function() {
+    var type = 1;
+    var house_type = type == 0 ? 'whole_house' : 'single_house';
+    var house = type == 0 ? whole_house : single_house;
+
+    $(".flipbox-input").datebox({ mode: "flipbox", afterToday: true });
+    if (house.rooms != null) {
+        var rooms = house.rooms;
+        for (i=0; i<rooms.length; ++i) {
+            var room = rooms[i];
+            $("#my-room-list").append(
+                '<li><a href="#" name="'+room.name+ '" price="' + room.price + '" area="' + room.area + '" date_entrance="' + room.date_entrance +   '">' + 
+                room.name  + ' ['+ room.price + '元/月 ' + room.area + '平方] ' +  room.date_entrance + '</a></li>' 
+                ).listview('refresh');
+        }
+    }
+
+    $("#submit-add-room").unbind().click(function() {
+        var name = $('#name').val();
+        var price = $('#price').val();
+        var area = $('#area').val();
+        var date_entrance = $('#date_entrance').val();
+        if (name.length == 0 || price.length == 0 || area.length == 0 || date_entrance.length == 0) {
+            alert("请把房间信息填充完整.");
+            return;
+        }
+
+        $("#my-room-list").append(
+            '<li><a href="#" name="'+name+ '" price="' + price + '" area="' + area +  '" date_entrance="' + date_entrance +   '">' + 
+            name  + ' ['+ price + '元/月 ' + area + '平方] ' +  date_entrance + '</a></li>' 
+            ).listview('refresh');
+        $("#my-room-list li").click(function() {
+            $(this).remove();
+            $("#my-room-list").listview('refresh');
+        });
+    });
+
+    $("#my-room-list li").click(function() {
+        $(this).remove();
+        $("#my-room-list").listview('refresh');
+    });
+
+    var rooms = [];
+    $("#set-room-back").unbind().click(function() {
+        $("#my-room-list li>a").each(function(index) {
+            // assign date
+            rooms.push({
+                name:  $(this).attr("name"), 
+                price:  $(this).attr("price"), 
+                area:  $(this).attr("area"), 
+                date_entrance:  $(this).attr("date_entrance")
+            });
+        });
+        house["rooms"] = rooms;
+        localStorage.setItem(house_type, JSON.stringify(house));
+        redirect_to("post_single.html");
+    });
+});
+
 
 // set_entrance_date.html
 $('#set-entrance-date-page').on('pageinit', function() {
@@ -801,22 +865,40 @@ $('#set-entrance-date-page').on('pageinit', function() {
 
 // set_keywords.html
 $('#set-keywords-page').on('pageinit', function() {
-    $("#set-keywords").click(function() {
+    var type = getParameter("type");
+    var house_type = type == 0 ? 'whole_house' : 'single_house';
+    var house = type == 0 ? whole_house : single_house;
+
+    var tags_text = "";
+    if (house.tags != null) {
+        for (i = 0; i < house.tags.length; ++i) {
+            if (i != 0) tags_text += ",";
+            tags_text += house.tags[i].name;
+        }
+    }
+    $('.input-tags').val(tags_text);
+
+
+    $("#set-keywords").unbind().click(function() {
         var tags = $("#tags").val().split(',');
         var tag_array = [];
         for (i=0; i<tags.length; ++i) {
             tag_array.push( { name: tags[i] });
         }
-        whole_house["tags"] = tag_array;
-        localStorage.setItem('whole_house', JSON.stringify(whole_house));
-        redirect_to("post_whole.html");
+        house["tags"] = tag_array;
+        localStorage.setItem(house_type, JSON.stringify(house));
+        if (type == 0) redirect_to("post_whole.html");
+        else redirect_to("post_single.html");
     });  
     $('.input-tags').tagsInput();
 });
 
-// set_device.html
+// set_devices.html
 $('#set-device-page').on('pageinit', function() {
-    $("#set-device").click(function() {
+    var type = getParameter("type");
+    var house_type = type == 0 ? 'whole_house' : 'single_house';
+    var house = type == 0 ? whole_house : single_house;
+    $("#set-device").unbind().click(function() {
         var devices = [];
         $('input[data-cacheval="false"]').each(function(index) {
             devices.push({
@@ -824,12 +906,92 @@ $('#set-device-page').on('pageinit', function() {
                 count: 1
             });
         });
-        whole_house["devices"] = devices;
-        localStorage.setItem('whole_house', JSON.stringify(whole_house));
-        // TODO read from url
-        redirect_to("post_whole.html");
+        house["devices"] = devices;
+        localStorage.setItem(house_type, JSON.stringify(house));
+        if (type == 0) redirect_to("post_whole.html");
+        else redirect_to("post_single.html");
     });
 });
+
+$('#post-single-page').on('pageinit', function() {
+    // get community list   e
+    var element = "community_id";
+    show_loading();
+    $.ajax({
+        type: 'GET',
+        url: config.api_url + "api/community/list",
+        beforeSend: function (request) {
+            request.setRequestHeader("Authorization", "Bearer " + user.access_token);
+        },
+        success: function(data) {
+                     console.log(data);
+                     Tempo.prepare(element).when(TempoEvent.Types.RENDER_COMPLETE, function() {
+                         hide_loading();
+                         $("#community_id").val(single_house.community_id);
+                         $('#community_id').selectmenu('refresh', true);
+                     }).render(data.communities);
+                 }
+    });
+
+
+    // set value if have 
+    if (single_house != null) {
+        $("#title").val(single_house.title);
+        $("#subtitle").val(single_house.subtitle);
+        $("#address").val(single_house.address);
+        $("#num_bedroom").val(single_house.num_bedroom);
+        $("#num_livingroom").val(single_house.num_livingroom);
+        $("#type").val(single_house.type);
+        if (single_house.rooms != null) {
+            $("#set-room-link").html("已经设置");
+        }
+        if (single_house.reserve_choices != null) {
+            $("#set-date-link").html("已经设置");
+        }
+        if (single_house.tags != null) {
+            $("#set-keywords-link").html("已经设置");
+        }
+        if (single_house.devices != null) {
+            $("#set-devices-link").html("已经设置");
+        }
+    }
+
+
+     // post a new house
+    $("#submit-post-single").click(function() {
+        single_house.title = $("#title").val();
+        single_house.subtitle = $("#subtitle").val();
+        single_house.address = $("#address").val();
+        single_house.community_id = $("#community_id").val();
+        single_house.num_bedroom = $("#num_bedroom").val();
+        single_house.num_livingroom = $("#num_livingroom").val();
+        single_house.type = 1;
+        localStorage.setItem('single_house', JSON.stringify(single_house));
+
+        // TODO add valiation
+        $.ajax({
+            type: 'POST',
+            beforeSend: function (request) {
+                request.setRequestHeader("Authorization", "Bearer " + user.access_token);
+            },
+            url: config.api_url + "api/apartment",
+            contentType: "application/json; charset=utf-8",
+            data: JSON.stringify(single_house),
+            success: function(data) {
+                if (data.message == "OK") {
+                    // TODO 上传图片
+                    show_common_error("发布成功");
+                    // delete storage
+                    // localStorage.removeItem('whole_house');
+                } else  show_common_error(data.message); 
+            },
+            error: server_err_fn
+        });  
+    });     
+});
+
+
+
 $('#post-whole-page').on('pageinit', function() {
     // get community list   e
     var element = "community_id";
