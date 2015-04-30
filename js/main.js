@@ -861,13 +861,17 @@ $('#post-whole-page').on('pageinit', function() {
             request.setRequestHeader("Authorization", "Bearer " + user.access_token);
         },
         success: function(data) {
-                     Tempo.prepare(element).when(TempoEvent.Types.RENDER_COMPLETE, function() {
-                         hide_loading();
-                         $('#community_id').selectmenu('refresh', true);
-                         $("#community_id").val(whole_house.community_id);
-                         $('#community_id').selectmenu('refresh', true);
-
-                     }).render(data.communities);
+                     if (data.message == "OK" && data.status_code == 200) {
+                         console.log(data);
+                         Tempo.prepare(element).when(TempoEvent.Types.RENDER_COMPLETE, function() {
+                             $('#community_id').selectmenu('refresh', true);
+                             $("#community_id").val(whole_house.community_id);
+                             $('#community_id').selectmenu('refresh', true);
+                             hide_loading();
+                         }).render(data.communities);
+                     } else {
+                         redirect_to("signin.html");
+                     }
                  }
     });
 
