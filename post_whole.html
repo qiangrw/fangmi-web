@@ -21,7 +21,7 @@
         <div id="post-whole-page" data-role="page">
             <!-- HEADER -->
             <div data-role="header">
-                <a href="post_type.html" class="ui-btn-transparent" data-icon="back" data-iconpos="notext" data-shadow="true" data-iconshadow="true">返回</a>
+                <a data-rel="back" class="ui-btn-transparent" data-icon="back" data-iconpos="notext" data-shadow="true" data-iconshadow="true">返回</a>
                 <h2 class="grey-header">发布整租房</h2>
 				<link rel="stylesheet" href="http://cdn.jtsage.com/datebox/1.4.5/jqm-datebox-1.4.5.min.css" />
 				<script type="text/javascript" src="http://cdn.jtsage.com/external/jquery.mousewheel.min.js"></script>
@@ -111,7 +111,7 @@
 
             <p class="padding-div">房屋图片(支持多张上传)</p>
             <progress style="width: 100%"></progress>
-            <input type="file" name="pic" id="pic" value="">
+            <input type="file" name="pics[]" id="pic" value="" multiple="multiple">
         </form>
         <div id="error" class="ui-grid-solo padding-div error" style="display:none;"></div>
         <br>     

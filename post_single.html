@@ -19,7 +19,7 @@
         <div id="post-single-page" data-role="page">
             <!-- HEADER -->
             <div data-role="header">
-                <a href="post_type.html" class="ui-btn-transparent" data-icon="back" data-iconpos="notext" data-shadow="true" data-iconshadow="true">返回</a>
+                <a data-rel="back" class="ui-btn-transparent" data-icon="back" data-iconpos="notext" data-shadow="true" data-iconshadow="true">返回</a>
                 <h2 class="grey-header">发布合租房</h2>
 				<link rel="stylesheet" href="http://cdn.jtsage.com/datebox/1.4.5/jqm-datebox-1.4.5.min.css" />
 				<script type="text/javascript" src="http://cdn.jtsage.com/external/jquery.mousewheel.min.js"></script>
@@ -72,19 +72,19 @@
                 <table class="form-table sel-table">
                     <tr>
                         <th width=100>出租房屋</th>
-                        <td><a id="set-room-link" href="set_rooms.html?type=1">点击编辑</a></td>
+                        <td><a class="set-room-link" href="set_rooms.html?type=1">点击编辑</a></td>
                     </tr>
                     <tr>
                         <th width=100>个性标签</th>
-                        <td><a id="set-keywords-link" href="set_keywords.html?type=1">点击编辑</a></td>
+                        <td><a class="set-keywords-link" href="set_keywords.html?type=1">点击编辑</a></td>
                     </tr>
                     <tr>
                         <th width=100>房屋设备</th>
-                        <td><a id="set-devices-link" href="set_devices.html?type=1">点击编辑</a></td>
+                        <td><a class="set-devices-link" href="set_devices.html?type=1">点击编辑</a></td>
                     </tr>
                     <tr>
                         <th width=100>预约时间</th>
-                        <td><a id="set-date-link" href="set_date.html?type=1">点击编辑</a></td>
+                        <td><a class="set-date-link" href="set_date.html?type=1">点击编辑</a></td>
                     </tr>
                 </table>
                 </div>    
@@ -92,7 +92,7 @@
 
                 <p class="padding-div">房屋图片(支持多张上传)</p>
                 <progress style="width: 100%"></progress>
-                <input type="file" name="pic" id="pic" value="">
+                <input type="file" name="pics[]" id="pic" value="" multiple="multiple">
 
                 <div id="error" class="ui-grid-solo padding-div error" style="display:none;"></div>
                 <div class="ui-grid-solo padding-div">
