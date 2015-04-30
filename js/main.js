@@ -656,6 +656,7 @@ $('#set-date-page').on('pageinit', function() {
     var type = getParameter("type");
     var house_type = type == 0 ? 'whole_house' : 'single_house';
     var house = type == 0 ? whole_house : single_house;
+    console.log(type);
 
     $(".flipbox-input").datebox({ mode: "flipbox", afterToday: true });
     $("#start_time").datebox({ mode: "timeflipbox" }); 
@@ -708,6 +709,9 @@ $('#set-date-page').on('pageinit', function() {
             });
         });
         house["reserve_choices"] = reserve_choices;
+        var type = getParameter("type");
+        var house_type = type == 0 ? 'whole_house' : 'single_house';
+        var house = type == 0 ? whole_house : single_house;
         localStorage.setItem(house_type, JSON.stringify(house));
         if (type == 0) redirect_to("post_whole.html");
         else redirect_to("post_single.html");
@@ -815,6 +819,9 @@ $('#set-keywords-page').on('pageinit', function() {
         for (i=0; i<tags.length; ++i) {
             tag_array.push( { name: tags[i] });
         }
+        var type = getParameter("type");
+        var house_type = type == 0 ? 'whole_house' : 'single_house';
+        var house = type == 0 ? whole_house : single_house;
         house["tags"] = tag_array;
         localStorage.setItem(house_type, JSON.stringify(house));
         if (type == 0) redirect_to("post_whole.html");
@@ -838,6 +845,7 @@ $('#set-device-page').on('pageinit', function() {
         });
         house["devices"] = devices;
         localStorage.setItem(house_type, JSON.stringify(house));
+        var type = getParameter("type");
         if (type == 0) redirect_to("post_whole.html");
         else redirect_to("post_single.html");
     });
