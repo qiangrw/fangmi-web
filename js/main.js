@@ -4,6 +4,7 @@ localStorage.setItem('config', JSON.stringify(config));
 var user   = JSON.parse(localStorage.getItem('user'));
 var server_err_fn = function(data) { 
     show_common_error("服务器错误，请稍后再试。"); 
+    hide_loading();
     console.log(data);
 };
 var whole_house = JSON.parse(localStorage.getItem('whole_house'));
