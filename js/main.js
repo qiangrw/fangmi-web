@@ -369,6 +369,7 @@ $("#conversation-page").on('pageinit', function() {
             request.setRequestHeader("Authorization", "Bearer " + user.access_token);
         },
         success: function(data) {
+                     console.log(data);
                      if (data.message = "OK") {
                          Tempo.prepare(element).when(TempoEvent.Types.RENDER_COMPLETE, function() {
                              $("#" + element).show();
