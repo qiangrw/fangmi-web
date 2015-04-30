@@ -550,14 +550,9 @@ $('#signup-page').on('pageinit', function() {
 
 // setting.html
 $('#setting-page').on('pagebeforeshow', function() {
-    if (user == null) {
+    if (user == null || user.username == null) {
         redirect_to("signin.html");
         return;
-    }
-    if (user_loaded()) {
-        Tempo.prepare("user-setting-info").render(user);
-    } else {
-        load_user("user-setting-info");
     }
     $("#signout-btn").unbind().click(function(){
         localStorage.removeItem('user');
@@ -565,6 +560,13 @@ $('#setting-page').on('pagebeforeshow', function() {
         localStorage.removeItem('single_house');
         redirect_to("signin.html");
     });
+
+    if (user_loaded()) {
+        Tempo.prepare("user-setting-info").render(user);
+    } else {
+        load_user("user-setting-info");
+    }
+    
 });   
 
 // set_date.html
