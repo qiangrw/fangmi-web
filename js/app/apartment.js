@@ -51,6 +51,7 @@ $('#house-detail-page').on('pagebeforeshow', function() {
                             tags: [], 
                             rooms: [],
                             reserve_choices: [], 
+                            devices: [], 
                         };
                         for (i = 0; i < data.apartment.reserve_choices.length; i++) {
                             house.reserve_choices.push({
@@ -70,6 +71,12 @@ $('#house-detail-page').on('pagebeforeshow', function() {
                         for (i = 0; i < data.apartment.tags.length; i++) {
                             house.tags.push({
                                 name : data.apartment.tags[i].name
+                            });
+                        }
+                        for (i = 0; i < data.apartment.devices.length; i++) {
+                            house.devices.push({
+                                name : data.apartment.devices[i].name,
+                                count: 1
                             });
                         }
                         console.log(house);

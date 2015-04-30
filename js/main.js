@@ -49,6 +49,21 @@ $(function() {
     $("[data-role='navbar']").navbar();
     $("[data-role='header'], [data-role='footer']").toolbar();
 });
+
+// Global auth validation
+/*
+$(document).on('pagebeforechange', function(e, data){  
+    var to = data.toPage, from = data.options.fromPage;
+    if (typeof to  === 'string') {
+        var u = $.mobile.path.parseUrl(to).filename;
+        if (u == "user.html" || u == "setting.html" || u == "houselist.html") {
+            redirect_to("signin.html");
+            return;
+        }
+    }
+});
+*/
+
 $(document).on('pagebeforeshow', function() {
     // Handling navbar related logic
     $("[data-role='navbar']").navbar();
@@ -72,6 +87,10 @@ $(document).on('pagebeforeshow', function() {
 });
 
 $('#houselist-page').on('pagebeforeshow', function() {
+    if (user == null || user.username == null) {
+        redirect_to("signin.html");
+        return;
+    }
     cur_url = "houselist.html?"; 
     var base_url = config.api_url + "api/apartment/list?";
     var community_id = getParameter("community_id");
@@ -99,18 +118,18 @@ $('#houselist-page').on('pagebeforeshow', function() {
             request.setRequestHeader("Authorization", "Bearer " + user.access_token);
         },
         success: function(data) {
-            if (data.message = "OK") {
-                Tempo.prepare(element)
-                    .when(TempoEvent.Types.RENDER_COMPLETE, function() {
-                        $("#" + element).show();
-                        hide_loading(); 
-                    }).render(data.apartments); } 
-        },
+                     if (data.message = "OK") {
+                         Tempo.prepare(element)
+        .when(TempoEvent.Types.RENDER_COMPLETE, function() {
+            $("#" + element).show();
+            hide_loading(); 
+        }).render(data.apartments); } 
+                 },
         error: server_err_fn
     });     
 });
 
- 
+
 $('#favlist-empty-page, #reservelist-empty-page, #rentlist-empty-page').on('pagebeforeshow', function() {
     cur_url = "houselist.html?"; 
     // TODO using recommend api in the future
@@ -130,17 +149,17 @@ $('#favlist-empty-page, #reservelist-empty-page, #rentlist-empty-page').on('page
             request.setRequestHeader("Authorization", "Bearer " + user.access_token);
         },
         success: function(data) {
-            console.log(data);
-            if (data.message = "OK") {
-                Tempo.prepare(element).when(TempoEvent.Types.RENDER_COMPLETE, function() {
-                    hide_loading(); 
-                    $("#" + element).show();
-                }).render(data.apartments); } 
-        },
+                     console.log(data);
+                     if (data.message = "OK") {
+                         Tempo.prepare(element).when(TempoEvent.Types.RENDER_COMPLETE, function() {
+                             hide_loading(); 
+                             $("#" + element).show();
+                         }).render(data.apartments); } 
+                 },
         error: server_err_fn
     });     
 });
-    
+
 
 $('#myhouselist-page').on('pagebeforeshow', function() {
     cur_url = "houselist.html?"; 
@@ -155,15 +174,15 @@ $('#myhouselist-page').on('pagebeforeshow', function() {
             request.setRequestHeader("Authorization", "Bearer " + user.access_token);
         },
         success: function(data) {
-            console.log(data);
-            if (data.message = "OK") {
-                Tempo.prepare(element)
-                        .when(TempoEvent.Types.RENDER_COMPLETE, function(){
-                                $("#" + element).show();
-                                hide_loading();
-                        })
-                        .render(data.apartments); } 
-        },
+                     console.log(data);
+                     if (data.message = "OK") {
+                         Tempo.prepare(element)
+        .when(TempoEvent.Types.RENDER_COMPLETE, function(){
+            $("#" + element).show();
+            hide_loading();
+        })
+    .render(data.apartments); } 
+                 },
         error: server_err_fn
     });     
 });
@@ -184,11 +203,11 @@ $('#favlist-page').on('pagebeforeshow', function() {
                              redirect_to("favlist_empty.html");
                          }
                          Tempo.prepare(element)
-                            .when(TempoEvent.Types.RENDER_COMPLETE, function() 
-                             {
-                                 hide_loading(); 
-                                 $("#" + element).show(); 
-                             }).render(data.apartments);
+        .when(TempoEvent.Types.RENDER_COMPLETE, function() 
+            {
+                hide_loading(); 
+                $("#" + element).show(); 
+            }).render(data.apartments);
                      } 
                  },
         error: server_err_fn
@@ -212,10 +231,10 @@ $('#rentlist-page').on('pagebeforeshow', function() {
                              redirect_to("rentlist_empty.html");
                          } else {
                              Tempo.prepare(element)
-                                    .when(TempoEvent.Types.RENDER_COMPLETE, function() {
-                                        hide_loading(); 
-                                        $("#" + element).show();
-                                    }).render(data.rents);
+        .when(TempoEvent.Types.RENDER_COMPLETE, function() {
+            hide_loading(); 
+            $("#" + element).show();
+        }).render(data.rents);
                          }
                      } 
                  },
@@ -296,7 +315,7 @@ $('#choose-date-page').on('pagebeforeshow', function() {
 });
 
 
-$('#edit-profile-page').on('pageinit', function() {
+$('#edit-profile-page').on('pagebeforeshow', function() {
     var set_user_data = function(user) {
         user.gender = user.gender ? 1 : 0;
         $("#gender").val(user.gender);
@@ -358,7 +377,7 @@ $('#edit-profile-page').on('pageinit', function() {
 
 
 // message.html
-$("#conversation-page").on('pageinit', function() {
+$("#conversation-page").on('pagebeforeshow', function() {
     var element = "conversation-list";
     $("#" + element).hide();
     show_loading();
@@ -445,7 +464,7 @@ $('#message-detail-page').on('pagebeforeshow', function() {
 });  
 
 // forget_password.html
-$('#forget-password-page').on('pageinit', function() {
+$('#forget-password-page').on('pagebeforeshow', function() {
     set_captcha_elements();
     $("#submit-forget").click(function(){
         $.ajax({
@@ -467,7 +486,7 @@ $('#forget-password-page').on('pageinit', function() {
 
 
 // check_id.html
-$('#apply-confirm-page').on('pageinit', function() {
+$('#apply-confirm-page').on('pagebeforeshow', function() {
     user_post({
         button: "#submit-apply-confirm",
         form:   "#apply-confirm-form",
@@ -477,7 +496,7 @@ $('#apply-confirm-page').on('pageinit', function() {
 });
 
 // check_student.html
-$('#apply-student-page').on('pageinit', function() {
+$('#apply-student-page').on('pagebeforeshow', function() {
     $(':file').change(function(){
         var file = this.files[0];
         var name = file.name;
@@ -527,7 +546,7 @@ $('#apply-student-page').on('pageinit', function() {
 
 
 // signup.html
-$('#signup-page').on('pageinit', function() {
+$('#signup-page').on('pagebeforeshow', function() {
     set_captcha_elements();
     $("#submit-signup").click(function(){
         $.ajax({
@@ -554,23 +573,14 @@ $('#setting-page').on('pagebeforeshow', function() {
         redirect_to("signin.html");
         return;
     }
-    $("#signout-btn").unbind().click(function(){
-        localStorage.removeItem('user');
-        localStorage.removeItem('whole_house');
-        localStorage.removeItem('single_house');
-        redirect_to("signin.html");
-    });
+    load_user("user-setting-info");
 
-    if (user_loaded()) {
-        Tempo.prepare("user-setting-info").render(user);
-    } else {
-        load_user("user-setting-info");
-    }
-    
+
+
 });   
 
 // set_date.html
-$('#set-date-page').on('pageinit', function() {
+$('#set-date-page').on('pagebeforeshow', function() {
     var type = getParameter("type");
     var house_type = type == 0 ? 'whole_house' : 'single_house';
     var house = type == 0 ? whole_house : single_house;
@@ -641,7 +651,7 @@ $('#set-date-page').on('pageinit', function() {
 
 
 // set_rooms.html
-$('#set-rooms-page').on('pageinit', function() {
+$('#set-rooms-page').on('pagebeforeshow', function() {
     var type = 1;
     var house_type = type == 0 ? 'whole_house' : 'single_house';
     var house = type == 0 ? whole_house : single_house;
@@ -702,7 +712,7 @@ $('#set-rooms-page').on('pageinit', function() {
 
 
 // set_entrance_date.html
-$('#set-entrance-date-page').on('pageinit', function() {
+$('#set-entrance-date-page').on('pagebeforeshow', function() {
     if (whole_house.rooms[0].date_entrance) {
         $('#entrance_date').val(whole_house.rooms[0].date_entrance);
     }
@@ -719,7 +729,7 @@ $('#set-entrance-date-page').on('pageinit', function() {
 });
 
 // set_keywords.html
-$('#set-keywords-page').on('pageinit', function() {
+$('#set-keywords-page').on('pagebeforeshow', function() {
     var type = getParameter("type");
     var house_type = type == 0 ? 'whole_house' : 'single_house';
     var house = type == 0 ? whole_house : single_house;
@@ -752,7 +762,7 @@ $('#set-keywords-page').on('pageinit', function() {
 });
 
 // set_devices.html
-$('#set-device-page').on('pageinit', function() {
+$('#set-device-page').on('pagebeforeshow', function() {
     $("#set-device").unbind().click(function() {
         var devices = [];
         $('input[data-cacheval="false"]').each(function(index) {
@@ -772,7 +782,7 @@ $('#set-device-page').on('pageinit', function() {
     });
 });
 
-$('#post-single-page').on('pageinit', function() {
+$('#post-single-page').on('pagebeforeshow', function() {
     // get community list   e
     var element = "community_id";
     show_loading();
@@ -852,8 +862,8 @@ $('#post-single-page').on('pageinit', function() {
 
 
 
-$('#post-whole-page').on('pageinit', function() {
-    // get community list   e
+$('#post-whole-page').on('pagebeforeshow', function() {
+    // get community list  
     var element = "community_id";
     show_loading();
     $.ajax({
@@ -983,13 +993,20 @@ function load_user(element) {
             request.setRequestHeader("Authorization", "Bearer " + user.access_token);
         },
         success: function(data) {
-                     if (data.message = "OK") {
+                     if (data.message = "OK" && data.status_code == 200) {
                          $.extend(user, data.user);
                          user.avatar = config.api_url + user.avatar;
                          localStorage.setItem('user', JSON.stringify(user));
                          Tempo.prepare(element).when(TempoEvent.Types.RENDER_COMPLETE, function() {
                              $("#" + element).show();
                              hide_loading();
+                             $("#signout-btn").unbind().click(function(){
+                                 console.log("here");
+                                 if (user != null) localStorage.removeItem('user');
+                                 if (whole_house != null) localStorage.removeItem('whole_house');
+                                 if (single_house != null) localStorage.removeItem('single_house');
+                                 redirect_to("signin.html");
+                             });      
                          }).render(user);
                      } else {
                          redirect_to("signin.html");
