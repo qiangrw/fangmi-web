@@ -45,6 +45,10 @@ function alert_message(message) {
 
 
 // Global Page before show functions
+$(function() {
+    $("[data-role='navbar']").navbar();
+    $("[data-role='header'], [data-role='footer']").toolbar();
+});
 $(document).on('pagebeforeshow', function() {
     // Handling navbar related logic
     $("[data-role='navbar']").navbar();
@@ -366,7 +370,6 @@ $("#conversation-page").on('pageinit', function() {
         },
         success: function(data) {
                      if (data.message = "OK") {
-                         console.log(data);
                          Tempo.prepare(element).when(TempoEvent.Types.RENDER_COMPLETE, function() {
                              $("#" + element).show();
                              hide_loading();
@@ -557,6 +560,8 @@ $('#setting-page').on('pagebeforeshow', function() {
     }
     $("#signout-btn").unbind().click(function(){
         localStorage.removeItem('user');
+        localStorage.removeItem('whole_house');
+        localStorage.removeItem('single_house');
         redirect_to("signin.html");
     });
 });   
