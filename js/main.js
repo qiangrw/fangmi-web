@@ -575,9 +575,6 @@ $('#setting-page').on('pagebeforeshow', function() {
         return;
     }
     load_user("user-setting-info");
-
-
-
 });   
 
 // set_date.html
@@ -1010,6 +1007,7 @@ function load_user(element) {
                              });      
                          }).render(user);
                      } else {
+                         hide_loading();
                          redirect_to("signin.html");
                      }
                  },
