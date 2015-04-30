@@ -43,19 +43,20 @@ $('#user-page').on('pagebeforeshow', function() {
         redirect_to("signin.html");
         return;
     }
+    element = "user-info";
+    $("#" + element).hide();
+    show_loading();
     get_with_auth("api/account", function(data) {
         if (data.message = "OK" && data.status_code == 200) {
             $.extend(user, data.user);
             user.avatar = config.api_url + user.avatar;
             localStorage.setItem('user', JSON.stringify(user));
-            element = "user-info";
-            $("#" + element).hide();
-            show_loading();
             Tempo.prepare(element).when(TempoEvent.Types.RENDER_COMPLETE, function() {
                 $("#" + element).show();
                 hide_loading();
             }).render(user);  
         } else {
+            hide_loading();
             redirect_to("signin.html");
         }   
 
