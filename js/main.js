@@ -70,9 +70,14 @@ $('#houselist-page').on('pagebeforeshow', function() {
     cur_url = "houselist.html?"; 
     var base_url = config.api_url + "api/apartment/list?";
     var community_id = getParameter("community_id");
+    var q = getParameter("q");
     if (community_id) {
         base_url += "&community_id=" + community_id;
         cur_url += "&community_id=" + community_id;
+    }
+    if (q) {
+        base_url += "&q=" + q;
+        cur_url += "&q=" + q;
     }
     var element = "houselist";
     $("#" + element).hide();
