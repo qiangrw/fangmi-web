@@ -18,9 +18,7 @@ if (whole_house == null) {
                }]
     };
 }
-if (single_house == null) {
-     single_house = { };
-}
+if (single_house == null) { single_house = { }; }
 
 // global functions                                                                    
 var show_loading = function(event) { 
@@ -28,6 +26,20 @@ var show_loading = function(event) {
 }
 var hide_loading = function(event) { 
     $('body').removeClass('ui-loading');
+}
+function refreshPage()
+{
+    // TODO currently not work 
+    $.mobile.pageContainer.pagecontainer('change', window.location.href, {
+        allowSamePageTransition: true,
+        transition: 'none',
+        reloadPage: true 
+        // 'reload' parameter not working yet: //github.com/jquery/jquery-mobile/issues/7406
+    });
+}
+function alert_message(message) { 
+    $( "#popup-message" ).html(message);
+    $( "#popup" ).popup("open");
 }
 
 
@@ -68,6 +80,9 @@ $('#houselist-page').on('pagebeforeshow', function() {
     $.ajax({
         type: 'GET',
         url: base_url,
+        beforeSend: function (request) {
+            request.setRequestHeader("Authorization", "Bearer " + user.access_token);
+        },
         success: function(data) {
             if (data.message = "OK") {
                 Tempo.prepare(element)
@@ -96,6 +111,9 @@ $('#favlist-empty-page, #reservelist-empty-page, #rentlist-empty-page').on('page
     $.ajax({
         type: 'GET',
         url: base_url,
+        beforeSend: function (request) {
+            request.setRequestHeader("Authorization", "Bearer " + user.access_token);
+        },
         success: function(data) {
             console.log(data);
             if (data.message = "OK") {
@@ -118,6 +136,9 @@ $('#myhouselist-page').on('pagebeforeshow', function() {
     $.ajax({
         type: 'GET',
         url: base_url,
+        beforeSend: function (request) {
+            request.setRequestHeader("Authorization", "Bearer " + user.access_token);
+        },
         success: function(data) {
             console.log(data);
             if (data.message = "OK") {
@@ -316,6 +337,9 @@ $('#choose-date-page').on('pagebeforeshow', function() {
     if (id == null) return;
     $.ajax({
         type: 'GET',
+      beforeSend: function (request) {
+          request.setRequestHeader("Authorization", "Bearer " + user.access_token);
+      },
       url: config.api_url + "api/apartment?id=" + id,
       success: function(data) {
           console.log("choose-date-page:");
@@ -461,8 +485,8 @@ $("#conversation-page").on('pageinit', function() {
 $('#message-detail-page').on('pagebeforeshow', function() {
     var from_username = getParameter("from_username");
     if (from_username == null) return;
-    $("#to_username").val(to_username);
-    $("#header-title").val(to_username);
+    $("#to_username").val(from_username);
+    $("#header-title").val(from_username);
 
     var element = "messagedetail-list";
     $("#" + element).hide();
@@ -512,7 +536,7 @@ $('#message-detail-page').on('pagebeforeshow', function() {
                         );
                     $("#message-content-input").val('');
                 } else  {
-                    alert("发送失败");
+                    message_alert("发送失败");
                 }
             }
         });                 
@@ -911,7 +935,7 @@ $('#post-single-page').on('pageinit', function() {
     }
 
 
-     // post a new house
+    // post a new house
     $("#submit-post-single").click(function() {
         single_house.title = $("#title").val();
         single_house.subtitle = $("#subtitle").val();
@@ -1246,26 +1270,4 @@ function from_time(time) {
     return (eles[0] + ":" + eles[1] + " " + type);
 }
 
-String.prototype.endWith = function (subStr) {
-    if (subStr.length > this.length) {
-        return false;
-    }
-    else {
-        return (this.lastIndexOf(subStr) == (this.length - subStr.length)) ? true : false;
-    }
-}
 
-function refreshPage()
-{
-    jQuery.mobile.pageContainer.pagecontainer('change', window.location.href, {
-        allowSamePageTransition: true,
-        transition: 'none',
-        reloadPage: true 
-        // 'reload' parameter not working yet: //github.com/jquery/jquery-mobile/issues/7406
-    });
-}
-
-function alert_message(message) { 
-    $( "#popup-message" ).html(message);
-    $( "#popup" ).popup("open");
-}
