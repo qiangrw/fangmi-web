@@ -20,6 +20,7 @@ if (whole_house == null) {
 }
 if (single_house == null) { single_house = { }; }
 
+
 // global functions                                                                    
 var show_loading = function(event) { 
     $('body').addClass('ui-loading');
@@ -380,25 +381,6 @@ $('#choose-date-page').on('pagebeforeshow', function() {
     });
 });
 
-// user.html
-$('#user-page').on('pagebeforeshow', function() {
-    if (user == null) {
-        redirect_to("signin.html");
-        return;
-    }
-    element = "user-info";
-    $("#" + element).hide();
-    show_loading();
-    if (user_loaded()) {
-        Tempo.prepare("user-info").render(user);
-        Tempo.prepare(element).when(TempoEvent.Types.RENDER_COMPLETE, function() {
-            $("#" + element).show();
-            hide_loading();
-        }).render(user);
-    } else {
-        load_user("user-info");
-    }
-});
 
 $('#edit-profile-page').on('pageinit', function() {
     var set_user_data = function(user) {
@@ -548,31 +530,6 @@ $('#message-detail-page').on('pagebeforeshow', function() {
     });
 });  
 
-// signin.html
-$('#signin-page').on('pageinit', function() {
-    var user = {};
-    $("#submit-signin").click(function(){
-        $.ajax({
-            type: 'POST',
-            url: config.api_url + "oauth/token",
-            data: $("#signin-form").serialize(),
-            success: function(data) {
-                if (data.access_token != null) {
-                    hide_common_error();
-                    user.access_token = data.access_token;
-                    localStorage.setItem('user', JSON.stringify(user));
-                    // TODO save user or bugs may come
-                    // save_user();
-                    redirect_to("index.html");
-                } else {
-                    show_common_error(data.message);
-                }
-            },
-            error: server_err_fn
-        });
-    });
-});
-
 // forget_password.html
 $('#forget-password-page').on('pageinit', function() {
     set_captcha_elements();
@@ -594,16 +551,6 @@ $('#forget-password-page').on('pageinit', function() {
     });    
 });
 
-
-// change_password.html
-$('#change-password-page').on('pageinit', function() {
-    user_post({
-        button: "#submit-change-password",
-        form:   "#change-password-form",
-        api:    "api/account/password/change",
-        message: "修改成功，您可以用新密码登录了." 
-    });   
-});
 
 // check_id.html
 $('#apply-confirm-page').on('pageinit', function() {
@@ -1276,3 +1223,21 @@ function from_time(time) {
 }
 
 
+function get_with_auth(api_name, succ_func, error_func) {
+    ajax_with_auth('GET', api_name, succ_func, error_func);
+}
+function post_with_auth(api_name, succ_func, error_func) {
+    ajax_with_auth('POST', api_name, succ_func, error_func);
+}
+
+function ajax_with_auth(type, api_name, succ_func, error_func) {
+    if (error_func == null) error_func = server_err_fn;
+    $.ajax({ type: type,
+        url: config.api_url + api_name,
+      beforeSend: function (request) {
+          request.setRequestHeader("Authorization", "Bearer " + user.access_token);
+      },
+      success: succ_func,
+      error: error_func
+    });   
+} 
