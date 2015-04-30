@@ -22,22 +22,23 @@
 				<a href="user.html" class="ui-btn-transparent" data-icon="back" data-iconpos="notext" data-shadow="true" data-iconshadow="true">返回</a>
                 <h2 class="grey-header">预约记录</h2>
                 <script src="js/main.js"></script>
+                <script src="js/app/reservelist.js"></script>
             </div>
             <!-- ./HEADER -->
 
             <!-- MAIN -->
             <div id="reservelist" role="main">
                 <div data-template class="ui-grid-solo white-div">
-                    <h2 class="grey-header padding-div ">海淀区紫金庄园5号楼605室</h2>
+                    <h2 class="grey-header padding-div">{{apartment.address}}</h2>
 					<p class="padding-div">
                     <span>{{reserve_choice.date}} {{reserve_choice.time_start}} - 
                         {{reserve_choice.time_end}}</span>
                         <!--<span>（本周六下午）</span>-->
 
-                    {% if (deleted) %} 
+                    {% if (cancelled) %} 
                         <span class="pull-right">已取消</span>
 					</p>
-                    <a href="house.html?id={{id}}" class="ui-btn ui-corner-all">重新预约</a>
+                    <a rid="{{reserve_choice.id}}" class="ui-btn ui-corner-all btn-active-reserve">重新预约</a>
 
                     {% else %}    
 					</p>
@@ -48,13 +49,18 @@
 						<!--<div class="ui-block-b"><a class="ui-btn ui-corner-all
                                 ui-btn-b">修改预约</a></div>-->
                         <div class="ui-block-b">
-                            <a href="message_detail.html?to_username={{user.username}}" class="ui-btn ui-corner-all">联系房东</a>
+                            <a href="message_detail.html?from_username={{user.username}}" class="ui-btn ui-corner-all">联系房东</a>
                         </div>
                     </div>
                     {% endif %}
                 </div>
             </div>  
             <!-- ./MAIN -->
+            
+            <div data-role="popup" id="popup" class="ui-content popup-div">
+                <a href="#" data-rel="back" data-role="button" data-theme="c" data-icon="delete" data-iconpos="notext" class="ui-btn-right">Close</a>
+                <p id="popup-message"></p>
+            </div>
 
         </div>
         <!-- ./PAGE -->

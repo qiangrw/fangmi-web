@@ -329,3 +329,9 @@ table td, table th,  table td *, table th * { vertical-align: top; }
     min-height: 40px;
     vertical-align: center;
 }
+
+.popup-div {
+  max-width:280px; 
+  padding: 10px 10px;
+  margin: auto auto;
+}

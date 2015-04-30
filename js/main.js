@@ -187,52 +187,6 @@ $('#rentlist-page').on('pagebeforeshow', function() {
     });     
 });
 
-$('#reservelist-page').on('pagebeforeshow', function() {
-    var element = "reservelist";
-    $("#" + element).hide();
-    show_loading();
-    $.ajax({
-        type: 'GET',
-        url: config.api_url + "api/reserve/list?username=" + user.username,
-        beforeSend: function (request) {
-            request.setRequestHeader("Authorization", "Bearer " + user.access_token);
-        },
-        success: function(data) {
-                     console.log(data);
-                     if (data.message = "OK") {
-                         if (data.reserves.length == 0) {
-                             redirect_to("reservelist_empty.html");
-                         } else {
-                             Tempo.prepare(element)
-        .when(TempoEvent.Types.RENDER_COMPLETE, function() {
-            hide_loading();
-            $("#" + element).show();
-            $(".btn-cancel-reserve").click(function(){
-                var reserve_id = $(this).attr('rid');
-                $.ajax({
-                    type: 'PUT',
-                    beforeSend: function (request) {
-                        request.setRequestHeader("Authorization", "Bearer " + user.access_token);
-                    },
-                    url: config.api_url + "api/reserve?id=" + reserve_id + "cancelled=True",
-                    success: function(data) {
-                        if (data.message == "OK") alert("取消成功");
-                        else  show_common_error(data.message); 
-                    }
-                });    
-            }); 
-            hide_loading();
-        })
-    .render(data.reserves);
-                         }
-                     } 
-                 },
-        error: server_err_fn
-    });  
-
-
-});
-
 
 $('#house-detail-page').on('pagebeforeshow', function() {
     var element = "house-detail";
@@ -1303,10 +1257,15 @@ String.prototype.endWith = function (subStr) {
 
 function refreshPage()
 {
-    $.mobile.changePage( window.location.href, {
-        allowSamePageTransition : true,
-    transition              : 'none',
-    showLoadMsg             : false,
-    reloadPage              : true
+    jQuery.mobile.pageContainer.pagecontainer('change', window.location.href, {
+        allowSamePageTransition: true,
+        transition: 'none',
+        reloadPage: true 
+        // 'reload' parameter not working yet: //github.com/jquery/jquery-mobile/issues/7406
     });
+}
+
+function alert_message(message) { 
+    $( "#popup-message" ).html(message);
+    $( "#popup" ).popup("open");
 }
