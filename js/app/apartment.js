@@ -314,7 +314,7 @@ $('#post-single-page').on('pagebeforeshow', function() {
         localStorage.setItem('single_house', JSON.stringify(single_house));
 
         var method = "POST";
-        if (whole_house.id && whole_house.id != 0) method = "PUT";
+        if (single_house.id && single_house.id != 0) method = "PUT";
         $.ajax({
             type: method,
           beforeSend: function (request) {
