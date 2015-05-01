@@ -1,6 +1,6 @@
 var signin_succ = function(data) {
     hide_loading();
-    if (data.message = "OK" && data.status_code == 200) {
+    if (data.message = 'OK' && data.status_code == 200) {
         $.extend(user, data.user);
         user.avatar = config.api_url + user.avatar;
         localStorage.setItem('user', JSON.stringify(user));
@@ -50,7 +50,7 @@ $('#user-page').on('pagebeforeshow', function() {
     $("#" + element).hide();
     show_loading();
     get_with_auth("api/account", function(data) {
-        if (data.message = "OK" && data.status_code == 200) {
+        if (data.message = 'OK' && data.status_code == 200) {
             $.extend(user, data.user);
             user.avatar = config.api_url + user.avatar;
             localStorage.setItem('user', JSON.stringify(user));
@@ -75,4 +75,60 @@ $('#change-password-page').on('pageinit', function() {
         message: "修改成功，您可以用新密码登录了." 
     });   
 });
+
+ 
+// check_id.html
+$('#apply-confirm-page').on('pagebeforeshow', function() {
+    user_post({
+        button: "#submit-apply-confirm",
+        form:   "#apply-confirm-form",
+        api:    "api/account/apply/confirmed",
+        message: "审核申请发送成功，请耐心等待审核." 
+    });
+});
+
+// check_student.html
+$('#apply-student-page').on('pagebeforeshow', function() {
+    $(':file').change(function(){
+        var file = this.files[0];
+        var name = file.name;
+        var size = file.size;
+        var type = file.type;
+        // TODO add validation
+    });
+    function progressHandlingFunction(e){
+        if(e.lengthComputable){
+            $('progress').attr({value:e.loaded,max:e.total});
+        }
+    }
+
+    $("#submit-apply-student").unbind().click(function() {
+        var formData = new FormData($('#apply-student-form')[0]);
+        console.log("start updaloding");
+        $.ajax({
+            url: config.api_url + "api/account/apply/student", 
+            type: 'POST',
+            xhr: function() {  
+                var myXhr = $.ajaxSettings.xhr();
+                if(myXhr.upload){ 
+                    console.log("updalod");
+                    myXhr.upload.addEventListener('progress',progressHandlingFunction, false); 
+                }
+                return myXhr;
+            },
+            beforeSend: function (request) { request.setRequestHeader("Authorization", "Bearer " + user.access_token); },
+            success: function(data) {
+                         console.log(data);
+                         if (data.status_code == 200 && data.message == 'OK') show_common_error("审核学生信息申请发送成功，请耐心等待审核."); 
+                         else  show_common_error(data.message);
+                     },
+            error: server_err_fn,
+            data: formData,
+            cache: false,
+            contentType: false,
+            processData: false
+        });
+    });
+});
+
 
