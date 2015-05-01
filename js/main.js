@@ -803,11 +803,11 @@ $('#post-single-page').on('pagebeforeshow', function() {
 
     // set value if have 
     if (single_house != null) {
-        $("#title").val(single_house.title);
-        $("#subtitle").val(single_house.subtitle);
-        $("#address").val(single_house.address);
-        $("#num_bedroom").val(single_house.num_bedroom);
-        $("#num_livingroom").val(single_house.num_livingroom);
+        if (single_house.title) $("#title").val(single_house.title);
+        if (single_house.subtitle) $("#subtitle").val(single_house.subtitle);
+        if (single_house.address) $("#address").val(single_house.address);
+        if (single_house.num_bedroom) $("#num_bedroom").val(single_house.num_bedroom);
+        if (single_house.num_livingroom) $("#num_livingroom").val(single_house.num_livingroom);
         $("#type").val(single_house.type);
         if (single_house.rooms != null) {
             $(".set-room-link").html("已经设置");
@@ -847,10 +847,9 @@ $('#post-single-page').on('pagebeforeshow', function() {
           data: JSON.stringify(single_house),
           success: function(data) {
               if (data.message == "OK") {
-                  // TODO 上传图片
                   show_common_error("发布成功");
                   localStorage.removeItem('single_house');
-                  redirect_to("detail.html?id=" + data.apartment.id);
+                  post_photo(data.apartment.id);
               } else  show_common_error(data.message); 
           },
           error: server_err_fn
@@ -888,13 +887,13 @@ $('#post-whole-page').on('pagebeforeshow', function() {
 
     // set value if have 
     if (whole_house != null) {
-        $("#title").val(whole_house.title);
-        $("#subtitle").val(whole_house.subtitle);
-        $("#address").val(whole_house.address);
-        $("#num_bedroom").val(whole_house.num_bedroom);
-        $("#num_livingroom").val(whole_house.num_livingroom);
-        $("#price").val(whole_house.rooms[0].price);
-        $("#area").val(whole_house.rooms[0].area);
+        if (whole_house.title) $("#title").val(whole_house.title);
+        if (whole_house.subtitle) $("#subtitle").val(whole_house.subtitle);
+        if (whole_house.address)  $("#address").val(whole_house.address);
+        if (whole_house.num_bedroom) $("#num_bedroom").val(whole_house.num_bedroom);
+        if (whole_house.num_livingroom) $("#num_livingroom").val(whole_house.num_livingroom);
+        if (whole_house.rooms[0].price) $("#price").val(whole_house.rooms[0].price);
+        if (whole_house.rooms[0].area) $("#area").val(whole_house.rooms[0].area);
         $("#type").val(whole_house.type);
         if (whole_house.rooms[0].date_entrance != null) {
             $("#set-entrance-date-link").html("已经设置");
@@ -935,11 +934,11 @@ $('#post-whole-page').on('pagebeforeshow', function() {
           contentType: "application/json; charset=utf-8",
           data: JSON.stringify(whole_house),
           success: function(data) {
+              console.log(data);
               if (data.message == "OK") {
-                  // TODO 上传图片
-                  show_common_error("发布成功");
+                  show_common_error("发布成功,开始上传文件 ...");
                   localStorage.removeItem('whole_house');
-                  redirect_to("detail.html?id=" + data.apartment.id);
+                  post_photo(data.apartment.id);
               } else  show_common_error(data.message); 
           },
           error: server_err_fn
@@ -1063,7 +1062,7 @@ function show_common_error(error) {
     $("#error").show();
 }
 
-function hide_common_error(error) {
+function hide_common_error() {
     $("#error").html('');
     $("#error").hide();
 }
@@ -1173,6 +1172,46 @@ function from_time(time) {
     return (eles[0] + ":" + eles[1] + " " + type);
 }
 
+
+function post_photo(apartment_id)
+{         
+    function progressHandlingFunction(e){
+        if(e.lengthComputable){
+            $('progress').attr({value:e.loaded,max:e.total});
+        }
+    }
+    $("#id").val(apartment_id);
+    var formData = new FormData($('#file-form')[0]);
+    console.log("start updaloding");
+    $.ajax({
+        url: config.api_url + "api/apartment/photos", 
+        type: 'POST',
+        xhr: function() {  
+            var myXhr = $.ajaxSettings.xhr();
+            if(myXhr.upload){ 
+                console.log("updalod");
+                myXhr.upload.addEventListener('progress',progressHandlingFunction, false); 
+            }
+            return myXhr;
+        },
+        beforeSend: function (request) {
+                        console.log("before updalod");
+                        request.setRequestHeader("Authorization", "Bearer " + user.access_token);
+                    },
+        success: function(data) {
+                     if (data.message = "OK") { 
+                         show_common_error("文件发送成功."); 
+                         redirect_to("detail.html?id=" + apartment_id);
+                     }
+                     else  show_common_error(data.message);
+                 },
+        error: server_err_fn,
+        data: formData,
+        cache: false,
+        contentType: false,
+        processData: false
+    });
+}
 
 function get_with_auth(api_name, succ_func, error_func) {
     ajax_with_auth('GET', api_name, succ_func, error_func);

@@ -22,8 +22,8 @@
                 <a data-rel="back" class="ui-btn-transparent" data-icon="back" data-iconpos="notext" data-shadow="true" data-iconshadow="true">返回</a>
                 <h2 class="grey-header">发布合租房</h2>
 				<link rel="stylesheet" href="http://cdn.jtsage.com/datebox/1.4.5/jqm-datebox-1.4.5.min.css" />
-				<script type="text/javascript" src="http://cdn.jtsage.com/external/jquery.mousewheel.min.js"></script>
 				<script type="text/javascript" src="http://cdn.jtsage.com/datebox/1.4.5/jqm-datebox-1.4.5.core.min.js"></script>
+                <script type="text/javascript" src="http://dev.jtsage.com/cdn/datebox/latest/jqm-datebox.mode.datebox.min.js"></script>
 				<script type="text/javascript" src="http://cdn.jtsage.com/datebox/1.4.5/jqm-datebox-1.4.5.mode.flipbox.min.js"></script>
 				<script type="text/javascript" src="http://cdn.jtsage.com/datebox/i18n/jquery.mobile.datebox.i18n.zh-CN.utf8.min.js"></script>
 				<script src="js/main.js"></script>
@@ -89,10 +89,14 @@
                 </table>
                 </div>    
 
-
-                <p class="padding-div">房屋图片(支持多张上传)</p>
-                <progress style="width: 100%"></progress>
-                <input type="file" name="pics[]" id="pic" value="" multiple="multiple">
+                <form id="file-form" enctype="multipart/form-data">
+                    <p class="padding-div">房屋图片(支持多张上传)</p>
+                    <input type="hidden" name="id" id="id" value="">
+                    <input type="file" name="photos" id="photos" value="" multiple="multiple">
+                    <p class="padding-div">租房合同</p>
+                    <input type="file" name="contract" id="contract" value="">
+                    <progress style="width: 100%"></progress>
+                </form>                               
 
                 <div id="error" class="ui-grid-solo padding-div error" style="display:none;"></div>
                 <div class="ui-grid-solo padding-div">
