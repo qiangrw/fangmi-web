@@ -377,7 +377,7 @@ $('#edit-profile-page').on('pagebeforeshow', function() {
 }); 
 
 
-// message.html
+// conversation.html
 $("#conversation-page").on('pagebeforeshow', function() {
     var element = "conversation-list";
     $("#" + element).hide();
