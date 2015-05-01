@@ -164,56 +164,55 @@ $('#favlist-empty-page, #reservelist-empty-page, #rentlist-empty-page').on('page
 
 
 $('#myhouselist-page').on('pagebeforeshow', function() {
-    cur_url = "houselist.html?"; 
-    var base_url = config.api_url + "api/apartment/list?username=" + user.username;
     var element = "myhouselist";
     $("#" + element).hide();
     show_loading();
-    $.ajax({
-        type: 'GET',
-        url: base_url,
-        beforeSend: function (request) {
-            request.setRequestHeader("Authorization", "Bearer " + user.access_token);
-        },
-        success: function(data) {
-                     console.log(data);
-                     if (data.message = "OK") {
-                         Tempo.prepare(element)
-        .when(TempoEvent.Types.RENDER_COMPLETE, function(){
-            $("#" + element).show();
-            hide_loading();
-        })
-    .render(data.apartments); } 
-                 },
-        error: server_err_fn
-    });     
+    get_with_auth("api/apartment/list?username=" + user.username,
+        function(data) {
+            console.log(data);
+            if (data.message = "OK") {
+                Tempo.prepare(element).when(TempoEvent.Types.RENDER_COMPLETE, function(){
+                    $("#" + element).show();
+                    hide_loading();
+                }).render(data.apartments); } 
+        });
+});
+
+$("#reserve-detail-page").on('pagebeforeshow', function() {
+    var element = "reserve-detail-list";
+    var apartment_id = getParameter("id");
+    if (apartment_id == null) return;
+    $("#" + element).hide();
+    show_loading();
+    get_with_auth("api/reserve/list?apartment_id=" + apartment_id,
+        function(data) {
+            console.log(data);
+            if (data.message = "OK") {
+                Tempo.prepare(element).when(TempoEvent.Types.RENDER_COMPLETE, function(){
+                    if (data.reserves.length > 0) {
+                        $("#" + element).show();
+                    }
+                    hide_loading();
+                }).render(data.reserves) 
+            } 
+        });
 });
 
 $('#favlist-page').on('pagebeforeshow', function() {
     var element = "favhouselist";
     $("#" + element).hide();
     show_loading();
-    $.ajax({
-        type: 'GET',
-        url: config.api_url + "api/apartment/fav",
-        beforeSend: function (request) {
-            request.setRequestHeader("Authorization", "Bearer " + user.access_token);
-        },
-        success: function(data) {
-                     if (data.message = "OK") {
-                         if (data.apartments.length == 0) {
-                             redirect_to("favlist_empty.html");
-                         }
-                         Tempo.prepare(element)
-        .when(TempoEvent.Types.RENDER_COMPLETE, function() 
-            {
+    get_with_auth("api/apartment/fav", function(data) {
+        if (data.message = "OK") {
+            if (data.apartments.length == 0) {
+                redirect_to("favlist_empty.html");
+            }
+            Tempo.prepare(element).when(TempoEvent.Types.RENDER_COMPLETE, function() {
                 hide_loading(); 
                 $("#" + element).show(); 
             }).render(data.apartments);
-                     } 
-                 },
-        error: server_err_fn
-    });     
+        }     
+    });
 });
 
 $('#rentlist-page').on('pagebeforeshow', function() {
