@@ -11,13 +11,7 @@
         <script src="js/jquery.mobile-1.4.5.min.js"></script>
         <script src="js/jquery.validate.min.js"></script>
         <script src="js/messages_zh.js"></script>
-        <script src="js/md5.js"></script>
         <script src="js/tempo.min.js" type="text/javascript"></script>
-        <link rel="stylesheet" href="http://cdn.jtsage.com/datebox/1.4.5/jqm-datebox-1.4.5.min.css" />
-        <script type="text/javascript" src="http://cdn.jtsage.com/external/jquery.mousewheel.min.js"></script>
-        <script type="text/javascript" src="http://cdn.jtsage.com/datebox/1.4.5/jqm-datebox-1.4.5.core.min.js"></script>
-        <script type="text/javascript" src="http://cdn.jtsage.com/datebox/1.4.5/jqm-datebox-1.4.5.mode.flipbox.min.js"></script>
-        <script type="text/javascript" src="http://cdn.jtsage.com/datebox/i18n/jquery.mobile.datebox.i18n.zh-CN.utf8.min.js"></script>
     </head>
 
     <body>
@@ -27,57 +21,15 @@
                 <a href="#" data-rel="back" class="ui-btn-transparent" data-icon="back" data-iconpos="notext" data-shadow="true" data-iconshadow="true">返回</a>
                 <h2 class="grey-header">房源详情</h2>
                 <a href="share.html" class="ui-btn-transparent" data-icon="share" data-iconpos="notext" data-shadow="true" data-iconshadow="true">分享</a>
-                <link rel="stylesheet" href="css/carousel.css">
-                <script src="js/carousel.js"></script>
                 <script src="js/main.js"></script>
                 <script src="js/app/apartment.js"></script>
-                <script>
-                    $(function(){
-                        var carousel = new $.widgets.Carousel( {
-                            uuid : "carousel",
-                            args : { "scrollInterval" : 600,"itemWidth":400 },
-                            value : [
-                            { "title" : "Tron.Legacy",
-                                "image" : "images/home/thu.jpg"
-                            },
-                            { "title" : "Yogi Bear",
-                                "image" : "images/home/pku.jpg"
-                            },
-                            { "title" : "The Chronicles of Narnia: The Voyage of the Dawn Treader",
-                                "image" : "images/home/thu.jpg"
-                            }
-                            ]
-                        });	
-                    })
-                </script>
             </div>
             <!-- ./HEADER -->
 
             <!-- MAIN -->
             <div id="house-detail" role="main" class="ui-content" data-template>
                 <div class="ui-grid-solo">
-                    <!--<div style="width:100%; height:300px; min-height: 300px;">
-                        <div style="width:100%">
-                            <div id="carousel" class="carousel">							
-                                <div id="carousel_scrollpane" class="carousel-content">
-                                    <div id="carousel_content" class="carousel-content-scroller"> </div>
-                                </div>
-                                <div id="carousel_nav" class="carousel-nav" style="display:none!important;">
-                                    <div id="carousel_mid" class="carousel-mid"></div>
-                                </div>
-                            </div>
-                        </div>
-                        <div id="carousel_template" style="display:none">
-                            <div class="carousel-item">
-                                <div id="carousel_item_@{id}" >
-                                    <div style="float:left; width: 100%; height:auto;">
-                                        <img style="width:100%; height:auto;" src="@{image}" />
-                                    </div>				      								
-                                </div>
-                            </div>
-                        </div>
-                    </div>-->
-                    <center><img class="home-img" src="images/home/pku.jpg"></img> </center>
+                    <center><img class="home-img" src="images/home/pku.jpg"></img></center>
                 </div>
 
                 <div class="ui-grid-solo padding-div">

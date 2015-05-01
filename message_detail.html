@@ -11,7 +11,6 @@
         <script src="js/jquery.mobile-1.4.5.min.js"></script>
         <script src="js/jquery.validate.min.js"></script>
         <script src="js/messages_zh.js"></script>
-        <script src="js/md5.js"></script>
         <script src="js/tempo.min.js" type="text/javascript"></script>
     </head>
 
@@ -24,12 +23,13 @@
                 <h2 id="header-title" class="grey-header">消息列表</h2>
 				<a id="delete-message-link" href="#delete_message" data-theme="c" data-icon="trash" data-iconpos="notext" data-shadow="true" data-iconshadow="true">Trash</a>
 				<script src="js/main.js"></script>
+				<script src="js/app/message.js"></script>
             </div>
             <!-- ./HEADER -->
 
             <!-- MAIN -->
             <div role="main" class="ui-content">
-                <div id="messagedetail-list" style="min-height: 480px;!important;">
+                <div id="messagedetail-list" style="min-height: 460px;!important; display:none;">
                     <div data-template class="message-div">
                         {% if (mine == true) %}
                         <div class="message-img-div"><img src="images/user/user_profile.png" /></div>

@@ -7,6 +7,11 @@ var server_err_fn = function(data) {
     hide_loading();
     console.log(data);
 };
+var server_err_redirect_fn = function(data) { 
+    console.log(data);
+    hide_loading();
+    redirect_to("signin.html");
+};
 var whole_house = JSON.parse(localStorage.getItem('whole_house'));
 var single_house = JSON.parse(localStorage.getItem('single_house'));
 var cur_url;
@@ -14,10 +19,10 @@ if (whole_house == null) {
     whole_house = {
         type: 0,
         rooms: [ {
-                   name: 'default', 
-                   area: 0, 
-                   date_entrance: null
-               }]
+            name: 'default', 
+            area: 0, 
+            date_entrance: null
+        }]
     };
 }
 if (single_house == null) { single_house = { type: 1 }; }
@@ -26,11 +31,12 @@ if (single_house == null) { single_house = { type: 1 }; }
 // global functions                                                                    
 var show_loading = function(event) { $('body').addClass('ui-loading'); }
 var hide_loading = function(event) { $('body').removeClass('ui-loading'); }
-function show_common_error(error) {
+var redirect_to = function(page) { $( ":mobile-pagecontainer" ).pagecontainer( "change", page, { role: "page" } ); }
+var show_common_error = function(error) {
     $("#error").html(error);
     $("#error").show();
 }
-function hide_common_error() {
+var hide_common_error = function() {
     $("#error").html('');
     $("#error").hide();
 }
@@ -51,11 +57,15 @@ function alert_message(message) {
 
 // deal with all the file uploading problem
 function progressHandlingFunction(e){
-        if(e.lengthComputable){
-            $('progress').attr({value:e.loaded,max:e.total});
-        }
+    if(e.lengthComputable){
+        $('progress').attr({value:e.loaded,max:e.total});
+    }
 }
-    
+
+// whether user is loaded before
+function user_loaded() {
+    return user != null && user.username != null;
+}
 
 
 // Global Page before show functions
@@ -64,20 +74,6 @@ $(function() {
     $("[data-role='header'], [data-role='footer']").toolbar();
 });
 
-// Global auth validation
-/*
-$(document).on('pagebeforechange', function(e, data){  
-    var to = data.toPage, from = data.options.fromPage;
-    if (typeof to  === 'string') {
-        var u = $.mobile.path.parseUrl(to).filename;
-        if (u == "user.html" || u == "setting.html" || u == "houselist.html") {
-            redirect_to("signin.html");
-            return;
-        }
-    }
-});
-*/
-
 $(document).on('pagebeforeshow', function() {
     // Handling navbar related logic
     $("[data-role='navbar']").navbar();
@@ -85,12 +81,13 @@ $(document).on('pagebeforeshow', function() {
     var id = $.mobile.activePage.attr('id');
     cur_url = $.mobile.activePage.data('url');
     $("#nav-footer li a").removeClass("ui-btn-now");
+    console.log("[log] loading " + id);
     if (id == "index-page") $("#nav-footer [data-icon='home']").addClass("ui-btn-now");
     if (id == "user-page") $("#nav-footer [data-icon='user']").addClass("ui-btn-now");
     if (id == "about-page") $("#nav-footer [data-icon='info']").addClass("ui-btn-now");
     if (id == "setting-page") $("#nav-footer [data-icon='gear']").addClass("ui-btn-now");
     user = JSON.parse(localStorage.getItem('user'));
-    if (user != null) {
+    if (user != null && user.username != null) {
         $(".ui-btn-signin").hide();
         $(".ui-btn-signup").hide();
     } else {
@@ -100,95 +97,6 @@ $(document).on('pagebeforeshow', function() {
     hide_common_error();
 });
 
-$('#houselist-page').on('pagebeforeshow', function() {
-    if (user == null || user.username == null) {
-        redirect_to("signin.html");
-        return;
-    }
-    cur_url = "houselist.html?"; 
-    var base_url = config.api_url + "api/apartment/list?";
-    var community_id = getParameter("community_id");
-    var school_id = getParameter("school_id");
-    var q = getParameter("q");
-    if (community_id) {
-        base_url += "&community_id=" + community_id;
-        cur_url += "&community_id=" + community_id;
-    }
-    if (school_id) {
-        base_url += "&school_id=" + school_id;
-        cur_url += "&school_id=" + school_id;
-    }
-    if (q) {
-        base_url += "&q=" + q;
-        cur_url += "&q=" + q;
-    }
-    var element = "houselist";
-    $("#" + element).hide();
-    show_loading();
-    $.ajax({
-        type: 'GET',
-        url: base_url,
-        beforeSend: function (request) {
-            request.setRequestHeader("Authorization", "Bearer " + user.access_token);
-        },
-        success: function(data) {
-                     if (data.message == 'OK') {
-                         Tempo.prepare(element)
-        .when(TempoEvent.Types.RENDER_COMPLETE, function() {
-            $("#" + element).show();
-            hide_loading(); 
-        }).render(data.apartments); } 
-                 },
-        error: server_err_fn
-    });     
-});
-
-
-$('#favlist-empty-page, #reservelist-empty-page, #rentlist-empty-page').on('pagebeforeshow', function() {
-    cur_url = "houselist.html?"; 
-    // TODO using recommend api in the future
-    var base_url = config.api_url + "api/apartment/list?";
-    var community_id = getParameter("community_id");
-    if (community_id) {
-        base_url += "&community_id=" + community_id;
-        cur_url += "&community_id=" + community_id;
-    }
-    var element = "recommend-houselist";
-    $("#" + element).hide();
-    show_loading();
-    $.ajax({
-        type: 'GET',
-        url: base_url,
-        beforeSend: function (request) {
-            request.setRequestHeader("Authorization", "Bearer " + user.access_token);
-        },
-        success: function(data) {
-                     console.log(data);
-                     if (data.message == 'OK') {
-                         Tempo.prepare(element).when(TempoEvent.Types.RENDER_COMPLETE, function() {
-                             hide_loading(); 
-                             $("#" + element).show();
-                         }).render(data.apartments); } 
-                 },
-        error: server_err_fn
-    });     
-});
-
-
-$('#myhouselist-page').on('pagebeforeshow', function() {
-    var element = "myhouselist";
-    $("#" + element).hide();
-    show_loading();
-    get_with_auth("api/apartment/list?username=" + user.username,
-        function(data) {
-            console.log(data);
-            if (data.message == 'OK') {
-                Tempo.prepare(element).when(TempoEvent.Types.RENDER_COMPLETE, function(){
-                    $("#" + element).show();
-                    hide_loading();
-                }).render(data.apartments); } 
-        });
-});
 
 $("#reserve-detail-page").on('pagebeforeshow', function() {
     var element = "reserve-detail-list";
@@ -208,23 +116,6 @@ $("#reserve-detail-page").on('pagebeforeshow', function() {
                 }).render(data.reserves) 
             } 
         });
-});
-
-$('#favlist-page').on('pagebeforeshow', function() {
-    var element = "favhouselist";
-    $("#" + element).hide();
-    show_loading();
-    get_with_auth("api/apartment/fav", function(data) {
-        if (data.message == 'OK') {
-            if (data.apartments.length == 0) {
-                redirect_to("favlist_empty.html");
-            }
-            Tempo.prepare(element).when(TempoEvent.Types.RENDER_COMPLETE, function() {
-                hide_loading(); 
-                $("#" + element).show(); 
-            }).render(data.apartments);
-        }     
-    });
 });
 
 $('#rentlist-page').on('pagebeforeshow', function() {
@@ -281,232 +172,6 @@ $('#more-device-page').on('pagebeforeshow', function() {
     });
 });
 
-$('#choose-date-page').on('pagebeforeshow', function() {
-    var element = "choose-date-list";
-    $("#" + element).hide();
-    show_loading();
-    var id = getParameter("id");
-    if (id == null) return;
-    $.ajax({
-        type: 'GET',
-      beforeSend: function (request) {
-          request.setRequestHeader("Authorization", "Bearer " + user.access_token);
-      },
-      url: config.api_url + "api/apartment?id=" + id,
-      success: function(data) {
-          console.log("choose-date-page:");
-          console.log(data.apartment.reserve_choices);
-          if (data.message == 'OK') {
-              Tempo.prepare(element).when(TempoEvent.Types.RENDER_COMPLETE, function() {
-                  $("#choose-date-list fieldset input").checkboxradio();
-                  $("#" + element).show();
-                  hide_loading();
-              }).render(data.apartment.reserve_choices);
-          } 
-      }
-    }); 
-
-    $("#submit-add-reserve").click(function() {
-        var choice_id = $('#choose-date-list input[data-cacheval="false"]').val();
-        if (!choice_id) {
-            show_common_error("请至少选择一个时间");
-            return;
-        }
-        $.ajax({
-            type: 'POST',
-            beforeSend: function (request) {
-                request.setRequestHeader("Authorization", "Bearer " + user.access_token);
-            },
-            url: config.api_url + "api/reserve?reserve_choice_id=" + choice_id,
-            success: function(data) {
-                if (data.message == 'OK') show_common_error("预约成功");  
-                else  show_common_error(data.message); 
-            }
-        });    
-
-    });
-});
-
-
-$('#edit-profile-page').on('pagebeforeshow', function() {
-    var set_user_data = function(user) {
-        user.gender = user.gender ? 1 : 0;
-        $("#gender").val(user.gender);
-        $("#gender option[value='"+user.gender+"']").attr('selected', 'selected');
-        $('#gender').selectmenu('refresh', true);
-        $("#horoscope").val(user.horoscope);
-        $("#horoscope option[value='"+user.horoscope+"']").attr('selected', 'selected');
-        $('#horoscope').selectmenu('refresh', true);
-        $("#nickname").val(user.nickname);
-        $("#status").val(user.status);
-    };
-
-    if (user == null) {
-        redirect_to("signin.html");
-        return;
-    }
-
-    if (user_loaded() == false) {
-        $.ajax( { 
-            type: 'GET',
-          url: config.api_url + "api/account",
-          beforeSend: function (request) {
-              request.setRequestHeader("Authorization", "Bearer " + user.access_token);
-          },
-          success: function(data) {
-                       if (data.message == 'OK') {
-                           $.extend(user, data.user);
-                           user.avatar = config.api_url + user.avatar;
-                           localStorage.setItem('user', JSON.stringify(user));
-                           set_user_data(user);
-                       } else redirect_to("signin.html");
-                   },
-          error: function(data) { redirect_to("signin.html"); }
-        });  
-    } else {
-        set_user_data(user);
-    }
-
-    $("#submit_edit_profile").click(function(){
-        $.ajax({
-            type: 'POST',
-            beforeSend: function (request) {
-                request.setRequestHeader("Authorization", "Bearer " + user.access_token);
-            },
-            url: config.api_url + "api/account",
-            data: $("#edit-profile-form").serialize(),
-            success: function(data) {
-                if (data.message == 'OK') {
-                    $.extend(user, data.user);
-                    user.avatar = config.api_url + user.avatar;
-                    localStorage.setItem('user', JSON.stringify(user));
-                    show_common_error("保存成功");
-                } else  show_common_error(data.message); 
-            },
-            error: function(data) { redirect_to("signin.html"); }
-        });                 
-    });
-}); 
-
-
-// conversation.html
-$("#conversation-page").on('pagebeforeshow', function() {
-    var element = "conversation-list";
-    $("#" + element).hide();
-    show_loading();
-    $.ajax({
-        type: 'GET',
-        url: config.api_url + "api/message/conversation",
-        beforeSend: function (request) {
-            request.setRequestHeader("Authorization", "Bearer " + user.access_token);
-        },
-        success: function(data) {
-                     console.log(data);
-                     if (data.message == 'OK') {
-                         Tempo.prepare(element).when(TempoEvent.Types.RENDER_COMPLETE, function() {
-                             $("#" + element).show();
-                             hide_loading();
-                         }).render(data.conversations);
-                     } 
-                 },
-        error: server_err_fn
-    });     
-});
-
-
-// message_detail.html
-$('#message-detail-page').on('pagebeforeshow', function() {
-    var from_username = getParameter("from_username");
-    if (from_username == null) return;
-    $("#to_username").val(from_username);
-    $("#header-title").val(from_username);
-
-    var element = "messagedetail-list";
-    $("#" + element).hide();
-    show_loading();
-    var messages = null;
-    $.ajax({
-        type: 'GET',
-        url: config.api_url + "api/message/list?filter_unread=False&from_username=" + from_username,
-        beforeSend: function (request) {
-            request.setRequestHeader("Authorization", "Bearer " + user.access_token);
-        },
-        success: function(data) {
-                     console.log(data);
-                     if (data.message == 'OK') {
-                         for (i = 0; i < data.messages.length; ++i) {
-                             data.messages[i].mine = data.messages[i].from_username != from_username;
-                         }
-                         messages = data.messages;
-                         console.log(data);
-                         Tempo.prepare(element).when(TempoEvent.Types.RENDER_COMPLETE, function() {
-                             hide_loading(); 
-                             $("#" + element).show();
-                         }).render(data.messages);
-                     } 
-                 },
-        error: server_err_fn
-    });     
-
-
-    $("#submit-post-message").click(function(){
-        console.log($("#post-message-form").serialize());
-        $.ajax({
-            type: 'POST',
-            beforeSend: function (request) {
-                request.setRequestHeader("Authorization", "Bearer " + user.access_token);
-            },
-            url: config.api_url + "api/message",
-            data: $("#post-message-form").serialize(),
-            success: function(data) {
-                if (data.message == 'OK') {
-                    var message =  { mine: true, content: $("#message-content-input").val() };
-                    $("#messagedetail-list").append(
-                        '<div class="message-div">' + 
-                        '<div class="message-img-div"><img src="images/user/user_profile.png" /></div>'+
-                        '<div class="message-text-div"><p>' + message.content + '</p></div>'+
-                        '</div>'
-                        );
-                    $("#message-content-input").val('');
-                } else  {
-                    message_alert("发送失败");
-                }
-            }
-        });                 
-    });
-});  
-
-// forget_password.html
-$('#forget-password-page').on('pagebeforeshow', function() {
-    set_captcha_elements();
-    $("#submit-forget").click(function(){
-        $.ajax({
-            type: 'POST',
-            url: config.api_url + "api/account/password/forget",
-            data: $("#forget-password-form").serialize(),
-            success: function(data) {
-                if (data.message == 'OK') {
-                    show_common_error("修改成功，您可以用新密码登录了.");
-                } else {
-                    show_common_error(data.message);
-                }
-            },
-            error: server_err_fn
-        });   
-
-    });    
-});
-
-
-
-// setting.html
-$('#setting-page').on('pagebeforeshow', function() {
-    if (user == null || user.username == null) {
-        redirect_to("signin.html");
-        return;
-    }
-    load_user("user-setting-info");
-});   
 
 // set_date.html
 $('#set-date-page').on('pagebeforeshow', function() {
@@ -711,247 +376,8 @@ $('#set-device-page').on('pagebeforeshow', function() {
     });
 });
 
-// post_single.html
-$('#post-single-page').on('pagebeforeshow', function() {
-    // get community list 
-    var element = "community_id";
-    show_loading();
-    $.ajax({
-        type: 'GET',
-        url: config.api_url + "api/community/list",
-        beforeSend: function (request) {
-            request.setRequestHeader("Authorization", "Bearer " + user.access_token);
-        },
-        success: function(data) {
-                     console.log(data);
-                     Tempo.prepare(element).when(TempoEvent.Types.RENDER_COMPLETE, function() {
-                         hide_loading();
-                         $("#community_id").val(single_house.community_id);
-                         $('#community_id').selectmenu('refresh', true);
-                     }).render(data.communities);
-                 }
-    });
 
-
-    // set value if have 
-    if (single_house != null) {
-        if (single_house.title) $("#title").val(single_house.title);
-        if (single_house.subtitle) $("#subtitle").val(single_house.subtitle);
-        if (single_house.address) $("#address").val(single_house.address);
-        if (single_house.num_bedroom) $("#num_bedroom").val(single_house.num_bedroom);
-        if (single_house.num_livingroom) $("#num_livingroom").val(single_house.num_livingroom);
-        $("#type").val(single_house.type);
-        if (single_house.rooms != null) $(".set-room-link").html("已经设置");
-        if (single_house.reserve_choices != null) $(".set-date-link").html("已经设置");
-        if (single_house.tags != null)  $(".set-keywords-link").html("已经设置"); 
-        if (single_house.devices != null) $(".set-devices-link").html("已经设置");
-    }
-
-
-    // post a new house
-    $("#submit-post-single").click(function() {
-        single_house.title = $("#title").val();
-        single_house.subtitle = $("#subtitle").val();
-        single_house.address = $("#address").val();
-        single_house.community_id = $("#community_id").val();
-        single_house.num_bedroom = $("#num_bedroom").val();
-        single_house.num_livingroom = $("#num_livingroom").val();
-        single_house.type = 1;
-        localStorage.setItem('single_house', JSON.stringify(single_house));
-
-        var method = "POST";
-        if (whole_house.id && whole_house.id != 0) method = "PUT";
-        $.ajax({
-            type: method,
-          beforeSend: function (request) {
-              request.setRequestHeader("Authorization", "Bearer " + user.access_token);
-          },
-          url: config.api_url + "api/apartment",
-          contentType: "application/json; charset=utf-8",
-          data: JSON.stringify(single_house),
-          success: function(data) {
-              if (data.message == 'OK') {
-                  show_common_error("发布成功,开始上传文件 ...");
-                  localStorage.removeItem('single_house');
-                  post_photo(data.apartment.id);
-              } else  show_common_error(data.message); 
-          },
-          error: server_err_fn
-        });  
-    });     
-});
-
-
-
-$('#post-whole-page').on('pagebeforeshow', function() {
-    // get community list  
-    var element = "community_id";
-    show_loading();
-    $.ajax({
-        type: 'GET',
-        url: config.api_url + "api/community/list",
-        beforeSend: function (request) {
-            request.setRequestHeader("Authorization", "Bearer " + user.access_token);
-        },
-        success: function(data) {
-                     if (data.message == 'OK' && data.status_code == 200) {
-                         console.log(data);
-                         Tempo.prepare(element).when(TempoEvent.Types.RENDER_COMPLETE, function() {
-                             $('#community_id').selectmenu('refresh', true);
-                             $("#community_id").val(whole_house.community_id);
-                             $('#community_id').selectmenu('refresh', true);
-                             hide_loading();
-                         }).render(data.communities);
-                     } else {
-                         hide_loading();
-                         redirect_to("signin.html");
-                     }
-                 }
-    });
-
-    // set value if have 
-    if (whole_house != null) {
-        if (whole_house.title) $("#title").val(whole_house.title);
-        if (whole_house.subtitle) $("#subtitle").val(whole_house.subtitle);
-        if (whole_house.address)  $("#address").val(whole_house.address);
-        if (whole_house.num_bedroom) $("#num_bedroom").val(whole_house.num_bedroom);
-        if (whole_house.num_livingroom) $("#num_livingroom").val(whole_house.num_livingroom);
-        if (whole_house.rooms[0].price) $("#price").val(whole_house.rooms[0].price);
-        if (whole_house.rooms[0].area) $("#area").val(whole_house.rooms[0].area);
-        $("#type").val(whole_house.type);
-        if (whole_house.rooms[0].date_entrance != null)  $("#set-entrance-date-link").html("已经设置"); 
-        if (whole_house.reserve_choices != null)  $("#set-date-link").html("已经设置");
-        if (whole_house.tags != null)  $("#set-keywords-link").html("已经设置");
-        if (whole_house.devices != null)  $("#set-devices-link").html("已经设置");
-    }
-
-
-    // post a new house
-    $("#submit-post-whole").click(function() {
-        whole_house.title = $("#title").val();
-        whole_house.subtitle = $("#subtitle").val();
-        whole_house.address = $("#address").val();
-        whole_house.community_id = $("#community_id").val();
-        whole_house.num_bedroom = $("#num_bedroom").val();
-        whole_house.num_livingroom = $("#num_livingroom").val();
-        whole_house.type = 0;
-        whole_house.rooms[0].price =  $("#price").val();
-        whole_house.rooms[0].area =  $("#area").val();
-        localStorage.setItem('whole_house', JSON.stringify(whole_house));
-
-        var method = "POST";
-        if (whole_house.id && whole_house.id != 0) method = "PUT";
-        $.ajax({
-            type: method,
-          beforeSend: function (request) {
-              request.setRequestHeader("Authorization", "Bearer " + user.access_token);
-          },
-          url: config.api_url + "api/apartment",
-          contentType: "application/json; charset=utf-8",
-          data: JSON.stringify(whole_house),
-          success: function(data) {
-              console.log(data);
-              if (data.message == 'OK') {
-                  show_common_error("发布成功,开始上传文件 ...");
-                  localStorage.removeItem('whole_house');
-                  post_photo(data.apartment.id);
-              } else  show_common_error(data.message); 
-          },
-          error: server_err_fn
-        });  
-    });
-});
-
-function bindAble()
-{
-    $(".reserve-table .able").click(function(){
-        $(this).removeClass("able").addClass("selected");
-        bindSelected();
-    });
-}
-function bindSelected()
-{
-    $(".reserve-table .selected").click(function(){
-        $(this).removeClass("selected").addClass("able");
-        bindAble();
-    });
-}
-
-function bindSetEmpty()
-{
-    $(".reserve-table .able").click(function(){
-        $(this).removeClass("able").addClass("empty");
-        bindSetAble();
-    });
-}
-function bindSetAble()
-{
-    $(".reserve-table .empty").click(function(){
-        $(this).removeClass("empty").addClass("able");
-        bindSetEmpty();
-    });
-}
-
-function user_loaded() {
-    return user.username != null;
-}
-
-function load_user(element) {
-    $("#" + element).hide();
-    show_loading();
-    $.ajax({
-        type: 'GET',
-        url: config.api_url + "api/account",
-        beforeSend: function (request) {
-            request.setRequestHeader("Authorization", "Bearer " + user.access_token);
-        },
-        success: function(data) {
-                     if (data.message == 'OK' && data.status_code == 200) {
-                         $.extend(user, data.user);
-                         user.avatar = config.api_url + user.avatar;
-                         localStorage.setItem('user', JSON.stringify(user));
-                         Tempo.prepare(element).when(TempoEvent.Types.RENDER_COMPLETE, function() {
-                             $("#" + element).show();
-                             hide_loading();
-                             $("#signout-btn").unbind().click(function(){
-                                 console.log("here");
-                                 if (user != null) localStorage.removeItem('user');
-                                 if (whole_house != null) localStorage.removeItem('whole_house');
-                                 if (single_house != null) localStorage.removeItem('single_house');
-                                 redirect_to("signin.html");
-                             });      
-                         }).render(user);
-                     } else {
-                         hide_loading();
-                         redirect_to("signin.html");
-                     }
-                 },
-        error: function(data) { show_common_error("用户名密码错误"); }
-    });   
-}
-
-function save_user()
-{  
-    $.ajax({
-        type: 'GET',
-    url: config.api_url + "api/account",
-    beforeSend: function (request) {
-        request.setRequestHeader("Authorization", "Bearer " + user.access_token);
-    },
-    success: function(data) {
-                 if (data.message == 'OK') {
-                     $.extend(user, data.user);
-                     user.avatar = config.api_url + user.avatar;
-                     localStorage.setItem('user', JSON.stringify(user));
-                 } else {
-                     redirect_to("signin.html");
-                 }
-             },
-    error: server_err_fn
-    });  
-}
-
-
+// simple user related post logic 
 function user_post(pconfig) {
     $(pconfig.button).unbind().click(function(){
         $.ajax({
@@ -1017,9 +443,6 @@ function set_captcha_elements() {
     });          
 }
 
-function redirect_to(page) {
-    $( ":mobile-pagecontainer" ).pagecontainer( "change", page, { role: "page" } );
-}
 
 function getParameter(name) {
     var url = document.location.href;
@@ -1116,18 +539,45 @@ function post_photo(apartment_id)
 function get_with_auth(api_name, succ_func, error_func) {
     ajax_with_auth('GET', api_name, succ_func, error_func);
 }
+
+function put_with_auth(api_name, succ_func, error_func) {
+    ajax_with_auth('PUT', api_name, succ_func, error_func);
+}
+
 function post_with_auth(api_name, succ_func, error_func) {
     ajax_with_auth('POST', api_name, succ_func, error_func);
 }
 
+function post_with_data_auth(api_name, data, succ_func, error_func) {
+    if (error_func == null) error_func = server_err_fn;
+    $.ajax({
+        type: 'POST',
+      beforeSend: function (request) { request.setRequestHeader("Authorization", "Bearer " + user.access_token); },
+      url: config.api_url + api_name,
+      data: data,
+      success: succ_func,
+      error: error_func
+    });  
+}        
+
 function ajax_with_auth(type, api_name, succ_func, error_func) {
     if (error_func == null) error_func = server_err_fn;
-    $.ajax({ type: type,
-        url: config.api_url + api_name,
-      beforeSend: function (request) {
-          request.setRequestHeader("Authorization", "Bearer " + user.access_token);
-      },
+    $.ajax( { 
+        type: type,
+      url: config.api_url + api_name,
+      beforeSend: function (request) { request.setRequestHeader("Authorization", "Bearer " + user.access_token); },
       success: succ_func,
       error: error_func
     });   
-} 
+}
+
+function tempo_show(element, data) {
+    console.log("[TempoShow]");
+    console.log(data);
+    $("#" + element).hide();
+    show_loading();
+    Tempo.prepare(element).when(TempoEvent.Types.RENDER_COMPLETE, function() {
+        $("#" + element).show();
+        hide_loading();
+    }).render(data);
+}

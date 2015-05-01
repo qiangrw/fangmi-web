@@ -1,8 +1,8 @@
-// signin.html
+// signin.html 
 $('#signin-page').on('pageinit', function() {
     var signin_succ = function(data) {
         hide_loading();
-        if (data.message = 'OK' && data.status_code == 200) {
+        if (data.message = 'OK') {
             $.extend(user, data.user);
             user.avatar = config.api_url + user.avatar;
             localStorage.setItem('user', JSON.stringify(user));
@@ -31,14 +31,11 @@ $('#signin-page').on('pageinit', function() {
                     user.access_token = data.access_token;
                     get_with_auth("api/account", signin_succ, signin_fail);
                 } else {
-                    show_common_error(data.message);
+                    show_common_error("验证错误");
                     hide_loading();
                 }
-            },
-            error: function(data) {
-                       show_common_error("用户名密码错误");
-                       hide_loading();
-                   }
+            }, 
+            error: server_err_fn
         });
     });
 });
@@ -54,21 +51,50 @@ $('#user-page').on('pagebeforeshow', function() {
     $("#" + element).hide();
     show_loading();
     get_with_auth("api/account", function(data) {
-        if (data.message = 'OK' && data.status_code == 200) {
+        if (data.message = 'OK') {
             $.extend(user, data.user);
             user.avatar = config.api_url + user.avatar;
             localStorage.setItem('user', JSON.stringify(user));
-            Tempo.prepare(element).when(TempoEvent.Types.RENDER_COMPLETE, function() {
-                $("#" + element).show();
-                hide_loading();
-            }).render(user);  
+            tempo_show(element, user);
         } else {
             hide_loading();
             redirect_to("signin.html");
         }   
-
-    });
+    }, server_err_redirect_fn);
 });
+      
+// edit_profile.html
+$('#edit-profile-page').on('pagebeforeshow', function() {
+    var set_user_data = function(user) {
+        user.gender = user.gender ? 1 : 0;
+        $("#gender").val(user.gender);
+        $("#gender option[value='"+user.gender+"']").attr('selected', 'selected');
+        $('#gender').selectmenu('refresh', true);
+        $("#horoscope").val(user.horoscope);
+        $("#horoscope option[value='"+user.horoscope+"']").attr('selected', 'selected');
+        $('#horoscope').selectmenu('refresh', true);
+        $("#nickname").val(user.nickname);
+        $("#status").val(user.status);
+    };
+
+    if (!user_loaded()) {
+        redirect_to("signin.html");
+        return;
+    }
+    set_user_data(user);
+
+    $("#submit_edit_profile").unbind().click(function(){
+        post_with_data_auth("api/account", $("#edit-profile-form").serialize(),
+            function(data) {
+                if (data.status == 200 && data.message == 'OK') {
+                    $.extend(user, data.user);
+                    user.avatar = config.api_url + user.avatar;
+                    localStorage.setItem('user', JSON.stringify(user));
+                    show_common_error("信息保存成功");
+                } else  show_common_error(data.message); 
+            }, server_err_redirect_fn);
+    });
+}); 
 
 // change_password.html
 $('#change-password-page').on('pageinit', function() {
@@ -150,5 +176,62 @@ $('#signup-page').on('pagebeforeshow', function() {
         });   
 
     });
+});
+
+// setting.html
+$('#setting-page').on('pagebeforeshow', function() {
+    if (user == null || user.username == null) {
+        hide_loading();
+        redirect_to("signin.html");
+        return;
+    }
+    element = "user-setting-info";
+    $("#" + element).hide();
+    show_loading();
+    get_with_auth("api/account", function(data) {
+        if (data.message == 'OK') {
+            $.extend(user, data.user);
+            user.avatar = config.api_url + user.avatar;
+            localStorage.setItem('user', JSON.stringify(user));
+
+            Tempo.prepare(element).when(TempoEvent.Types.RENDER_COMPLETE, function() {
+                $("#" + element).show();
+                hide_loading();
+
+                // bind events
+                $("#signout-btn").unbind().click(function(){
+                    console.log("here");
+                    if (user != null) localStorage.removeItem('user');
+                    if (whole_house != null) localStorage.removeItem('whole_house');
+                    if (single_house != null) localStorage.removeItem('single_house');
+                    redirect_to("signin.html");
+                });      
+            }).render(user);
+        } else {
+            hide_loading();
+            redirect_to("signin.html");
+        }
+    }, server_err_redirect_fn);
+});
+ 
+// forget_password.html
+$('#forget-password-page').on('pagebeforeshow', function() {
+    set_captcha_elements();
+    $("#submit-forget").click(function(){
+        $.ajax({
+            type: 'POST',
+            url: config.api_url + "api/account/password/forget",
+            data: $("#forget-password-form").serialize(),
+            success: function(data) {
+                if (data.message == 'OK') {
+                    show_common_error("修改成功，您可以用新密码登录了.");
+                } else {
+                    show_common_error(data.message);
+                }
+            },
+            error: server_err_fn
+        });   
+
+    });    
 });
 
