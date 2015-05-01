@@ -31,7 +31,10 @@ $('#signin-page').on('pageinit', function() {
                     hide_loading();
                 }
             },
-            error: server_err_fn
+            error: function(data) {
+                    show_common_error("用户名密码错误");
+                    hide_loading();
+                   }
         });
     });
 });
