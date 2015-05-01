@@ -161,6 +161,17 @@ $('#myhouselist-page').on('pagebeforeshow', function() {
     }, server_err_redirect_fn);
 });
 
+$('#post-whole-page').on('pagebeforehide', function() {
+     if (whole_house != null) {
+        whole_house.title = $("#title").val();
+        whole_house.subtitle = $("#subtitle").val();
+        whole_house.address =  $("#address").val();
+        whole_house.num_bedroom = $("#num_bedroom").val();
+        whole_house.num_livingroom =  $("#num_livingroom").val();
+        whole_house.rooms[0].price = $("#price").val();
+        whole_house.rooms[0].area =  $("#area").val();
+     }
+});
 
 // post_whole.html
 $('#post-whole-page').on('pagebeforeshow', function() {
@@ -242,6 +253,18 @@ $('#post-whole-page').on('pagebeforeshow', function() {
     });
 });
     
+ 
+$('#post-single-page').on('pagebeforehide', function() {
+     if (single_house != null) {
+        single_house.title = $("#title").val();
+        single_house.subtitle = $("#subtitle").val();
+        single_house.address =  $("#address").val();
+        single_house.num_bedroom = $("#num_bedroom").val();
+        single_house.num_livingroom =  $("#num_livingroom").val();
+     }
+});
+                                                    
+
 // post_single.html
 $('#post-single-page').on('pagebeforeshow', function() {
     // get community list 
