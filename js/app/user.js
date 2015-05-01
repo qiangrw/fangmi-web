@@ -1,18 +1,22 @@
-var signin_succ = function(data) {
-    hide_loading();
-    if (data.message = 'OK' && data.status_code == 200) {
-        $.extend(user, data.user);
-        user.avatar = config.api_url + user.avatar;
-        localStorage.setItem('user', JSON.stringify(user));
-        redirect_to("index.html");
-    } else {
-        redirect_to("signin.html");
-    }   
-}
-var signin_fail = function(data) { show_common_error("用户名密码错误"); }
-
 // signin.html
 $('#signin-page').on('pageinit', function() {
+    var signin_succ = function(data) {
+        hide_loading();
+        if (data.message = 'OK' && data.status_code == 200) {
+            $.extend(user, data.user);
+            user.avatar = config.api_url + user.avatar;
+            localStorage.setItem('user', JSON.stringify(user));
+            redirect_to("index.html");
+        } else {
+            redirect_to("signin.html");
+        }   
+    }
+    var signin_fail = function(data) { 
+        show_common_error("用户名密码错误"); 
+        hide_loading();
+    }
+
+
     $("#submit-signin").click(function(){
         show_loading();
         $.ajax({
@@ -32,8 +36,8 @@ $('#signin-page').on('pageinit', function() {
                 }
             },
             error: function(data) {
-                    show_common_error("用户名密码错误");
-                    hide_loading();
+                       show_common_error("用户名密码错误");
+                       hide_loading();
                    }
         });
     });
@@ -76,7 +80,7 @@ $('#change-password-page').on('pageinit', function() {
     });   
 });
 
- 
+
 // check_id.html
 $('#apply-confirm-page').on('pagebeforeshow', function() {
     user_post({
@@ -96,11 +100,6 @@ $('#apply-student-page').on('pagebeforeshow', function() {
         var type = file.type;
         // TODO add validation
     });
-    function progressHandlingFunction(e){
-        if(e.lengthComputable){
-            $('progress').attr({value:e.loaded,max:e.total});
-        }
-    }
 
     $("#submit-apply-student").unbind().click(function() {
         var formData = new FormData($('#apply-student-form')[0]);
@@ -118,10 +117,10 @@ $('#apply-student-page').on('pagebeforeshow', function() {
             },
             beforeSend: function (request) { request.setRequestHeader("Authorization", "Bearer " + user.access_token); },
             success: function(data) {
-                         console.log(data);
-                         if (data.status_code == 200 && data.message == 'OK') show_common_error("审核学生信息申请发送成功，请耐心等待审核."); 
-                         else  show_common_error(data.message);
-                     },
+                console.log(data);
+                if (data.status_code == 200 && data.message == 'OK') show_common_error("审核学生信息申请发送成功，请耐心等待审核."); 
+                else  show_common_error(data.message);
+            },
             error: server_err_fn,
             data: formData,
             cache: false,
@@ -131,4 +130,25 @@ $('#apply-student-page').on('pagebeforeshow', function() {
     });
 });
 
+
+// signup.html
+$('#signup-page').on('pagebeforeshow', function() {
+    set_captcha_elements();
+    $("#submit-signup").click(function(){
+        $.ajax({
+            type: 'POST',
+            url: config.api_url + "api/account/register",
+            data: $("#signup-form").serialize(),
+            success: function(data) {
+                if (data.message == 'OK') {
+                    show_common_error("注册成功，请登录.");
+                } else {
+                    show_common_error(data.message);
+                }
+            },
+            error: function(data) { show_common_error('服务器错误'); }
+        });   
+
+    });
+});
 

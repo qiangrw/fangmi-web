@@ -14,7 +14,7 @@ $('#house-detail-page').on('pagebeforeshow', function() {
             // fav the house
             var btn = $(this);
             post_with_auth("api/apartment/fav?action=append&id=" + id, function(data) {
-                if (data.message == "OK" && data.status_code == 200) {
+                if (data.message == 'OK' && data.status_code == 200) {
                     btn.removeClass("ui-icon-nofav").addClass("ui-icon-fav"); 
                     bind_fav();
                 }
@@ -25,7 +25,7 @@ $('#house-detail-page').on('pagebeforeshow', function() {
         $(".ui-icon-fav").click(function() {
             var btn = $(this);
             post_with_auth("api/apartment/fav?action=remove&id=" + id, function(data) {
-                if (data.message == "OK" && data.status_code == 200) {
+                if (data.message == 'OK' && data.status_code == 200) {
                     btn.removeClass("ui-icon-fav").addClass("ui-icon-nofav"); 
                     bind_nofav();
                 }
@@ -33,7 +33,7 @@ $('#house-detail-page').on('pagebeforeshow', function() {
         });
     }; 
     get_with_auth("api/apartment?id="+id, function(data) {
-        if (data.message = "OK" && data.status_code == 200) {
+        if (data.message == 'OK' && data.status_code == 200) {
             Tempo.prepare(element).when(TempoEvent.Types.RENDER_COMPLETE, function() { 
                 console.log(data.apartment);
                 if (user.username == data.apartment.user.username) {

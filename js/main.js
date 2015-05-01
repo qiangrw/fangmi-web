@@ -24,11 +24,15 @@ if (single_house == null) { single_house = { type: 1 }; }
 
 
 // global functions                                                                    
-var show_loading = function(event) { 
-    $('body').addClass('ui-loading');
+var show_loading = function(event) { $('body').addClass('ui-loading'); }
+var hide_loading = function(event) { $('body').removeClass('ui-loading'); }
+function show_common_error(error) {
+    $("#error").html(error);
+    $("#error").show();
 }
-var hide_loading = function(event) { 
-    $('body').removeClass('ui-loading');
+function hide_common_error() {
+    $("#error").html('');
+    $("#error").hide();
 }
 function refreshPage()
 {
@@ -44,6 +48,14 @@ function alert_message(message) {
     $( "#popup-message" ).html(message);
     $( "#popup" ).popup("open");
 }
+
+// deal with all the file uploading problem
+function progressHandlingFunction(e){
+        if(e.lengthComputable){
+            $('progress').attr({value:e.loaded,max:e.total});
+        }
+}
+    
 
 
 // Global Page before show functions
@@ -120,7 +132,7 @@ $('#houselist-page').on('pagebeforeshow', function() {
             request.setRequestHeader("Authorization", "Bearer " + user.access_token);
         },
         success: function(data) {
-                     if (data.message = "OK") {
+                     if (data.message == 'OK') {
                          Tempo.prepare(element)
         .when(TempoEvent.Types.RENDER_COMPLETE, function() {
             $("#" + element).show();
@@ -152,7 +164,7 @@ $('#favlist-empty-page, #reservelist-empty-page, #rentlist-empty-page').on('page
         },
         success: function(data) {
                      console.log(data);
-                     if (data.message = "OK") {
+                     if (data.message == 'OK') {
                          Tempo.prepare(element).when(TempoEvent.Types.RENDER_COMPLETE, function() {
                              hide_loading(); 
                              $("#" + element).show();
@@ -170,7 +182,7 @@ $('#myhouselist-page').on('pagebeforeshow', function() {
     get_with_auth("api/apartment/list?username=" + user.username,
         function(data) {
             console.log(data);
-            if (data.message = "OK") {
+            if (data.message == 'OK') {
                 Tempo.prepare(element).when(TempoEvent.Types.RENDER_COMPLETE, function(){
                     $("#" + element).show();
                     hide_loading();
@@ -187,7 +199,7 @@ $("#reserve-detail-page").on('pagebeforeshow', function() {
     get_with_auth("api/reserve/list?apartment_id=" + apartment_id,
         function(data) {
             console.log(data);
-            if (data.message = "OK") {
+            if (data.message == 'OK') {
                 Tempo.prepare(element).when(TempoEvent.Types.RENDER_COMPLETE, function(){
                     if (data.reserves.length > 0) {
                         $("#" + element).show();
@@ -203,7 +215,7 @@ $('#favlist-page').on('pagebeforeshow', function() {
     $("#" + element).hide();
     show_loading();
     get_with_auth("api/apartment/fav", function(data) {
-        if (data.message = "OK") {
+        if (data.message == 'OK') {
             if (data.apartments.length == 0) {
                 redirect_to("favlist_empty.html");
             }
@@ -227,7 +239,7 @@ $('#rentlist-page').on('pagebeforeshow', function() {
         },
         success: function(data) {
                      console.log(data);
-                     if (data.message = "OK") {
+                     if (data.message == 'OK') {
                          if (data.rents.length == 0) {
                              redirect_to("rentlist_empty.html");
                          } else {
@@ -258,7 +270,7 @@ $('#more-device-page').on('pagebeforeshow', function() {
       },
       url: config.api_url + "api/apartment?id=" + id,
       success: function(data) {
-          if (data.message = "OK") {
+          if (data.message == 'OK') {
               console.log(data.apartment);
               Tempo.prepare(element).when(TempoEvent.Types.RENDER_COMPLETE, function() {
                   $("#" + element).show();
@@ -284,7 +296,7 @@ $('#choose-date-page').on('pagebeforeshow', function() {
       success: function(data) {
           console.log("choose-date-page:");
           console.log(data.apartment.reserve_choices);
-          if (data.message = "OK") {
+          if (data.message == 'OK') {
               Tempo.prepare(element).when(TempoEvent.Types.RENDER_COMPLETE, function() {
                   $("#choose-date-list fieldset input").checkboxradio();
                   $("#" + element).show();
@@ -307,7 +319,7 @@ $('#choose-date-page').on('pagebeforeshow', function() {
             },
             url: config.api_url + "api/reserve?reserve_choice_id=" + choice_id,
             success: function(data) {
-                if (data.message == "OK") show_common_error("预约成功");  
+                if (data.message == 'OK') show_common_error("预约成功");  
                 else  show_common_error(data.message); 
             }
         });    
@@ -342,7 +354,7 @@ $('#edit-profile-page').on('pagebeforeshow', function() {
               request.setRequestHeader("Authorization", "Bearer " + user.access_token);
           },
           success: function(data) {
-                       if (data.message = "OK") {
+                       if (data.message == 'OK') {
                            $.extend(user, data.user);
                            user.avatar = config.api_url + user.avatar;
                            localStorage.setItem('user', JSON.stringify(user));
@@ -364,7 +376,7 @@ $('#edit-profile-page').on('pagebeforeshow', function() {
             url: config.api_url + "api/account",
             data: $("#edit-profile-form").serialize(),
             success: function(data) {
-                if (data.message == "OK") {
+                if (data.message == 'OK') {
                     $.extend(user, data.user);
                     user.avatar = config.api_url + user.avatar;
                     localStorage.setItem('user', JSON.stringify(user));
@@ -390,7 +402,7 @@ $("#conversation-page").on('pagebeforeshow', function() {
         },
         success: function(data) {
                      console.log(data);
-                     if (data.message = "OK") {
+                     if (data.message == 'OK') {
                          Tempo.prepare(element).when(TempoEvent.Types.RENDER_COMPLETE, function() {
                              $("#" + element).show();
                              hide_loading();
@@ -421,7 +433,7 @@ $('#message-detail-page').on('pagebeforeshow', function() {
         },
         success: function(data) {
                      console.log(data);
-                     if (data.message = "OK") {
+                     if (data.message == 'OK') {
                          for (i = 0; i < data.messages.length; ++i) {
                              data.messages[i].mine = data.messages[i].from_username != from_username;
                          }
@@ -447,7 +459,7 @@ $('#message-detail-page').on('pagebeforeshow', function() {
             url: config.api_url + "api/message",
             data: $("#post-message-form").serialize(),
             success: function(data) {
-                if (data.message == "OK") {
+                if (data.message == 'OK') {
                     var message =  { mine: true, content: $("#message-content-input").val() };
                     $("#messagedetail-list").append(
                         '<div class="message-div">' + 
@@ -486,28 +498,6 @@ $('#forget-password-page').on('pagebeforeshow', function() {
 });
 
 
-
-// signup.html
-$('#signup-page').on('pagebeforeshow', function() {
-    set_captcha_elements();
-    $("#submit-signup").click(function(){
-        $.ajax({
-            type: 'POST',
-            url: config.api_url + "api/account/register",
-            data: $("#signup-form").serialize(),
-            success: function(data) {
-                if (data.message == 'OK') {
-                    // TODO redirect to signup success page
-                    show_common_error("注册成功，请登录.");
-                } else {
-                    show_common_error(data.message);
-                }
-            },
-            error: function(data) { show_common_error('服务器错误'); }
-        });   
-
-    });
-});
 
 // setting.html
 $('#setting-page').on('pagebeforeshow', function() {
@@ -780,7 +770,7 @@ $('#post-single-page').on('pagebeforeshow', function() {
           contentType: "application/json; charset=utf-8",
           data: JSON.stringify(single_house),
           success: function(data) {
-              if (data.message == "OK") {
+              if (data.message == 'OK') {
                   show_common_error("发布成功,开始上传文件 ...");
                   localStorage.removeItem('single_house');
                   post_photo(data.apartment.id);
@@ -804,7 +794,7 @@ $('#post-whole-page').on('pagebeforeshow', function() {
             request.setRequestHeader("Authorization", "Bearer " + user.access_token);
         },
         success: function(data) {
-                     if (data.message == "OK" && data.status_code == 200) {
+                     if (data.message == 'OK' && data.status_code == 200) {
                          console.log(data);
                          Tempo.prepare(element).when(TempoEvent.Types.RENDER_COMPLETE, function() {
                              $('#community_id').selectmenu('refresh', true);
@@ -861,7 +851,7 @@ $('#post-whole-page').on('pagebeforeshow', function() {
           data: JSON.stringify(whole_house),
           success: function(data) {
               console.log(data);
-              if (data.message == "OK") {
+              if (data.message == 'OK') {
                   show_common_error("发布成功,开始上传文件 ...");
                   localStorage.removeItem('whole_house');
                   post_photo(data.apartment.id);
@@ -916,7 +906,7 @@ function load_user(element) {
             request.setRequestHeader("Authorization", "Bearer " + user.access_token);
         },
         success: function(data) {
-                     if (data.message = "OK" && data.status_code == 200) {
+                     if (data.message == 'OK' && data.status_code == 200) {
                          $.extend(user, data.user);
                          user.avatar = config.api_url + user.avatar;
                          localStorage.setItem('user', JSON.stringify(user));
@@ -949,7 +939,7 @@ function save_user()
         request.setRequestHeader("Authorization", "Bearer " + user.access_token);
     },
     success: function(data) {
-                 if (data.message = "OK") {
+                 if (data.message == 'OK') {
                      $.extend(user, data.user);
                      user.avatar = config.api_url + user.avatar;
                      localStorage.setItem('user', JSON.stringify(user));
@@ -967,9 +957,7 @@ function user_post(pconfig) {
         $.ajax({
             type: 'POST',
         url: config.api_url + pconfig.api,
-        beforeSend: function (request) {
-            request.setRequestHeader("Authorization", "Bearer " + user.access_token);
-        },
+        beforeSend: function (request) { request.setRequestHeader("Authorization", "Bearer " + user.access_token); },
         data: $(pconfig.form).serialize(),
         success: function(data) {
             if (data.message == 'OK') {
@@ -983,15 +971,6 @@ function user_post(pconfig) {
     });    
 }
 
-function show_common_error(error) {
-    $("#error").html(error);
-    $("#error").show();
-}
-
-function hide_common_error() {
-    $("#error").html('');
-    $("#error").hide();
-}
 
 function set_captcha_elements() {
     var time = 60;
@@ -1101,11 +1080,6 @@ function from_time(time) {
 
 function post_photo(apartment_id)
 {         
-    function progressHandlingFunction(e){
-        if(e.lengthComputable){
-            $('progress').attr({value:e.loaded,max:e.total});
-        }
-    }
     $("#id").val(apartment_id);
     var formData = new FormData($('#file-form')[0]);
     console.log("start updaloding");
@@ -1125,7 +1099,7 @@ function post_photo(apartment_id)
                         request.setRequestHeader("Authorization", "Bearer " + user.access_token);
                     },
         success: function(data) {
-                     if (data.message = "OK") { 
+                     if (data.message == 'OK') { 
                          show_common_error("文件发送成功."); 
                          redirect_to("detail.html?id=" + apartment_id);
                      }
