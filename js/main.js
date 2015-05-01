@@ -12,6 +12,7 @@ var single_house = JSON.parse(localStorage.getItem('single_house'));
 var cur_url;
 if (whole_house == null) {
     whole_house = {
+        type: 0,
         rooms: [ {
                    name: 'default', 
                    area: 0, 
@@ -19,7 +20,7 @@ if (whole_house == null) {
                }]
     };
 }
-if (single_house == null) { single_house = { }; }
+if (single_house == null) { single_house = { type: 1 }; }
 
 
 // global functions                                                                    
@@ -780,8 +781,9 @@ $('#set-device-page').on('pagebeforeshow', function() {
     });
 });
 
+// post_single.html
 $('#post-single-page').on('pagebeforeshow', function() {
-    // get community list   e
+    // get community list 
     var element = "community_id";
     show_loading();
     $.ajax({
@@ -809,18 +811,10 @@ $('#post-single-page').on('pagebeforeshow', function() {
         if (single_house.num_bedroom) $("#num_bedroom").val(single_house.num_bedroom);
         if (single_house.num_livingroom) $("#num_livingroom").val(single_house.num_livingroom);
         $("#type").val(single_house.type);
-        if (single_house.rooms != null) {
-            $(".set-room-link").html("已经设置");
-        }
-        if (single_house.reserve_choices != null) {
-            $(".set-date-link").html("已经设置");
-        }
-        if (single_house.tags != null) {
-            $(".set-keywords-link").html("已经设置");
-        }
-        if (single_house.devices != null) {
-            $(".set-devices-link").html("已经设置");
-        }
+        if (single_house.rooms != null) $(".set-room-link").html("已经设置");
+        if (single_house.reserve_choices != null) $(".set-date-link").html("已经设置");
+        if (single_house.tags != null)  $(".set-keywords-link").html("已经设置"); 
+        if (single_house.devices != null) $(".set-devices-link").html("已经设置");
     }
 
 
@@ -847,7 +841,7 @@ $('#post-single-page').on('pagebeforeshow', function() {
           data: JSON.stringify(single_house),
           success: function(data) {
               if (data.message == "OK") {
-                  show_common_error("发布成功");
+                  show_common_error("发布成功,开始上传文件 ...");
                   localStorage.removeItem('single_house');
                   post_photo(data.apartment.id);
               } else  show_common_error(data.message); 
@@ -895,18 +889,10 @@ $('#post-whole-page').on('pagebeforeshow', function() {
         if (whole_house.rooms[0].price) $("#price").val(whole_house.rooms[0].price);
         if (whole_house.rooms[0].area) $("#area").val(whole_house.rooms[0].area);
         $("#type").val(whole_house.type);
-        if (whole_house.rooms[0].date_entrance != null) {
-            $("#set-entrance-date-link").html("已经设置");
-        }
-        if (whole_house.reserve_choices != null) {
-            $("#set-date-link").html("已经设置");
-        }
-        if (whole_house.tags != null) {
-            $("#set-keywords-link").html("已经设置");
-        }
-        if (whole_house.devices != null) {
-            $("#set-devices-link").html("已经设置");
-        }
+        if (whole_house.rooms[0].date_entrance != null)  $("#set-entrance-date-link").html("已经设置"); 
+        if (whole_house.reserve_choices != null)  $("#set-date-link").html("已经设置");
+        if (whole_house.tags != null)  $("#set-keywords-link").html("已经设置");
+        if (whole_house.devices != null)  $("#set-devices-link").html("已经设置");
     }
 
 
