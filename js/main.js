@@ -531,10 +531,8 @@ $('#apply-student-page').on('pagebeforeshow', function() {
                             request.setRequestHeader("Authorization", "Bearer " + user.access_token);
                         },
             success: function(data) {
-                         if (data.message = "OK") 
-            show_common_error("审核学生信息申请发送成功，请耐心等待审核."); 
-                         else  
-            show_common_error(data.message);
+                         if (data.message = "OK" && data.status_code == 200) show_common_error("审核学生信息申请发送成功，请耐心等待审核."); 
+                         else  show_common_error(data.message);
                      },
             error: server_err_fn,
             data: formData,
@@ -1023,7 +1021,7 @@ function save_user()
 
 
 function user_post(pconfig) {
-    $(pconfig.button).click(function(){
+    $(pconfig.button).unbind().click(function(){
         $.ajax({
             type: 'POST',
         url: config.api_url + pconfig.api,
