@@ -511,7 +511,7 @@ $('#apply-student-page').on('pagebeforeshow', function() {
         }
     }
 
-    $("#submit-apply-student").click(function() {
+    $("#submit-apply-student").unbind().click(function() {
         var formData = new FormData($('#apply-student-form')[0]);
         console.log("start updaloding");
         $.ajax({
@@ -530,7 +530,7 @@ $('#apply-student-page').on('pagebeforeshow', function() {
                             request.setRequestHeader("Authorization", "Bearer " + user.access_token);
                         },
             success: function(data) {
-                         if (data.message = "OK" && data.status_code == 200) show_common_error("审核学生信息申请发送成功，请耐心等待审核."); 
+                         if (data.status_code == 200 && data.message == 'OK') show_common_error("审核学生信息申请发送成功，请耐心等待审核."); 
                          else  show_common_error(data.message);
                      },
             error: server_err_fn,
