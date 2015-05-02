@@ -15,63 +15,44 @@
     </head>
 
     <body>
-        <div data-role="page">
+        <div id="search-mate-page" data-role="page">
             <!-- HEADER -->
             <div data-role="header">
 				<a href="detail.html" class="ui-btn-transparent" data-icon="back" data-iconpos="notext" data-shadow="true" data-iconshadow="true">返回</a>
                 <h2 class="grey-header">寻觅好室友</h2>
                 <script src="js/main.js"></script>
+                <script src="js/app/user.js"></script>
             </div>
             <!-- ./HEADER -->
 
             <!-- MAIN -->
             <div role="main" class="ui-content">
                 <div class="ui-grid-solo padding-div">
-                    <form id="search-form" action="#">
-                         <input type="search" placeholder="大学、星座、关键字或者点击查找" name="keywords" id="search" value="">
+                    <form id="search-form" action="search_mate.html">
+                         <input type="search" placeholder="用户名" name="username" id="username" value="">
                     </form>
                 </div>
 
-                <div class="ui-grid-solo" style="background: white!important; padding: 4px 4px; margin-top:10px;">
-                    <div class="grid-one-third">
-                        <center>
-                            <img src="images/user/user_profile.png" width="80%"></img>
-                        </center>
-                    </div>
-                    <div class="grid-two-third">
-                        <div class="pull-right"> 
-                            <a href="#"><span class="keywords-label blue">聊一聊</span></a>
+                <div id="user-list" class="ui-grid-solo" style="background: white!important; padding: 4px 4px; margin-top:10px; display: none;">
+                    <div data-template>
+                        <div class="grid-one-third">
+                            <center>
+                                <img src="images/user/user_profile.png" width="80%"></img>
+                            </center>
                         </div>
-                        <table>
-                            <tr><td>强哥哥</td></tr>
-                            <tr><td>天蝎座</td></tr>
-                            <tr><td>清华计算机技术系</td></tr>
-                        </table>
+                        <div class="grid-two-third">
+                            <div class="pull-right"> 
+                                <a href="message.html?from_username={{username}}"><span class="keywords-label blue">聊一聊</span></a>
+                            </div>
+                            <table>
+                                <tr><td>{{username}}</td></tr>
+                                <tr><td>{{school}} {{major}}</td></tr>
+                            </table>
+                        </div>
                     </div>
                 </div>
-                
-                <div class="ui-grid-solo" style="background: white!important; padding: 4px 4px; margin-top:10px;">
-                    <div class="grid-one-third">
-                        <center>
-                            <img src="images/user/user_profile.png" width="80%"></img>
-                        </center>
-                    </div>
-                    <div class="grid-two-third">
-                        <div class="pull-right"> 
-                            <a href="#"><span class="keywords-label blue">聊一聊</span></a>
-                        </div>
-                        <table>
-                            <tr><td>强哥哥</td></tr>
-                            <tr><td>天蝎座</td></tr>
-                            <tr><td>清华计算机技术系</td></tr>
-                        </table>
-                    </div>
-                </div>
-                           
-
             </div>  
             <!-- ./MAIN -->
-
         </div>
         <!-- ./PAGE -->
 

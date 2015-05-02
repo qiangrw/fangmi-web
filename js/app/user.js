@@ -235,3 +235,18 @@ $('#forget-password-page').on('pagebeforeshow', function() {
     });    
 });
 
+$('#search-mate-page').on('pageinit', function() {
+    if (user == null || user.username == null) {
+        redirect_to("signin.html");
+        return;
+    }
+    var base_url = "api/user/list?";
+    var username = getParameter("username");
+    if (username)  base_url += "&username=" + username;
+    var element = "user-list";
+    $("#" + element).hide();
+    show_loading();
+    ajax_without_auth("GET", base_url, function(data) {
+        if (data.message == 'OK') tempo_show(element, data.users);
+    }, server_err_redirect_fn);     
+});
