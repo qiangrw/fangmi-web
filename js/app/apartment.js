@@ -35,6 +35,9 @@ $('#house-detail-page').on('pagebeforeshow', function() {
     }; 
     get_with_auth("api/apartment?id="+id, function(data) {
         if (data.message == 'OK') {
+        // mate div
+        ajax_without_auth("GET", "api/user/list", function(response) {
+            data.apartment.recommend_user = response.users[0];
             Tempo.prepare(element).when(TempoEvent.Types.RENDER_COMPLETE, function() { 
                 console.log(data.apartment);
                 if (user.username == data.apartment.user.username) {
@@ -95,10 +98,12 @@ $('#house-detail-page').on('pagebeforeshow', function() {
                 bind_nofav();
                 hide_loading(); 
             }).render(data.apartment);
+        }); 
         } else {
             redirect_to("signin.html");
         } 
     });
+
 });
 
 // houselist.html

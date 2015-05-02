@@ -134,11 +134,10 @@ $('#rentlist-page').on('pagebeforeshow', function() {
                          if (data.rents.length == 0) {
                              redirect_to("rentlist_empty.html");
                          } else {
-                             Tempo.prepare(element)
-        .when(TempoEvent.Types.RENDER_COMPLETE, function() {
-            hide_loading(); 
-            $("#" + element).show();
-        }).render(data.rents);
+                             Tempo.prepare(element).when(TempoEvent.Types.RENDER_COMPLETE, function() {
+                                 hide_loading(); 
+                                 $("#" + element).show();
+                             }).render(data.rents);
                          }
                      } 
                  },
@@ -382,17 +381,17 @@ function user_post(pconfig) {
     $(pconfig.button).unbind().click(function(){
         $.ajax({
             type: 'POST',
-        url: config.api_url + pconfig.api,
-        beforeSend: function (request) { request.setRequestHeader("Authorization", "Bearer " + user.access_token); },
-        data: $(pconfig.form).serialize(),
-        success: function(data) {
-            if (data.message == 'OK') {
-                show_common_error(pconfig.message);
-            } else {
-                show_common_error(data.message);
-            }
-        },
-        error: server_err_fn
+            url: config.api_url + pconfig.api,
+            beforeSend: function (request) { request.setRequestHeader("Authorization", "Bearer " + user.access_token); },
+            data: $(pconfig.form).serialize(),
+            success: function(data) {
+                if (data.message == 'OK') {
+                    show_common_error(pconfig.message);
+                } else {
+                    show_common_error(data.message);
+                }
+            },
+            error: server_err_fn
         });   
     });    
 }
@@ -558,7 +557,19 @@ function post_with_data_auth(api_name, data, succ_func, error_func) {
       success: succ_func,
       error: error_func
     });  
-}        
+}                           
+
+
+function ajax_without_auth(type, api_name, succ_func, error_func) {
+    if (error_func == null) error_func = server_err_fn;
+    $.ajax( { 
+        type: type,
+      url: config.api_url + api_name,
+      success: succ_func,
+      error: error_func
+    });   
+}
+
 
 function ajax_with_auth(type, api_name, succ_func, error_func) {
     if (error_func == null) error_func = server_err_fn;
