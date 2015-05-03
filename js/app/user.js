@@ -54,7 +54,7 @@ var set_captcha_elements = function() {
 $('#signin-page').on('pageinit', function() {
     var signin_succ = function(data) {
         hide_loading();
-        if (data.message = 'OK') {
+        if (data.message == 'OK') {
             $.extend(user, data.user);
             user.avatar = config.api_url + user.avatar;
             localStorage.setItem('user', JSON.stringify(user));
@@ -103,7 +103,7 @@ $('#user-page').on('pagebeforeshow', function() {
     $("#" + element).hide();
     show_loading();
     get_with_auth("api/account", function(data) {
-        if (data.message = 'OK') {
+        if (data.message == 'OK') {
             $.extend(user, data.user);
             user.avatar = config.api_url + user.avatar;
             localStorage.setItem('user', JSON.stringify(user));
@@ -138,7 +138,7 @@ $('#edit-profile-page').on('pagebeforeshow', function() {
     $("#submit_edit_profile").unbind().click(function(){
         post_with_data_auth("api/account", $("#edit-profile-form").serialize(),
             function(data) {
-                if (data.status == 200 && data.message == 'OK') {
+                if (data.message == 'OK') {
                     $.extend(user, data.user);
                     user.avatar = config.api_url + user.avatar;
                     localStorage.setItem('user', JSON.stringify(user));
