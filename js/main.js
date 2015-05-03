@@ -98,26 +98,6 @@ $(document).on('pagebeforeshow', function() {
 });
 
 
-$("#reserve-detail-page").on('pagebeforeshow', function() {
-    var element = "reserve-detail-list";
-    var apartment_id = getParameter("id");
-    if (apartment_id == null) return;
-    $("#" + element).hide();
-    show_loading();
-    get_with_auth("api/reserve/list?apartment_id=" + apartment_id,
-        function(data) {
-            console.log(data);
-            if (data.message == 'OK') {
-                Tempo.prepare(element).when(TempoEvent.Types.RENDER_COMPLETE, function(){
-                    if (data.reserves.length > 0) {
-                        $("#" + element).show();
-                    }
-                    hide_loading();
-                }).render(data.reserves) 
-            } 
-        });
-});
-
 $('#rentlist-page').on('pagebeforeshow', function() {
     var element = "rentlist";
     $("#" + element).hide();
