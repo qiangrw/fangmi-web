@@ -397,51 +397,6 @@ function user_post(pconfig) {
 }
 
 
-function set_captcha_elements() {
-    var time = 60;
-    var timer_id = setInterval(settime, 1000);
-    $("#vcode-timer").html(time);
-    clearInterval(timer_id);
-    $("#vcode-timer").html("");
-    $("#info").html("获取验证码");
-
-    var enableButton = function(){ $("#go").button('enable'); }
-    var settime = function(time){
-        time = $("#vcode-timer").html();
-        if(time == "") time = 60;
-        time -= 1;
-        $("#vcode-timer").html(time);
-        $("#info").html("秒后重新获取");
-        if(time > 0) {
-        } else {
-            time = 60;
-            $("#vcode-timer").html(time);
-            $("#go").button('enable');
-            $("#go").attr('disabled',false);
-            clearInterval(timer_id);
-            $("#vcode-timer").html("");
-            $("#info").html("获取验证码");
-        }
-    }
-
-    $("#go").click(function(event){
-        event.preventDefault();
-        var $phone = $("#phone").val();
-        if($phone == undefined || $phone.length != 11) {
-            alert("手机号码应该为11位数字。" + $phone);
-            return;
-        }
-        $("#go").attr('disabled',true);
-        $("#submit-signup").attr('disabled', false);
-
-        var minutes = 0.1;
-        $("#go").attr("value", minutes);
-        timer_id = setInterval(settime, 1000);
-
-        // TODO send vcode request
-    });          
-}
-
 
 function getParameter(name) {
     var url = document.location.href;
@@ -547,6 +502,18 @@ function post_with_auth(api_name, succ_func, error_func) {
     ajax_with_auth('POST', api_name, succ_func, error_func);
 }
 
+function get_without_auth(api_name, succ_func, error_func) {
+    ajax_without_auth('GET', api_name, succ_func, error_func);
+}
+
+function put_without_auth(api_name, succ_func, error_func) {
+    ajax_without_auth('PUT', api_name, succ_func, error_func);
+}
+
+function post_without_auth(api_name, succ_func, error_func) {
+    ajax_without_auth('POST', api_name, succ_func, error_func);
+}
+
 function post_with_data_auth(api_name, data, succ_func, error_func) {
     if (error_func == null) error_func = server_err_fn;
     $.ajax({
@@ -558,7 +525,17 @@ function post_with_data_auth(api_name, data, succ_func, error_func) {
       error: error_func
     });  
 }                           
-
+          
+function post_with_data(api_name, data, succ_func, error_func) {
+    if (error_func == null) error_func = server_err_fn;
+    $.ajax({
+      type: 'POST',
+      url: config.api_url + api_name,
+      data: data,
+      success: succ_func,
+      error: error_func
+    });  
+}        
 
 function ajax_without_auth(type, api_name, succ_func, error_func) {
     if (error_func == null) error_func = server_err_fn;

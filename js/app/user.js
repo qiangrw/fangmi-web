@@ -1,3 +1,55 @@
+// captcha related function
+var set_captcha_elements = function() {
+    var time = 60;
+    var timer_id = setInterval(settime, 1000);
+    $("#vcode-timer").html(time);
+    clearInterval(timer_id);
+    $("#vcode-timer").html("");
+    $("#info").html("获取验证码");
+
+    var enableButton = function(){ $("#go").button('enable'); }
+    var settime = function(time){
+        time = $("#vcode-timer").html();
+        if(time == "") time = 60;
+        time -= 1;
+        $("#vcode-timer").html(time);
+        $("#info").html("秒后重新获取");
+        if(time > 0) {
+        } else {
+            time = 60;
+            $("#vcode-timer").html(time);
+            $("#go").button('enable');
+            $("#go").attr('disabled',false);
+            clearInterval(timer_id);
+            $("#vcode-timer").html("");
+            $("#info").html("获取验证码");
+        }
+    }
+
+    $("#go").click(function(event){
+        event.preventDefault();
+        var $phone = $("#phone").val();
+        if($phone == undefined || $phone.length != 11) {
+            alert("手机号码应该为11位数字。" + $phone);
+            return;
+        }
+        $("#go").attr('disabled',true);
+        $("#submit-signup").attr('disabled', false);
+
+        var minutes = 0.1;
+        $("#go").attr("value", minutes);
+        timer_id = setInterval(settime, 1000);
+
+        post_with_data('api/captcha', {mobile: $phone}, function(data) { }, function() {
+            show_common_error("验证码发送失败，请稍后再试");
+        });
+
+    });          
+}
+
+
+
+
 // signin.html 
 $('#signin-page').on('pageinit', function() {
     var signin_succ = function(data) {
