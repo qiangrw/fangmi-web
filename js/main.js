@@ -539,13 +539,17 @@ function ajax_with_auth(type, api_name, succ_func, error_func) {
     });   
 }
 
-function tempo_show(element, data) {
+var tempo_hide = function(element) {
+    $("#" + element).show();
+    hide_loading();
+}
+function tempo_show(element, data, binding_func) {
     console.log("[TempoShow]");
     console.log(data);
     $("#" + element).hide();
     show_loading();
     Tempo.prepare(element).when(TempoEvent.Types.RENDER_COMPLETE, function() {
-        $("#" + element).show();
-        hide_loading();
+        tempo_hide(element);
+        if (binding_func != null) binding_func();
     }).render(data);
 }

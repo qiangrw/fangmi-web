@@ -54,7 +54,7 @@
 					</table>
                     <div class="ui-grid-a">
 
-                        {% if (deleted) %} 
+                        {% if (cancelled) %} 
                         <div class="ui-block-a"><a hid="{{id}}" href="#" class="btn-repost-house ui-btn ui-corner-all ui-btn-d">重新发布</a></div>
                         {% else %} 
                         <div class="ui-block-a"><a hid="{{id}}" href="#" class="btn-delete-house ui-btn ui-corner-all ui-btn-d">取消发布</a></div>
@@ -63,38 +63,11 @@
                     </div>
                 </div>
 
-                <!--
-                <div class="ui-grid-solo white-div">
-                    <h2 class="grey-header padding-div ">海淀区紫金庄园5号楼605室</h2>
-                    <table class="info-table">
-                        <tr>
-                            <td>房型：</td>
-                            <td>三室一厅</td>
-                            <td>出租方式：</td>
-                            <td>合租</td>
-                        </tr>
-                        <tr>
-                            <td>租金：</td>
-                            <td>2500元/月</td>
-                            <td></td>
-                            <td></td>
-                        </tr>
-                        <tr>
-                            <td>预约人数</td>
-                            <td>2 人</td>
-                            <td><a id="get_captcha" href="reserve_detail.html" class="ui-btn-captcha">查看预约详情</a></td>
-                            <td></td>
-                        </tr>
-                    </table>
-                    <div class="ui-grid-a">
-                        <div class="ui-block-a"><a href="#" class="ui-btn ui-corner-all ui-btn-d">取消发布</a></div>
-                        <div class="ui-block-b"><a href="detail.html" class="ui-btn ui-corner-all">信息管理</a></div>
-                    </div>
+                <div data-role="popup" id="popup" class="ui-content popup-div">
+                    <a href="#" data-rel="back" data-role="button" data-theme="c" data-icon="delete" data-iconpos="notext" class="ui-btn-right">Close</a>
+                    <p id="popup-message"></p>
                 </div>
-
-
-
-
+                <!--
                 <p class="padding-div">已出租</p>
                 <div class="ui-grid-solo padding-div white-div">
                     <h2 class="grey-header padding-div ">海淀区紫金庄园5号楼605室</h2>
