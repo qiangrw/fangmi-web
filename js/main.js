@@ -31,7 +31,10 @@ if (single_house == null) { single_house = { type: 1 }; }
 // global functions                                                                    
 var show_loading = function(event) { $('body').addClass('ui-loading'); }
 var hide_loading = function(event) { $('body').removeClass('ui-loading'); }
-var redirect_to = function(page) { $( ":mobile-pagecontainer" ).pagecontainer( "change", page, { role: "page" } ); }
+var redirect_to = function(page) { 
+    hide_loading();
+    $( ":mobile-pagecontainer" ).pagecontainer( "change", page, { role: "page" } ); 
+}
 var show_common_error = function(error) {
     $("#error").html(error);
     $("#error").show();
