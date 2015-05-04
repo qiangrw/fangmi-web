@@ -191,6 +191,21 @@ $('#post-whole-page').on('pagebeforehide', function() {
      }
 });
 
+
+function check_house(house) {
+    if (house.title == null || house.title.length < 5) return "标题至少需要五个字";
+    if (house.subtitle == null || house.subtitle.length < 5) return "小区特色至少需要五个字";
+    if (house.address == null || house.address.length < 5) return "地址至少需要五个字";
+    if (house.num_livingroom == "") return "请填写房屋类型";
+    if (house.num_bedroom == "") return "请填写房屋类型";
+    if (house.reserve_choices == null || house.reserve_choices.length == 0) 
+      return "请设置预约时间";
+    if (house.tags == null || house.tags.length == 0) return "请设置个性标签";
+    if (house.devices == null || house.devices.length == 0) return "请设置房屋设备";
+    if (house.category_id == null) return "请选择小区";
+    return "";
+}
+
 // post_whole.html
 $('#post-whole-page').on('pagebeforeshow', function() {
     // get community list  
@@ -236,7 +251,7 @@ $('#post-whole-page').on('pagebeforeshow', function() {
 
 
     // post a new house
-    $("#submit-post-whole").click(function() {
+    $("#submit-post-whole").unbind().click(function() {
         whole_house.title = $("#title").val();
         whole_house.subtitle = $("#subtitle").val();
         whole_house.address = $("#address").val();
@@ -247,6 +262,14 @@ $('#post-whole-page').on('pagebeforeshow', function() {
         whole_house.rooms[0].price =  $("#price").val();
         whole_house.rooms[0].area =  $("#area").val();
         localStorage.setItem('whole_house', JSON.stringify(whole_house));
+
+        // validation
+        var error = check_house(whole_house);
+        if (error != "") {
+            show_common_error(error);
+            return;
+        }
+
 
         var method = "POST";
         if (whole_house.id && whole_house.id != 0) method = "PUT";
@@ -270,18 +293,18 @@ $('#post-whole-page').on('pagebeforeshow', function() {
         });  
     });
 });
-    
- 
+
+
 $('#post-single-page').on('pagebeforehide', function() {
-     if (single_house != null) {
+    if (single_house != null) {
         single_house.title = $("#title").val();
         single_house.subtitle = $("#subtitle").val();
         single_house.address =  $("#address").val();
         single_house.num_bedroom = $("#num_bedroom").val();
         single_house.num_livingroom =  $("#num_livingroom").val();
-     }
+    }
 });
-                                                    
+
 
 // post_single.html
 $('#post-single-page').on('pagebeforeshow', function() {
@@ -321,7 +344,7 @@ $('#post-single-page').on('pagebeforeshow', function() {
 
 
     // post a new house
-    $("#submit-post-single").click(function() {
+    $("#submit-post-single").unbind().click(function() {
         single_house.title = $("#title").val();
         single_house.subtitle = $("#subtitle").val();
         single_house.address = $("#address").val();
@@ -331,6 +354,12 @@ $('#post-single-page').on('pagebeforeshow', function() {
         single_house.type = 1;
         localStorage.setItem('single_house', JSON.stringify(single_house));
 
+        // validation
+        var error = check_house(single_house);
+        if (error != "") {
+            show_common_error(error);
+            return;
+        }
         var method = "POST";
         if (single_house.id && single_house.id != 0) method = "PUT";
         $.ajax({
