@@ -202,7 +202,7 @@ function check_house(house) {
       return "请设置预约时间";
     if (house.tags == null || house.tags.length == 0) return "请设置个性标签";
     if (house.devices == null || house.devices.length == 0) return "请设置房屋设备";
-    if (house.category_id == null) return "请选择小区";
+    if (house.community_id == null) return "请选择小区";
     return "";
 }
 
