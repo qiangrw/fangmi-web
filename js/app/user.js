@@ -7,7 +7,6 @@ var set_captcha_elements = function() {
     $("#vcode-timer").html("");
     $("#info").html("获取验证码");
 
-    var enableButton = function(){ $("#go").button('enable'); }
     var settime = function(time){
         time = $("#vcode-timer").html();
         if(time == "") time = 60;
@@ -15,10 +14,10 @@ var set_captcha_elements = function() {
         $("#vcode-timer").html(time);
         $("#info").html("秒后重新获取");
         if(time > 0) {
+
         } else {
             time = 60;
             $("#vcode-timer").html(time);
-            $("#go").button('enable');
             $("#go").attr('disabled',false);
             clearInterval(timer_id);
             $("#vcode-timer").html("");
