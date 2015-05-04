@@ -69,7 +69,19 @@ $('#signin-page').on('pageinit', function() {
     }
 
 
-    $("#submit-signin").click(function(){
+    $("#submit-signin").unbind().click(function(){
+        var mobile = $("#username").val();
+        var password = $("#password").val();
+        // if (mobile == null || mobile.length != 11) {
+        if (mobile == null || mobile.length < 2) {
+            show_common_error("手机号码必须为11位.");
+            return;
+        }
+        if (password == null || password.length < 4 || password.length > 20) {
+            show_common_error("密码必须是4-20位.");
+            return;
+        }
+
         show_loading();
         $.ajax({
             type: 'POST',
@@ -83,7 +95,7 @@ $('#signin-page').on('pageinit', function() {
                     user.access_token = data.access_token;
                     get_with_auth("api/account", signin_succ, signin_fail);
                 } else {
-                    show_common_error("验证错误");
+                    show_common_error("用户验证失败");
                     hide_loading();
                 }
             }, 
@@ -149,7 +161,7 @@ $('#edit-profile-page').on('pagebeforeshow', function() {
 }); 
 
 // change_password.html
-$('#change-password-page').on('pageinit', function() {
+$('#change-password-page').on('pagebeforeshow', function() {
     user_post({
         button: "#submit-change-password",
         form:   "#change-password-form",
@@ -213,6 +225,29 @@ $('#apply-student-page').on('pagebeforeshow', function() {
 $('#signup-page').on('pagebeforeshow', function() {
     set_captcha_elements();
     $("#submit-signup").click(function(){
+        hide_common_error();
+        var mobile = $("#phone").val();
+        var captcha = $("#captcha").val();
+        var password = $("#password").val();
+        var password_confirm = $("#password_confirm").val();
+        console.log(mobile);
+        if (mobile == null || mobile.length != 11) {
+            show_common_error("手机号码必须为11位.");
+            return;
+        }
+        if (captcha == null || captcha < 2) {
+            show_common_error("请填写手机验证码.");
+            return;
+        }
+        if (password == null || password.length < 4 || password.length > 20) {
+            show_common_error("密码必须是4-20位.");
+            return;
+        }
+        if (password_confirm != password) {
+            show_common_error("两次密码输入不一致.");
+            return;
+        }
+
         $.ajax({
             type: 'POST',
             url: config.api_url + "api/account/register",
