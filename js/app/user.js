@@ -148,13 +148,34 @@ $('#edit-profile-page').on('pagebeforeshow', function() {
     set_user_data(user);
 
     $("#submit_edit_profile").unbind().click(function(){
+        var nickname = $("#nickname").val();
+        var gender = $("#gender").val();
+        var horoscope = $("#horoscope").val();
+        var status = $("#status").val();
+        if (nickname == null || nickname.length < 1) {
+            show_common_error("昵称不能为空");
+            return;
+        }
+        if (gender == null) {
+            show_common_error("请选择性别");
+            return;
+        }
+        if (horoscope == null) {
+            show_common_error("请选择星座");
+            return;
+        }
+        if (status == null || status.length < 1) {
+            show_common_error("个性签名不能为空");
+            return;
+        }
+
         post_with_data_auth("api/account", $("#edit-profile-form").serialize(),
             function(data) {
                 if (data.message == 'OK') {
                     $.extend(user, data.user);
                     user.avatar = config.api_url + user.avatar;
                     localStorage.setItem('user', JSON.stringify(user));
-                    show_common_error("信息保存成功");
+                    show_common_error("个人信息保存成功");
                 } else  show_common_error(data.message); 
             }, server_err_redirect_fn);
     });
