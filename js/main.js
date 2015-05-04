@@ -362,6 +362,16 @@ $('#set-device-page').on('pagebeforeshow', function() {
 // simple user related post logic 
 function user_post(pconfig) {
     $(pconfig.button).unbind().click(function(){
+        if (pconfig.required.length != 0) {
+            for (var i = 0; i < pconfig.required.length; ++i) {
+                if ($(pconfig.required[i]).val() == "") {
+                    show_common_error("请将表单填写完整");
+                    return;
+                }
+            }
+        }
+
+
         $.ajax({
             type: 'POST',
             url: config.api_url + pconfig.api,

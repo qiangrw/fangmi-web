@@ -187,10 +187,10 @@ $('#change-password-page').on('pagebeforeshow', function() {
         button: "#submit-change-password",
         form:   "#change-password-form",
         api:    "api/account/password/change",
-        message: "修改成功，您可以用新密码登录了." 
+        message: "修改成功，您可以用新密码登录了.",
+        required: ["#password_old", "#password_new", "#password_new_confirm"]
     });   
 });
-
 
 // check_id.html
 $('#apply-confirm-page').on('pagebeforeshow', function() {
@@ -198,7 +198,8 @@ $('#apply-confirm-page').on('pagebeforeshow', function() {
         button: "#submit-apply-confirm",
         form:   "#apply-confirm-form",
         api:    "api/account/apply/confirmed",
-        message: "审核申请发送成功，请耐心等待审核." 
+        message: "审核申请发送成功，请耐心等待审核.",
+        required: ["#id_number", "#real_name"]
     });
 });
 
