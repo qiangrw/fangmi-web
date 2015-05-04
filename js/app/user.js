@@ -213,6 +213,18 @@ $('#apply-student-page').on('pagebeforeshow', function() {
     });
 
     $("#submit-apply-student").unbind().click(function() {
+        var real_name = $("#real_name").val();
+        var id_number = $("#id_number").val();
+        var school = $("#school").val();
+        var major = $("#major").val();
+        var student_id = $("#student_id").val();
+        if (real_name == "" || id_number == "" || 
+            school == "" || major == "" || student_id == "") {
+            show_common_error("请将表单填写完整");
+            return;
+        }
+
+
         var formData = new FormData($('#apply-student-form')[0]);
         console.log("start updaloding");
         $.ajax({
