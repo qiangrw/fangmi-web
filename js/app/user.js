@@ -304,7 +304,29 @@ $('#setting-page').on('pagebeforeshow', function() {
 // forget_password.html
 $('#forget-password-page').on('pagebeforeshow', function() {
     set_captcha_elements();
-    $("#submit-forget").click(function(){
+    $("#submit-forget").unbind().click(function(){
+        var mobile = $("#phone").val();
+        var captcha = $("#captcha").val();
+        var password = $("#password").val();
+        var password_confirm = $("#password_confirm").val();
+        console.log(mobile);
+        if (mobile == null || mobile.length != 11) {
+            show_common_error("手机号码必须为11位.");
+            return;
+        }
+        if (captcha == null || captcha < 2) {
+            show_common_error("请填写手机验证码.");
+            return;
+        }
+        if (password == null || password.length < 4 || password.length > 20) {
+            show_common_error("密码必须是4-20位.");
+            return;
+        }
+        if (password_confirm != password) {
+            show_common_error("两次密码输入不一致.");
+            return;
+        }   
+        
         $.ajax({
             type: 'POST',
             url: config.api_url + "api/account/password/forget",
