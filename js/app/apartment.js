@@ -40,6 +40,11 @@ $('#house-detail-page').on('pagebeforeshow', function() {
             data.apartment.recommend_user = response.users[0];
             Tempo.prepare(element).when(TempoEvent.Types.RENDER_COMPLETE, function() { 
                 console.log(data.apartment);
+                if (data.apartment.type == 0) {
+                    $(".mate-section").hide();
+                } else {
+                    $(".mate-section").show();
+                }
                 if (user.username == data.apartment.user.username) {
                     $("#edit-house-link").show();
                     $("#edit-house-link").unbind().click(function() {

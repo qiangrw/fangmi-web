@@ -45,7 +45,7 @@
                             </td>
                         </tr>
                         <tr>
-                            <td> 实名房源100%认证 </td>
+                            <td> <span style="color:#df902b;">实名房源100%认证</span> </td>
                             <td class="text-right">{{num_fav_users}}人已收藏 </td>
                         </tr>
                     </table>
@@ -61,7 +61,7 @@
                         </tr>
                         <tr>     
                             {% if (type == 0) %} 
-                            <td>房屋面积：</td><td class="val">{{rooms[0].area}}</td>
+                            <td>房屋面积：</td><td class="val">{{rooms[0].area}}平米</td>
                             <td>入住时间：</td><td class="val">{{rooms[0].date_entrance}}</td>
                             {% endif %}
                         </tr>
@@ -70,7 +70,7 @@
 
                 <div data-template data-has="tags" class="ui-grid-solo" style="background: white!important; padding: 4px 4px; margin-top:10px;">
 
-                    <span data-template-for="tags" class="keywords-label">{{name}}</span>
+                    <span data-template-for="tags" class="keywords-label2">{{name}}</span>
                     <!--<span class="keywords-label blue">性价比超高</span>
                     <span class="keywords-label green">萝莉正太啥都有</span>
                     <span class="keywords-label yellow">便宜</span>
@@ -147,8 +147,8 @@
                                 <a id="mail-to-landlord-link" href="message.html?from_username={{user.username}}" class="ui-btn ui-corner-all">在线联系房东</a>
                             </div>
 
-                            <h3 class="padding-div">推荐室友</h3>
-                            <div id="mate-div" class="ui-grid-solo" style="background: white!important; padding: 4px 4px; margin-top:10px;">
+                            <h3 class="padding-div mate-section">推荐室友</h3>
+                            <div id="mate-div" class="ui-grid-solo mate-section" style="background: white!important; padding: 4px 4px; margin-top:10px;">
                                 <div class="grid-one-third">
                                     <center>
                                         <img src="images/user/user_profile.png" width="50%"></img>
