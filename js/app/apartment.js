@@ -113,6 +113,7 @@ $('#house-detail-page').on('pagebeforeshow', function() {
 
 // houselist.html
 $('#houselist-page').on('pagebeforeshow', function() {
+    console.log("loading");
     if (user == null || user.username == null) {
         redirect_to("signin.html");
         return;
@@ -127,8 +128,14 @@ $('#houselist-page').on('pagebeforeshow', function() {
     var element = "houselist";
     $("#" + element).hide();
     show_loading();
+    $("#empty-houselist-notice").hide();
     get_with_auth(base_url, function(data) {
-        if (data.message == 'OK') tempo_show(element, data.apartments);
+        if (data.message == 'OK') {
+            tempo_show(element, data.apartments);
+            if (data.apartments == null) $("#empty-houselist-notice").show();
+        }  else {
+            server_err_redirect_fn();
+        } 
     }, server_err_redirect_fn);     
 });
 
@@ -140,7 +147,11 @@ $('#favlist-empty-page, #reservelist-empty-page, #rentlist-empty-page').on('page
     $("#" + element).hide();
     show_loading();
     get_with_auth(api_name, function(data) {
-        if (data.message == 'OK') tempo_show(element, data.apartments);
+        if (data.message == 'OK') {
+            tempo_show(element, data.apartments);
+        }  else {
+            server_err_redirect_fn();
+        } 
     }, server_err_redirect_fn);
 });
 

@@ -19,12 +19,16 @@
 				<a href="#" data-rel="back" class="ui-btn-transparent" data-icon="back" data-iconpos="notext" data-shadow="true" data-iconshadow="true">返回</a>
                 <h2 class="grey-header">房源列表</h2>
                 <script src="js/main.js"></script>
-                <script src="js/app/apartment.js"></script>
+                <script src="js/app/apartment.js?v=2"></script>
             </div>
             <!-- ./HEADER -->
 
             <!-- MAIN -->
             <div role="main" class="ui-content">
+                <div id="empty-houselist-notice" class="ui-grid-solo padding-div" style="display:none">
+				<center> <p>抱歉，未找到相关房源.</p> </center>
+                </div>
+				
                 <div id="houselist" style="display:none">
                 <div data-template>
                 <div class="ui-grid-solo">      
