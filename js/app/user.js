@@ -47,27 +47,23 @@ var set_captcha_elements = function() {
 }
 
 
-
-
+var signin_succ = function(data) {
+    hide_loading();
+    if (data.message == 'OK') {
+        $.extend(user, data.user);
+        user.avatar = config.api_url + user.avatar;
+        localStorage.setItem('user', JSON.stringify(user));
+        redirect_to("index.html");
+    } else {
+        redirect_to("signin.html");
+    }   
+}
+var signin_fail = function(data) { 
+    show_common_error("用户名密码错误"); 
+    hide_loading();
+}
 // signin.html 
 $('#signin-page').on('pageinit', function() {
-    var signin_succ = function(data) {
-        hide_loading();
-        if (data.message == 'OK') {
-            $.extend(user, data.user);
-            user.avatar = config.api_url + user.avatar;
-            localStorage.setItem('user', JSON.stringify(user));
-            redirect_to("index.html");
-        } else {
-            redirect_to("signin.html");
-        }   
-    }
-    var signin_fail = function(data) { 
-        show_common_error("用户名密码错误"); 
-        hide_loading();
-    }
-
-
     $("#submit-signin").unbind().click(function(){
         var mobile = $("#username").val();
         var password = $("#password").val();
@@ -103,6 +99,46 @@ $('#signin-page').on('pageinit', function() {
     });
 });
 
+$('#wechat-page').on('pagebeforeshow', function() {
+    var code = getParameter("code");
+    // var appid = "wx9405f71ba4f268ae";
+    // var secret = "99e4f4a3c2daea6ea5cd015e810d26d5";
+    // var url = "https://api.weixin.qq.com/sns/oauth2/access_token?appid=" + appid + 
+    //        "&secret=" + secret + "&code=" + code + "&grant_type=authorization_code";
+    var url = "server/wechat_login.php?state=123&code=" + code;
+    $.ajax({
+            type: 'GET',
+            url: url,
+            success: function(data) {
+                if (data.access_token != null) {
+                    $.ajax({
+                        type: 'POST',
+                      url: config.api_url + "oauth/token",
+                      data: {
+                          access_token: data.access_token,
+                          openid: data.openid
+                      },
+                      success: function(data) {
+                          if (data.access_token != null) {
+                              user = {};
+                              hide_common_error();
+                              console.log(data);
+                              user.access_token = data.access_token;
+                              get_with_auth("api/account", signin_succ, signin_fail);
+                          } else {
+                              show_common_error("用户验证失败");
+                              hide_loading();
+                          }
+                      }, 
+                      error: server_err_fn
+                    });  
+                } else {
+                    alert("validation error");
+                }
+            }, 
+            error: server_err_fn
+    }); 
+});
 
 // user.html
 $('#user-page').on('pagebeforeshow', function() {
@@ -125,7 +161,7 @@ $('#user-page').on('pagebeforeshow', function() {
         }   
     }, server_err_redirect_fn);
 });
-      
+
 // edit_profile.html
 $('#edit-profile-page').on('pagebeforeshow', function() {
     var set_user_data = function(user) {
@@ -169,14 +205,14 @@ $('#edit-profile-page').on('pagebeforeshow', function() {
         }
 
         post_with_data_auth("api/account", $("#edit-profile-form").serialize(),
-            function(data) {
-                if (data.message == 'OK') {
-                    $.extend(user, data.user);
-                    user.avatar = config.api_url + user.avatar;
-                    localStorage.setItem('user', JSON.stringify(user));
-                    show_common_error("个人信息保存成功");
-                } else  show_common_error(data.message); 
-            }, server_err_redirect_fn);
+                    function(data) {
+                        if (data.message == 'OK') {
+                            $.extend(user, data.user);
+                            user.avatar = config.api_url + user.avatar;
+                            localStorage.setItem('user', JSON.stringify(user));
+                            show_common_error("个人信息保存成功");
+                        } else  show_common_error(data.message); 
+                    }, server_err_redirect_fn);
     });
 }); 
 
@@ -333,7 +369,7 @@ $('#setting-page').on('pagebeforeshow', function() {
         }
     }, server_err_redirect_fn);
 });
- 
+
 // forget_password.html
 $('#forget-password-page').on('pagebeforeshow', function() {
     set_captcha_elements();
@@ -359,7 +395,7 @@ $('#forget-password-page').on('pagebeforeshow', function() {
             show_common_error("两次密码输入不一致.");
             return;
         }   
-        
+
         $.ajax({
             type: 'POST',
             url: config.api_url + "api/account/password/forget",
