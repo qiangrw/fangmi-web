@@ -82,115 +82,112 @@
 
                 {% if (type == 1) %} 
                 <h3 class="padding-div">单间信息</h3>
-                <div class="ui-grid-solo" style="background: white!important; padding: 4px 4px; margin-top:10px;">
+                <div class="ui-grid-solo white-div">
+                    <div id="room-div">
+                        <div class="room-item" data-template-for="rooms">         
+                            <span>  {{name | default '房间'}} </span><br> 
+                            <span>  {{price}} 元/月 </span><br> 
+                            <span>  {{date_entrance}} </span><br> 
+                            <span class="room-no-taken"> 可入住 <span>
+                        </div>
+                    </div>
+                </div>
+                {% endif %}
+
+                <h3 class="padding-div">周边高校</h3>
+                <div class="ui-grid-solo white-div"> 
                     <table style="width: 100%; text-align: center;">
                         <tr>
-                            <td data-template-for="rooms">         
-                                {{name}}  <br> 
-                                {{price}} 元/月 <br>
-                                {{date_entrance}} <br> 
-                                <span class="pink">
-                                    可入住
-                                    <span>
-                                    </td>
-                                </tr>
+                            <td> <img src="images/school/pku.png" alt="" /></td>
+                            <td> <img src="images/school/ruc.png" alt="" /></td>
+                            <td> <img src="images/school/thu.png" alt="" /></td>
+                            <tr><td>北京大学</td><td>人民大学</td><td>清华大学</td></tr>
+                        </table>
+                    </div>
+
+                    <h3 class="padding-div">小地图</h3>
+                    <div class="ui-grid-solo">
+                        <center>
+                            <a href="#"><img class="home-img" src="images/house/map.jpg" data-src="{{community.map}}"></img> </a>
+                        </center>
+                        <table class="padding-div" style="width: 100%; text-align: left; background: white;">
+                            <tr><td width=50>地址：</td><td>{{address}}</td></tr>
+                            <tr><td>交通：</td><td>{{community.traffic}}</td></tr>
+                        </table>
+                    </div>
+
+                    <h3 class="padding-div">房间设备</h3>
+                    <div id="device-item-div" class="ui-grid-solo white-div">
+                        <div class="device-item" data-template-for="devices">
+                            <img title="" src="images/device/chuang.png" data-src="images/device/{{name}}.png"></img>
+                        </div>
+                        <div class="device-item" style="padding-top: 20px;" data-after-template>
+                            <a href="devices.html?id={{id}}" style="color: #999999; text-decoration: none; padding-top: 20px; font-size: 0.7em;">更多设备</a>
+                        </div>
+                    </div>
+
+                    <h3 class="padding-div">关于房东</h3>
+                    <div class="ui-grid-solo" style="white-div">
+                        <div style="width: 20%; display: inline-block; vertical-align: top;">
+                            <center>
+                                <img src="images/user/user_profile.png" width="80%"></img>
+                            </center>
+                        </div>
+                        <div style="width: 78%; display: inline-block;">
+                            <table width="100%">
+                                <tr><th width=100>无敌房东:</th><td>{{user.nickname}}</td></tr>
+                                <tr><th width=100>联系电话:</th><td>{{user.mobile | default '未提供联系电话'}}</td></tr>
+                                <tr><th width=100>个性签名:</th><td>{{user.status | default '暂未填写签名'}}</td></tr>
                             </table>
                         </div>
-                        {% endif %}
-
-                        <h3 class="padding-div">周边高校</h3>
-                        <div class="ui-grid-solo" style="background: white!important; padding: 4px 4px; margin-top:10px;">
-                            <table style="width: 100%; text-align: center;">
-                                <tr>
-                                    <td> <img src="images/school/pku.png" alt="" /></td>
-                                    <td> <img src="images/school/ruc.png" alt="" /></td>
-                                    <td> <img src="images/school/thu.png" alt="" /></td>
-                                    <tr><td>北京大学</td><td>人民大学</td><td>清华大学</td></tr>
-                                </table>
-                            </div>
-
-                            <h3 class="padding-div">小地图</h3>
-                            <div class="ui-grid-solo">
-                                <center>
-                                    <a href="#"><img class="home-img" src="images/house/map.jpg" data-src="{{community.map}}"></img> </a>
-                                </center>
-                                <table class="padding-div" style="width: 100%; text-align: left; background: white;">
-                                    <tr><td width=50>地址：</td><td>{{address}}</td></tr>
-                                    <tr><td>交通：</td><td>{{community.traffic}}</td></tr>
-                                </table>
-                            </div>
-
-                            <h3 class="padding-div">房间设备</h3>
-                            <div id="device-item-div" class="ui-grid-solo white-div">
-                                <div class="device-item" data-template-for="devices">
-                                    <img title="" src="images/device/chuang.png" data-src="images/device/{{name}}.png"></img>
-                                </div>
-                                <div class="device-item" style="padding-top: 20px;" data-after-template>
-                                    <a href="devices.html?id={{id}}" style="color: #999999; text-decoration: none; padding-top: 20px; font-size: 0.7em;">更多设备</a>
-                                </div>
-                            </div>
-
-                            <h3 class="padding-div">关于房东</h3>
-                            <div class="ui-grid-solo" style="background: white!important; padding: 4px 4px; margin-top:10px;">
-                                <div style="width: 20%; display: inline-block; vertical-align: top;">
-                                    <center>
-                                        <img src="images/user/user_profile.png" width="80%"></img>
-                                    </center>
-                                </div>
-                                <div style="width: 78%; display: inline-block;">
-                                    <table width="100%">
-                                        <tr><th width=100>无敌房东:</th><td>{{user.nickname}}</td></tr>
-                                        <tr><th width=100>联系电话:</th><td>{{user.mobile | default '未提供联系电话'}}</td></tr>
-                                        <tr><th width=100>个性签名:</th><td>{{user.status | default '暂未填写签名'}}</td></tr>
-                                    </table>
-                                </div>
-                                <a id="mail-to-landlord-link" href="message.html?from_username={{user.username}}" class="ui-btn ui-corner-all">在线联系房东</a>
-                            </div>
-
-                            <h3 class="padding-div mate-section">推荐室友</h3>
-                            <div id="mate-div" class="ui-grid-solo mate-section" style="background: white!important; padding: 4px 4px; margin-top:10px;">
-                                <div class="grid-one-third">
-                                    <center>
-                                        <img src="images/user/user_profile.png" width="50%"></img>
-                                    </center>
-                                </div>
-                                <div class="grid-two-third">
-                                    <div class="pull-right"> 
-                                        <a href="message.html?from_user={{recommend_user.username}}"><span class="keywords-label blue">聊一聊</span></a>
-                                    </div>
-                                    <table>
-                                        <tr><td>{{recommend_user.nickname}} </td></tr>
-                                        <tr><td>{{recommend_user.school}} {{recommend_user.major}}</td></tr>
-                                    </table>
-                                </div>
-                                <a href="search_mate.html" class="ui-btn ui-corner-all" style="background: #ff3057!important; border-color: #ff3057!important;">寻觅好室友</a>
-                            </div>
-
-                            <h3 class="padding-div">租房合同</h3>
-                            <div class="ui-grid-solo" style="background: white!important; padding: 4px 4px; margin-top:10px;">
-                                <div class="grid-one-third">
-                                    <center>
-                                        <a target="_blank" href="http://123.57.207.201:8080/{{contract}}"><img src="images/house/contract.png" width="50%"></img></a> 
-                                    </center>
-                                </div>
-                            </div>
-                            <br /><br />
-                        </div>  
-                        <!-- ./MAIN -->
-
+                        <a id="mail-to-landlord-link" href="message.html?from_username={{user.username}}" class="ui-btn ui-corner-all">在线联系房东</a>
                     </div>
-                    <!-- ./PAGE -->
 
-                    <div id="nav-footer" data-role="footer" data-position="fixed">
-                        <div data-role="navbar" data-iconpos="top">
-                            <ul>
-                                <li><a href="index.html" data-icon="home" class="ui-btn-active">房蜜</a></li>
-                                <li><a href="user.html" data-icon="user">个人账户</a></li>
-                                <li><a href="about.html" data-icon="info">关于房蜜</a></li>
-                                <li><a href="setting.html" data-icon="gear">设置</a></li>
-                            </ul>
-                        </div><!-- /navbar -->
-                    </div><!-- /footer -->
+                    <h3 class="padding-div mate-section">推荐室友</h3>
+                    <div id="mate-div" class="ui-grid-solo mate-section" style="background: white!important; padding: 4px 4px; margin-top:10px;">
+                        <div class="grid-one-third">
+                            <center>
+                                <img src="images/user/user_profile.png" width="50%"></img>
+                            </center>
+                        </div>
+                        <div class="grid-two-third">
+                            <div class="pull-right"> 
+                                <a href="message.html?from_user={{recommend_user.username}}"><span class="keywords-label blue">聊一聊</span></a>
+                            </div>
+                            <table>
+                                <tr><td>{{recommend_user.nickname}} </td></tr>
+                                <tr><td>{{recommend_user.school | default '未知学校'}} 
+                                        {{recommend_user.major | default '未知院系' }}</td></tr>
+                            </table>
+                        </div>
+                        <a href="search_mate.html" class="ui-btn ui-corner-all" style="background: #ff3057!important; border-color: #ff3057!important;">寻觅好室友</a>
+                    </div>
 
-                </body>
-            </html>
+                    <h3 class="padding-div">租房合同</h3>
+                    <div class="ui-grid-solo" style="white-div">
+                        <div class="grid-one-third">
+                            <center>
+                                <a target="_blank" href="http://123.57.207.201:8080/{{contract}}"><img src="images/house/contract.png" width="50%"></img></a> 
+                            </center>
+                        </div>
+                    </div>
+                    <br /><br />
+                </div>  
+                <!-- ./MAIN -->
+
+            </div>
+            <!-- ./PAGE -->
+
+            <div id="nav-footer" data-role="footer" data-position="fixed">
+                <div data-role="navbar" data-iconpos="top">
+                    <ul>
+                        <li><a href="index.html" data-icon="home" class="ui-btn-active">房蜜</a></li>
+                        <li><a href="user.html" data-icon="user">个人账户</a></li>
+                        <li><a href="about.html" data-icon="info">关于房蜜</a></li>
+                        <li><a href="setting.html" data-icon="gear">设置</a></li>
+                    </ul>
+                </div><!-- /navbar -->
+            </div><!-- /footer -->
+
+        </body>
+    </html>
