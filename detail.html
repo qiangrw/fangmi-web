@@ -33,8 +33,8 @@
                 </div>
 
                 <div class="ui-grid-solo padding-div">
-                    <table style="width:100%">
-                        <tr style="margin-bottom: -4px!important;">
+                    <table class="houseinfo-table" style="width:100%">
+                        <tr>
                             <td class="pink"><h3>{{title}}</h3></td>
                             <td class="text-right"> 
                                 {% if (is_favorited) %}
@@ -52,7 +52,7 @@
                 </div>
 
                 <div class="ui-grid-solo padding-div">
-                    <table style="width: 100%">
+                    <table class="houseinfo-table" style="width: 100%">
                         <tr><td>租金：</td><td class="val">{{min_price}}元/月</td></tr>
                         <tr><td>房型：</td><td class="val">{{num_bedroom}}室{{num_livingroom}}厅</td>
                             <td>租房方式：</td><td class="val">

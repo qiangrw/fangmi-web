@@ -248,6 +248,7 @@ table td, table th,  table td *, table th * { vertical-align: top; }
     background-color: #f2f2f2; 
     border: 2px solid #1cb354;
 }
+.houseinfo-table { font-size: 0.9em!important; }
 .reserve-table .able {
 	width: 30px; 
 	height: 30px; 
