@@ -132,7 +132,8 @@ $('#houselist-page').on('pagebeforeshow', function() {
     get_with_auth(base_url, function(data) {
         if (data.message == 'OK') {
             tempo_show(element, data.apartments);
-            if (data.apartments == null) $("#empty-houselist-notice").show();
+            if (data.apartments == null || data.apartments.length == 0) $("#empty-houselist-notice").show();
+            else $("#empty-houselist-notice").hide();
         }  else {
             server_err_redirect_fn();
         } 

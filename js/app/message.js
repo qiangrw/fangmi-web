@@ -1,14 +1,21 @@
 // conversation.html
 $("#conversation-page").on('pagebeforeshow', function() {
+    $("#empty-conversationlist-notice").hide();
     var element = "conversation-list";
     get_with_auth("api/message/conversation", function(data) {
         if (data.message == 'OK') {
-            tempo_show(element, data.conversations);
+            tempo_show(element, data.conversations, function() {
+                if (data.conversations == null || data.conversations.length == 0) {
+                    $("#empty-conversationlist-notice").show();
+                } else {
+                    $("#empty-conversationlist-notice").hide();
+                }
+            });
         } 
     }, server_err_redirect_fn);
 });
 
- 
+
 // message.html
 $('#message-page').on('pagebeforeshow', function() {
     var from_username = getParameter("from_username");
@@ -16,7 +23,7 @@ $('#message-page').on('pagebeforeshow', function() {
     $("#to_username").val(from_username);
     $("#header-title").val(from_username);
 
- 
+
     var post_binding_func = function() {
         $("#submit-post-message").unbind().click(function(){
             console.log('clicked');
