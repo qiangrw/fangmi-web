@@ -131,14 +131,14 @@
                     </div>
 
                     <h3 class="padding-div">关于房东</h3>
-                    <div class="ui-grid-solo" style="white-div">
+                    <div class="ui-grid-solo white-div">
                         <div style="width: 20%; display: inline-block; vertical-align: top;">
                             <center>
                                 <img src="images/user/user_profile.png" width="80%"></img>
                             </center>
                         </div>
                         <div style="width: 78%; display: inline-block;">
-                            <table width="100%">
+                            <table class="houseinfo-table" width="100%">
                                 <tr><th width=100>无敌房东:</th><td>{{user.nickname}}</td></tr>
                                 <tr><th width=100>联系电话:</th><td>{{user.mobile | default '未提供联系电话'}}</td></tr>
                                 <tr><th width=100>个性签名:</th><td>{{user.status | default '暂未填写签名'}}</td></tr>
@@ -148,7 +148,7 @@
                     </div>
 
                     <h3 class="padding-div mate-section">推荐室友</h3>
-                    <div id="mate-div" class="ui-grid-solo mate-section" style="background: white!important; padding: 4px 4px; margin-top:10px;">
+                    <div id="mate-div" class="ui-grid-solo mate-section white-div">
                         <div class="grid-one-third">
                             <center>
                                 <img src="images/user/user_profile.png" width="50%"></img>
@@ -158,7 +158,7 @@
                             <div class="pull-right"> 
                                 <a href="message.html?from_user={{recommend_user.username}}"><span class="keywords-label blue">聊一聊</span></a>
                             </div>
-                            <table>
+                            <table class="houseinfo-table">
                                 <tr><td>{{recommend_user.nickname}} </td></tr>
                                 <tr><td>{{recommend_user.school | default '未知学校'}} 
                                         {{recommend_user.major | default '未知院系' }}</td></tr>
