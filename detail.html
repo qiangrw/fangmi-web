@@ -140,8 +140,8 @@
                                 <div style="width: 78%; display: inline-block;">
                                     <table width="100%">
                                         <tr><th width=100>无敌房东:</th><td>{{user.nickname}}</td></tr>
-                                        <tr><th width=100>联系电话:</th><td>{{user.mobile}}</td></tr>
-                                        <tr><th width=100>个性签名:</th><td>{{user.status}}</td></tr>
+                                        <tr><th width=100>联系电话:</th><td>{{user.mobile | default '未提供联系电话'}}</td></tr>
+                                        <tr><th width=100>个性签名:</th><td>{{user.status | default '暂未填写签名'}}</td></tr>
                                     </table>
                                 </div>
                                 <a id="mail-to-landlord-link" href="message.html?from_username={{user.username}}" class="ui-btn ui-corner-all">在线联系房东</a>
