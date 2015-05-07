@@ -35,21 +35,30 @@ $('#house-detail-page').on('pagebeforeshow', function() {
     }; 
     get_with_auth("api/apartment?id="+id, function(data) {
         if (data.message == 'OK') {
-        // mate div
-        ajax_without_auth("GET", "api/user/list", function(response) {
-            data.apartment.recommend_user = response.users[0];
-            Tempo.prepare(element).when(TempoEvent.Types.RENDER_COMPLETE, function() { 
-                console.log(data.apartment);
-                if (data.apartment.type == 0) {
-                    $(".mate-section").hide();
-                } else {
-                    $(".mate-section").show();
+            // find taken room number
+            /*data.apartment.room_taken = 0;
+            if (data.apartment.type == 1) {
+                var rooms = data.apartment.rooms;
+                for (i = 0; i < rooms.length; ++i) {
+                    data.apartment.room_taken += (rooms[i].status == 1);
                 }
-                if (user.username == data.apartment.user.username) {
-                    $("#edit-house-link").show();
-                    $("#edit-house-link").unbind().click(function() {
-                        house = {
-                            id: data.apartment.id,
+            }*/
+
+            // mate div
+            ajax_without_auth("GET", "api/user/list", function(response) {
+                data.apartment.recommend_user = response.users[0];
+                Tempo.prepare(element).when(TempoEvent.Types.RENDER_COMPLETE, function() { 
+                    console.log(data.apartment);
+                    if (data.apartment.type == 0) {
+                        $(".mate-section").hide();
+                    } else {
+                        $(".mate-section").show();
+                    }
+                    if (user.username == data.apartment.user.username) {
+                        $("#edit-house-link").show();
+                        $("#edit-house-link").unbind().click(function() {
+                            house = {
+                                id: data.apartment.id,
                             title: data.apartment.title,
                             subtitle: data.apartment.subtitle,
                             type: data.apartment.type,
@@ -61,49 +70,49 @@ $('#house-detail-page').on('pagebeforeshow', function() {
                             rooms: [],
                             reserve_choices: [], 
                             devices: [], 
-                        };
-                        for (i = 0; i < data.apartment.reserve_choices.length; i++) {
-                            house.reserve_choices.push({
-                                date: data.apartment.reserve_choices[i].date,
-                                time_start: data.apartment.reserve_choices[i].time_start,
-                                time_end: data.apartment.reserve_choices[i].time_end
-                            });
-                        }
-                        for (i = 0; i < data.apartment.rooms.length; i++) {
-                            house.rooms.push({
-                                name : data.apartment.rooms[i].name,
-                                price : data.apartment.rooms[i].price,
-                                area : data.apartment.rooms[i].area,
-                                date_entrance : data.apartment.rooms[i].date_entrance
-                            });
-                        }
-                        for (i = 0; i < data.apartment.tags.length; i++) {
-                            house.tags.push({
-                                name : data.apartment.tags[i].name
-                            });
-                        }
-                        for (i = 0; i < data.apartment.devices.length; i++) {
-                            house.devices.push({
-                                name : data.apartment.devices[i].name,
-                                count: 1
-                            });
-                        }
-                        console.log(house);
-                        var type = house.type;
-                        var house_type = type == 0 ? 'whole_house' : 'single_house';
-                        localStorage.setItem(house_type, JSON.stringify(house));
-                        if (type == 0) redirect_to("post_whole.html");
-                        else redirect_to("post_single.html");
-                    });
-                    $("#reserve-house-link").hide();
-                    $("#mail-to-landlord-link").hide();
-                }
-                $("#" + element).show();
-                bind_fav();
-                bind_nofav();
-                hide_loading(); 
-            }).render(data.apartment);
-        }); 
+                            };
+                            for (i = 0; i < data.apartment.reserve_choices.length; i++) {
+                                house.reserve_choices.push({
+                                    date: data.apartment.reserve_choices[i].date,
+                                  time_start: data.apartment.reserve_choices[i].time_start,
+                                  time_end: data.apartment.reserve_choices[i].time_end
+                                });
+                            }
+                            for (i = 0; i < data.apartment.rooms.length; i++) {
+                                house.rooms.push({
+                                    name : data.apartment.rooms[i].name,
+                                  price : data.apartment.rooms[i].price,
+                                  area : data.apartment.rooms[i].area,
+                                  date_entrance : data.apartment.rooms[i].date_entrance
+                                });
+                            }
+                            for (i = 0; i < data.apartment.tags.length; i++) {
+                                house.tags.push({
+                                    name : data.apartment.tags[i].name
+                                });
+                            }
+                            for (i = 0; i < data.apartment.devices.length; i++) {
+                                house.devices.push({
+                                    name : data.apartment.devices[i].name,
+                                  count: 1
+                                });
+                            }
+                            console.log(house);
+                            var type = house.type;
+                            var house_type = type == 0 ? 'whole_house' : 'single_house';
+                            localStorage.setItem(house_type, JSON.stringify(house));
+                            if (type == 0) redirect_to("post_whole.html");
+                            else redirect_to("post_single.html");
+                        });
+                        $("#reserve-house-link").hide();
+                        $("#mail-to-landlord-link").hide();
+                    }
+                    $("#" + element).show();
+                    bind_fav();
+                    bind_nofav();
+                    hide_loading(); 
+                }).render(data.apartment);
+            }); 
         } else {
             redirect_to("signin.html");
         } 
@@ -171,7 +180,7 @@ $('#favlist-page').on('pagebeforeshow', function() {
         }     
     }, server_err_redirect_fn);
 });
-    
+
 
 // myhouselist.html
 $('#myhouselist-page').on('pagebeforeshow', function() {
@@ -197,7 +206,7 @@ $('#myhouselist-page').on('pagebeforeshow', function() {
 });
 
 $('#post-whole-page').on('pagebeforehide', function() {
-     if (whole_house != null) {
+    if (whole_house != null) {
         whole_house.title = $("#title").val();
         whole_house.subtitle = $("#subtitle").val();
         whole_house.address =  $("#address").val();
@@ -205,7 +214,7 @@ $('#post-whole-page').on('pagebeforehide', function() {
         whole_house.num_livingroom =  $("#num_livingroom").val();
         whole_house.rooms[0].price = $("#price").val();
         whole_house.rooms[0].area =  $("#area").val();
-     }
+    }
 });
 
 
