@@ -230,7 +230,7 @@
 td.val {color:#717171; font-weight: bold; }
 .keywords-label {padding: 6px 8px; background-color: #ffa3db; margin: 2px 10px; 
                 font-size: 0.9em; display: inline-block; color: white; border-radius: 4px;  }
-.keywords-label2 {padding: 12px 10px; background-color: #ffa3db; margin: 2px 10px; 
+.keywords-label2 {padding: 10px 16px; background-color: #ffa3db; margin: 2px 10px; 
                 font-size: 0.9em; display: inline-block; color: white; border-radius: 20px;  }
 .keywords-label.blue {background: #7fd9ff; }
 .keywords-label.yellow {background: #fcb355; }
