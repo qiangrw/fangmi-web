@@ -17,7 +17,8 @@
 
 
 .ui-btn {  font-weight: normal!important;}
-.home-img {	width: 100%; max-height: 300px; }
+.home-img {	width: 100%; }
+.home-img-restrict {	width: 100%; max-height: 300px; }
 .home-img-desc {
 	position: relative;
 	margin-top: -170px;
