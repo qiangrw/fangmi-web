@@ -74,13 +74,13 @@ function user_loaded() {
 // Global Page before show functions
 $(function() {
     $("[data-role='navbar']").navbar();
-    $("[data-role='header'], [data-role='footer']").toolbar();
+    $("[data-role='header'], [data-role='footer']").toolbar({ tapToggle:false});
 });
 
 $(document).on('pagebeforeshow', function() {
     // Handling navbar related logic
     $("[data-role='navbar']").navbar();
-    $("[data-role='header'], [data-role='footer']").toolbar();
+    $("[data-role='header'], [data-role='footer']").toolbar({ tapToggle:false});
     var id = $.mobile.activePage.attr('id');
     cur_url = $.mobile.activePage.data('url');
     $("#nav-footer li a").removeClass("ui-btn-now");
