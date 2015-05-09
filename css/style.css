@@ -340,6 +340,22 @@ table td, table th,  table td *, table th * { vertical-align: top; }
 }
 
 
+#school-div {
+    width: 100%;
+    display: inline-block;
+    margin: auto auto;
+    padding: none!important;
+}
+.school-item {
+    display: inline-block;
+    width: 32%;
+    min-height: 70px;
+    vertical-align: middle;
+    text-align: center;
+}  
+.school-item img { height: 70px; }
+.school-item p {text-align: center; font-size: 0.8em; margin-top: -2px; }
+
 #room-div {
     width: 100%;
     display: inline-block;
