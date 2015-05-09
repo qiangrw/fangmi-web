@@ -234,7 +234,10 @@ $('#apply-confirm-page').on('pagebeforeshow', function() {
         form:   "#apply-confirm-form",
         api:    "api/account/apply/confirmed",
         message: "审核申请发送成功，请耐心等待审核.",
-        required: ["#id_number", "#real_name"]
+        required: ["#id_number", "#real_name"], 
+        succ_func: function() {
+            wait_and_redirect_to("setting.html", 1000);
+        } 
     });
 });
 

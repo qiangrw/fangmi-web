@@ -35,6 +35,12 @@ var redirect_to = function(page) {
     hide_loading();
     $( ":mobile-pagecontainer" ).pagecontainer( "change", page, { role: "page" } ); 
 }
+var wait_and_redirect_to = function(page, time) {
+    if (time == null) time = 1000;
+    window.setTimeout(function(){
+        redirect_to(page);
+    }, time);
+}
 var show_common_error = function(error) {
     $("#error").html(error);
     $("#error").show();
@@ -380,6 +386,7 @@ function user_post(pconfig) {
             success: function(data) {
                 if (data.message == 'OK') {
                     show_common_error(pconfig.message);
+                    if (pconfig.succ_func) pconfig.succ_func();
                 } else {
                     show_common_error(data.message);
                 }
