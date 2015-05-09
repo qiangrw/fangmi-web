@@ -65,7 +65,10 @@ $('#choose-date-page').on('pagebeforeshow', function() {
             return;
         }
         post_with_auth("api/reserve?reserve_choice_id=" + choice_id, function(data) {
-            if (data.message == 'OK') show_common_error("预约成功");  
+            if (data.message == 'OK') {
+                show_common_error("预约成功，即将跳转到预约记录页面");
+                wait_and_redirect_to("reservelist.html");
+            }
             else  show_common_error(data.message); 
         });
     });
