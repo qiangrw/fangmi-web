@@ -16,7 +16,7 @@
         <div id="reserve-detail-page" data-role="page">
             <!-- HEADER -->
             <div data-role="header">
-				<a href="myhouselist.html" class="ui-btn-transparent" data-icon="back" data-iconpos="notext" data-shadow="true" data-iconshadow="true">返回</a>
+				<a href="myhouselist.html" data-ajax="false" class="ui-btn-transparent" data-icon="back" data-iconpos="notext" data-shadow="true" data-iconshadow="true">返回</a>
                 <h2 class="grey-header">房源预约详情</h2>
                 <script src="js/main.js"></script>
                 <script src="js/app/reserve.js"></script>
@@ -25,27 +25,33 @@
 
             <!-- MAIN -->
             <div id="reserve-detail-list" role="main">
-                <div data-template class="ui-grid-solo white-div">
-                    <h2 class="grey-header padding-div ">{{apartment.address}}</h2>
-					<table  class="info-table">
-						<tr>
-							<td>姓名：</td>
-                            <td>{{user.username}}</td>
-						</tr>
-						<tr>
-							<td>联系方式：</td>
-                            <td>{{user.mobile}}</td>
-						</tr>
-						<tr>
-							<td>预约日期</td>
-                            <td>{{reserve_choice.date}}</td>
-						</tr>
-						<tr>
-							<td>时间区间</td>
-                            <td>{{reserve_choice.time_start}} - {{reserve_choice.time_end}}</td>
-						</tr>
-					</table>
+				<div id="empty-reserve-notice" class="ui-grid-solo padding-div" style="display:none">
+				<center> <p>该房屋还没有预约记录</p> </center>
                 </div>
+				<div data-template>
+					<br>
+					<div class="ui-grid-solo white-div">
+						<h2 class="grey-header padding-div ">{{apartment.address}}</h2>
+						<table  class="info-table">
+							<tr>
+								<td>姓名：</td>
+								<td>{{user.username}}</td>
+							</tr>
+							<tr>
+								<td>联系方式：</td>
+								<td>{{user.mobile}}</td>
+							</tr>
+							<tr>
+								<td>预约日期</td>
+								<td>{{reserve_choice.date}}</td>
+							</tr>
+							<tr>
+								<td>时间区间</td>
+								<td>{{reserve_choice.time_start}} - {{reserve_choice.time_end}}</td>
+							</tr>
+						</table>
+					</div>
+				</div>
             </div>  
             <br>
             <!-- ./MAIN -->

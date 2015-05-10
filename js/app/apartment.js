@@ -183,26 +183,30 @@ $('#favlist-page').on('pagebeforeshow', function() {
 
 
 // myhouselist.html
+var myhouse_tempo = null;
 $('#myhouselist-page').on('pagebeforeshow', function() {
     var element = "myhouselist";
     $("#" + element).hide();
     show_loading();
     get_with_auth("api/apartment/list?username=" + user.username, function(data) {
-        if (data.message == 'OK') tempo_show(element, data.apartments, function() {
-            $(".btn-repost-house").unbind().click(function() {
-                apartment_id = $(this).attr("hid");
-                post_with_data_auth("api/apartment", { id: apartment_id, cancelled: "False"}, function(data) {
-                    alert_message("重新发布成功，房屋编号：" + apartment_id + ", 请刷新查看");
-                });
-            });
-            $(".btn-delete-house").unbind().click(function() {
-                apartment_id = $(this).attr("hid");
-                post_with_data_auth("api/apartment", { id: apartment_id, cancelled: "True"}, function(data) {
-                    alert_message("取消发布成功， 房屋编号" + apartment_id + ", 请刷新查看");
-                });
-            });
-        });
+        if (data.message == 'OK') {
+			tempo_show(element, data.apartments, function() {
+				$(".btn-repost-house").unbind().click(function() {
+					apartment_id = $(this).attr("hid");
+					post_with_data_auth("api/apartment", { id: apartment_id, cancelled: "False"}, function(data) {
+						alert_message("重新发布成功，房屋编号：" + apartment_id + ", 请刷新查看");
+					});
+				});
+				$(".btn-delete-house").unbind().click(function() {
+					apartment_id = $(this).attr("hid");
+					post_with_data_auth("api/apartment", { id: apartment_id, cancelled: "True"}, function(data) {
+						alert_message("取消发布成功， 房屋编号" + apartment_id + ", 请刷新查看");
+					});
+				});
+			});
+		}
     }, server_err_redirect_fn);
+	 
 });
 
 $('#post-whole-page').on('pagebeforehide', function() {

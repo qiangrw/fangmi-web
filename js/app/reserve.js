@@ -79,23 +79,26 @@ $('#choose-date-page').on('pagebeforeshow', function() {
 });
 
 // reserve_detail.html
+var reserve_detail_tempo = null;
 $("#reserve-detail-page").on('pagebeforeshow', function() {
     var element = "reserve-detail-list";
     var apartment_id = getParameter("id");
+	$("#" + element).hide();
     if (apartment_id == null) return;
-    $("#" + element).hide();
+	$("#empty-reserve-notice").hide();
     show_loading();
     get_with_auth("api/reserve/list?apartment_id=" + apartment_id,
         function(data) {
-            console.log(data);
-            if (data.message == 'OK') {
-                Tempo.prepare(element).when(TempoEvent.Types.RENDER_COMPLETE, function(){
-                    if (data.reserves.length > 0) {
-                        $("#" + element).show();
-                    }
+            if (data.message == 'OK' && data.reserves.length > 0) {
+				if (reserve_detail_tempo == null) 
+					reserve_detail_tempo = Tempo.prepare(element);
+                reserve_detail_tempo.when(TempoEvent.Types.RENDER_COMPLETE, function(){
                     hide_loading();
+					$("#" + element).show();
                 }).render(data.reserves) 
-            } 
-        });
+            } else {
+				$("#empty-reserve-notice").show();
+			}
+        }
+		);
 });
-

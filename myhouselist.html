@@ -26,7 +26,8 @@
             <!-- MAIN -->
             <div id="myhouselist" role="main">
 				<p class="padding-div">正在招租</p>
-                <div data-template class="ui-grid-solo white-div">
+				<div data-template>
+                <div class="ui-grid-solo white-div">
                     <h2 class="grey-header padding-div ">{{address}}</h2>
 					<table class="info-table">
 						<tr>
@@ -51,7 +52,6 @@
 						</tr>
 					</table>
                     <div class="ui-grid-a">
-
                         {% if (cancelled) %} 
                         <div class="ui-block-a"><a hid="{{id}}" href="#" class="btn-repost-house ui-btn ui-corner-all ui-btn-d">重新发布</a></div>
                         {% else %} 
@@ -60,6 +60,8 @@
                         {% endif %}
                     </div>
                 </div>
+				<br>
+				</div>
 
                 <div data-role="popup" id="popup" class="ui-content popup-div">
                     <a href="#" data-rel="back" data-role="button" data-theme="c" data-icon="delete" data-iconpos="notext" class="ui-btn-right">Close</a>

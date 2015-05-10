@@ -579,3 +579,15 @@ function tempo_show(element, data, binding_func) {
         if (binding_func != null) binding_func();
     }).render(data);
 }
+
+function tempo_obj_show(element, obj, data, binding_func) {
+    console.log("[TempoShow]");
+    console.log(data);
+    $("#" + element).hide();
+    show_loading();
+	if (obj == null) obj = Tempo.prepare(element);
+    obj.when(TempoEvent.Types.RENDER_COMPLETE, function() {
+        tempo_hide(element);
+        if (binding_func != null) binding_func();
+    }).render(data);
+}
