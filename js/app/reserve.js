@@ -1,4 +1,5 @@
 // reservelist.html
+var tempo_object = null;
 $('#reservelist-page').on('pagebeforeshow', function() {
     var element = "reservelist";
     $("#" + element).hide();
@@ -9,13 +10,14 @@ $('#reservelist-page').on('pagebeforeshow', function() {
             if (data.reserves.length == 0) {
                 redirect_to("reservelist_empty.html");
             } else {
-                Tempo.prepare(element).when(TempoEvent.Types.RENDER_COMPLETE, function() {
+				if (tempo_object == null) tempo_object = Tempo.prepare(element);
+                tempo_object.when(TempoEvent.Types.RENDER_COMPLETE, function() {
                     $(".btn-active-reserve").unbind().click(function(){
                         var reserve_id = $(this).attr('rid');
                         console.log("active reserve with rid=" + reserve_id);
                         put_with_auth("api/reserve?id=" + reserve_id + "&cancelled=False", function(data) {
                             if (data.message == "OK") {
-                                alert_message("重新预约成功");
+                                // alert_message("重新预约成功");
                                 refreshPage();
                             } else {
                                 alert_message(data.message);
@@ -26,7 +28,7 @@ $('#reservelist-page').on('pagebeforeshow', function() {
                         var reserve_id = $(this).attr('rid');
                         put_with_auth("api/reserve?id=" + reserve_id + "&cancelled=True", function(data) {
                             if (data.message == "OK") { 
-                                alert_message("预约成功取消");
+                                // alert_message("预约成功取消");
                                 refreshPage();
                             } else {
                                 alert_message(data.message);
