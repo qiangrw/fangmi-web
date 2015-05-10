@@ -326,7 +326,8 @@ $('#signup-page').on('pagebeforeshow', function() {
             data: $("#signup-form").serialize(),
             success: function(data) {
                 if (data.message == 'OK') {
-                    show_common_error("注册成功，请登录.");
+                    show_common_error("注册成功，即将跳转到登录页面.");
+					wait_and_redirect_to("signin.html");
                 } else {
                     show_common_error(data.message);
                 }
