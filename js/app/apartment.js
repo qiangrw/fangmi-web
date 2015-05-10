@@ -201,6 +201,16 @@ $('#myhouselist-page').on('pagebeforeshow', function() {
 				refreshPage();
 			});
 		});
+        $(".set-room-taken").unbind().click(function() {
+            var room_id =$(this).attr("rid");
+            var apartment_id = $(this).parent().parent().parent().parent().attr("aid");
+            alert("Taken Apartment:" + apartment_id + " Room:" + room_id);
+        });
+        $(".set-room-no-taken").unbind().click(function() {
+            var room_id =$(this).attr("rid");
+            var apartment_id = $(this).parent().parent().parent().parent().attr("aid");
+            alert("Untaken Apartment:" + apartment_id + " Room:" + room_id);
+        });
 	};
 	
     $("#" + element).hide();
