@@ -24,16 +24,18 @@
 
             <!-- MAIN -->
             <div id="rentlist" role="main">
-                <br>
-				<div class="ui-grid-solo white-div" data-template>
-                    <h2 class="grey-header padding-div">{{apartment.address}}</h2>
-					<p class="padding-div">
-                    <span>
-                         {% if (apartment.type == 0) %} 整租 {% else %} 合租 {% endif %}
-                        （{{apartment.num_bedroom}}室{{apartment.num_livingroom}}厅）
-                    </span>
-                    <span class="pull-right">{{room.price}}元/月</span>
-					</p>
+                <div data-template>
+                    <br>
+                    <div class="ui-grid-solo white-div">
+                        <h2 class="grey-header padding-div">{{apartment.address}}</h2>
+                        <p class="padding-div">
+                        <span>
+                            {% if (apartment.type == 0) %} 整租 {% else %} 合租 {% endif %}
+                            （{{apartment.num_bedroom}}室{{apartment.num_livingroom}}厅）
+                        </span>
+                        <span class="pull-right">{{room.price}}元/月</span>
+                        </p>
+                    </div>
                 </div>
             </div>  
             <!-- ./MAIN -->
