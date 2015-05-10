@@ -530,7 +530,18 @@ function post_with_data_auth(api_name, data, succ_func, error_func) {
       success: succ_func,
       error: error_func
     });  
-}                           
+} 
+function put_with_data_auth(api_name, data, succ_func, error_func) {
+    if (error_func == null) error_func = server_err_fn;
+    $.ajax({
+        type: 'PUT',
+      beforeSend: function (request) { request.setRequestHeader("Authorization", "Bearer " + user.access_token); },
+      url: config.api_url + api_name,
+      data: data,
+      success: succ_func,
+      error: error_func
+    });  
+}                                 
           
 function post_with_data(api_name, data, succ_func, error_func) {
     if (error_func == null) error_func = server_err_fn;
