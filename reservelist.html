@@ -25,36 +25,39 @@
 
             <!-- MAIN -->
             <div id="reservelist" role="main">
+            <div data-template>
                 <br>
-                <div data-template class="ui-grid-solo white-div">
+                <div class="ui-grid-solo white-div">
                     <h2 class="grey-header padding-div">{{apartment.address}}</h2>
-					<p class="padding-div">
-                    <span>{{reserve_choice.date}} {{reserve_choice.time_start}} - 
-                        {{reserve_choice.time_end}}</span>
-                        <!--<span>（本周六下午）</span>-->
+                    <p class="padding-div">
+                    <span>
+                        {{reserve_choice.date}} {{reserve_choice.time_start}} - 
+                        {{reserve_choice.time_end}}
+                    </span>
+                    {% if (cancelled) %} 
+                    <span class="pull-right">已取消</span>
+                    {% endif %}
+                    </p>
 
                     {% if (cancelled) %} 
-                        <span class="pull-right">已取消</span>
-					</p>
-                    <a rid="{{reserve_choice.id}}" class="ui-btn ui-corner-all btn-active-reserve">重新预约</a>
-
-                    {% else %}    
-					</p>
-					<div class="ui-grid-a">
+                    <div class="cancel-div padding-div">
+                        <a rid="{{id}}" class="ui-btn ui-corner-all btn-active-reserve">重新预约</a>
+                    </div>
+                    {% else %} 
+                    <div class="cancel-div ui-grid-a">
                         <div class="ui-block-a">
-                            <a class="ui-btn ui-corner-all ui-btn-d btn-cancel-reserve" rid="{{reserve_choice.id}}">取消预约</a>
+                            <a class="ui-btn ui-corner-all ui-btn-d btn-cancel-reserve" rid="{{id}}">取消预约</a>
                         </div>
-						<!--<div class="ui-block-b"><a class="ui-btn ui-corner-all
-                                ui-btn-b">修改预约</a></div>-->
                         <div class="ui-block-b">
                             <a href="message.html?from_username={{user.username}}" class="ui-btn ui-corner-all">联系房东</a>
                         </div>
                     </div>
                     {% endif %}
                 </div>
+            </div>
             </div>  
             <!-- ./MAIN -->
-            
+
             <div data-role="popup" id="popup" class="ui-content popup-div">
                 <a href="#" data-rel="back" data-role="button" data-theme="c" data-icon="delete" data-iconpos="notext" class="ui-btn-right">Close</a>
                 <p id="popup-message"></p>

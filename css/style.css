@@ -396,3 +396,6 @@ table td, table th,  table td *, table th * { vertical-align: top; }
   padding: 10px 10px;
   margin: auto auto;
 }
+
+.reserve-div-true, .cancel-div-false  { display: block; }
+.reserve-div-false, .cancel-div-true  { display: none; }

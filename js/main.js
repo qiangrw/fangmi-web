@@ -52,12 +52,18 @@ var hide_common_error = function() {
 function refreshPage()
 {
     // TODO currently not work 
-    $.mobile.pageContainer.pagecontainer('change', window.location.href, {
+    /*$.mobile.pageContainer.pagecontainer('change', window.location.href, {
         allowSamePageTransition: true,
         transition: 'none',
+        reload: true,
         reloadPage: true 
         // 'reload' parameter not working yet: //github.com/jquery/jquery-mobile/issues/7406
-    });
+    });*/
+    $.mobile.activePage.trigger("pagebeforecreate");
+    $.mobile.activePage.trigger("pagecreate");
+    $.mobile.activePage.trigger("pageinit");
+    $.mobile.activePage.trigger("pagebeforeshow");
+    // $.mobile.activePage.trigger("pageinit");
 }
 function alert_message(message) { 
     $( "#popup-message" ).html(message);

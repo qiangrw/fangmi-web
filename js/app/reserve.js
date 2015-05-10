@@ -16,6 +16,7 @@ $('#reservelist-page').on('pagebeforeshow', function() {
                         put_with_auth("api/reserve?id=" + reserve_id + "&cancelled=False", function(data) {
                             if (data.message == "OK") {
                                 alert_message("重新预约成功");
+                                refreshPage();
                             } else {
                                 alert_message(data.message);
                             }
@@ -26,6 +27,7 @@ $('#reservelist-page').on('pagebeforeshow', function() {
                         put_with_auth("api/reserve?id=" + reserve_id + "&cancelled=True", function(data) {
                             if (data.message == "OK") { 
                                 alert_message("预约成功取消");
+                                refreshPage();
                             } else {
                                 alert_message(data.message);
                             }
