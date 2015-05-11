@@ -399,3 +399,11 @@ table td, table th,  table td *, table th * { vertical-align: top; }
 
 .reserve-div-true, .cancel-div-false  { display: block; }
 .reserve-div-false, .cancel-div-true  { display: none; }
+
+#owl-demo {opacity: 1!important;}
+#owl-demo .item  {width: 100%!important;}
+#owl-demo .item img{
+    display: block;
+    width: 100%;
+    height: auto;
+}

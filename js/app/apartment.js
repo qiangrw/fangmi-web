@@ -107,6 +107,21 @@ $('#house-detail-page').on('pagebeforeshow', function() {
                         $("#reserve-house-link").hide();
                         $("#mail-to-landlord-link").hide();
                     }
+                    
+                    $("#owl-demo").owlCarousel({
+                        navigation : false, // Show next and prev buttons
+                        slideSpeed : 300,
+                        paginationSpeed : 400,
+                        singleItem:true,
+                        // "singleItem:true" is a shortcut for:
+                        // items : 1, 
+                        // itemsDesktop : false,
+                        // itemsDesktopSmall : false,
+                        // itemsTablet: false,
+                        itemsMobile : true
+                    });
+
+
                     $("#" + element).show();
                     bind_fav();
                     bind_nofav();
@@ -186,21 +201,21 @@ $('#favlist-page').on('pagebeforeshow', function() {
 var myhouse_tempo = null;
 $('#myhouselist-page').on('pagebeforeshow', function() {
     var element = "myhouselist";
-	var bind_myhouse_func = function() {
-		$(".btn-repost-house").unbind().click(function() {
-			apartment_id = $(this).attr("hid");
-			put_with_data_auth("api/apartment", { id: apartment_id, cancelled: "False"}, function(data) {
-				// alert_message("重新发布成功，房屋编号：" + apartment_id + ", 请刷新查看");
-				refreshPage();
-			});
-		});
-		$(".btn-delete-house").unbind().click(function() {
-			apartment_id = $(this).attr("hid");
-			put_with_data_auth("api/apartment", { id: apartment_id, cancelled: "True"}, function(data) {
-				// alert_message("取消发布成功， 房屋编号" + apartment_id + ", 请刷新查看");
-				refreshPage();
-			});
-		});
+    var bind_myhouse_func = function() {
+        $(".btn-repost-house").unbind().click(function() {
+            apartment_id = $(this).attr("hid");
+            put_with_data_auth("api/apartment", { id: apartment_id, cancelled: "False"}, function(data) {
+                // alert_message("重新发布成功，房屋编号：" + apartment_id + ", 请刷新查看");
+                refreshPage();
+            });
+        });
+        $(".btn-delete-house").unbind().click(function() {
+            apartment_id = $(this).attr("hid");
+            put_with_data_auth("api/apartment", { id: apartment_id, cancelled: "True"}, function(data) {
+                // alert_message("取消发布成功， 房屋编号" + apartment_id + ", 请刷新查看");
+                refreshPage();
+            });
+        });
         $(".set-room-taken").unbind().click(function() {
             var room_id =$(this).attr("rid");
             var apartment_id = $(this).parent().parent().parent().parent().attr("aid");
@@ -211,23 +226,23 @@ $('#myhouselist-page').on('pagebeforeshow', function() {
             var apartment_id = $(this).parent().parent().parent().parent().attr("aid");
             alert("Untaken Apartment:" + apartment_id + " Room:" + room_id);
         });
-	};
-	
+    };
+
     $("#" + element).hide();
     show_loading();
     get_with_auth("api/apartment/list?filter_cancelled=false&username=" + user.username, function(data) {
         if (data.message == 'OK') {
-			$("#" + element).hide();
-			show_loading();
-			if (myhouse_tempo == null) myhouse_tempo = Tempo.prepare(element);
-			myhouse_tempo.when(TempoEvent.Types.RENDER_COMPLETE, function() {
-				tempo_hide(element);
-				bind_myhouse_func();
-			}).render(data.apartments);
-			
-		}
+            $("#" + element).hide();
+            show_loading();
+            if (myhouse_tempo == null) myhouse_tempo = Tempo.prepare(element);
+            myhouse_tempo.when(TempoEvent.Types.RENDER_COMPLETE, function() {
+                tempo_hide(element);
+                bind_myhouse_func();
+            }).render(data.apartments);
+
+        }
     }, server_err_redirect_fn);
-	 
+
 });
 
 $('#post-whole-page').on('pagebeforehide', function() {
