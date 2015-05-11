@@ -61,21 +61,22 @@
 						</tr>
                     </table>
 
-                    <table aid="{{id}}" class="info-table room-info" style="display:none">
+                    <table aid="{{id}}" class="info-table room-info">
                         <tr data-template-for="rooms">
                             <td width=100>房间 {{_tempo.index}} 状态</td>
                             <td>
                                 {% if (status == 0) %} 
                                 <span> 可入住 </span>
                                 {% else %}
-                                <span> 可已出租</span> 
+                                <span> 已出租</span> 
                                 {% endif %}
                             </td>
                             <td>
                                 {% if (status == 0) %} 
                                 <a class="set-room-taken" rid="{{id}}"  href="#">标记为已出租</a>
                                 {% else %}
-                                <a class="set-room-no-taken" rid="{{id}}" href="#">标记为可出租</a>
+                                <!--
+                                <a class="set-room-no-taken" rid="{{id}}" href="#">标记为可出租</a>-->
                                 {% endif %}
                             </td>
                         </tr>

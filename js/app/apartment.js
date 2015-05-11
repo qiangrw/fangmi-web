@@ -219,7 +219,12 @@ $('#myhouselist-page').on('pagebeforeshow', function() {
         $(".set-room-taken").unbind().click(function() {
             var room_id =$(this).attr("rid");
             var apartment_id = $(this).parent().parent().parent().parent().attr("aid");
-            alert("Taken Apartment:" + apartment_id + " Room:" + room_id);
+            post_with_data_auth("api/rent", {
+                    date_start: "1990-07-20",
+                    date_end:   "1991-07-21",
+                    room_id: room_id
+                }, function(data) { refreshPage(); })
+            // alert("Taken Apartment:" + apartment_id + " Room:" + room_id);
         });
         $(".set-room-no-taken").unbind().click(function() {
             var room_id =$(this).attr("rid");
