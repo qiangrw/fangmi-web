@@ -92,7 +92,7 @@
                             <span>  {{name | default '房间'}} </span><br> 
                             <span>  {{price}} 元/月 </span><br> 
                             <span>  {{date_entrance}} </span><br> 
-                            {% if (status == 0) %} 
+                            {% if (status == true) %} 
                             <span class="room-no-taken"> 可入住 <span>
                             {% else %}
                             <span class="room-taken"> 已出租 <span>

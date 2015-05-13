@@ -602,3 +602,25 @@ function tempo_obj_show(element, obj, data, binding_func) {
         if (binding_func != null) binding_func();
     }).render(data);
 }
+
+
+function get_today() {
+    var today = new Date();
+    var dd = today.getDate();
+    var mm = today.getMonth()+1;
+    var yyyy = today.getFullYear();
+
+    if (dd<10) { dd='0'+dd } 
+    if (mm<10) { mm='0'+mm } 
+    return (yyyy + "-" + mm + "-" + dd );
+}
+
+function get_tommorow() {
+    var currentDate = new Date(new Date().getTime() + 24 * 60 * 60 * 1000);
+    var dd = currentDate.getDate();
+    var mm = currentDate.getMonth() + 1;
+    var yyyy = currentDate.getFullYear();
+    if (dd<10) { dd='0'+dd } 
+    if (mm<10) { mm='0'+mm } 
+    return (yyyy + "-" + mm + "-" + dd );
+}

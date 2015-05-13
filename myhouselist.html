@@ -65,14 +65,14 @@
                         <tr data-template-for="rooms">
                             <td width=100>房间 {{_tempo.index}} 状态</td>
                             <td>
-                                {% if (status == 0) %} 
+                                {% if (status == true) %} 
                                 <span> 可入住 </span>
                                 {% else %}
                                 <span> 已出租</span> 
                                 {% endif %}
                             </td>
                             <td>
-                                {% if (status == 0) %} 
+                                {% if (status == true) %} 
                                 <a class="set-room-taken" rid="{{id}}"  href="#">标记为已出租</a>
                                 {% else %}
                                 <!--

@@ -221,7 +221,7 @@ $('#myhouselist-page').on('pagebeforeshow', function() {
             var apartment_id = $(this).parent().parent().parent().parent().attr("aid");
             post_with_data_auth("api/rent", {
                     date_start: "1990-07-20",
-                    date_end:   "1991-07-21",
+                    date_end:   "2016-07-21",
                     room_id: room_id
                 }, function(data) { refreshPage(); })
             // alert("Taken Apartment:" + apartment_id + " Room:" + room_id);
