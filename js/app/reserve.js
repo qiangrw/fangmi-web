@@ -98,6 +98,7 @@ $("#reserve-detail-page").on('pagebeforeshow', function() {
                 }).render(data.reserves) 
             } else {
 				$("#empty-reserve-notice").show();
+                hide_loading();
 			}
         }
 		);
