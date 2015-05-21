@@ -1,5 +1,5 @@
 // Global Page Ready Functions
-var config = { api_url: "http://123.57.207.201:8080/"};
+var config = { api_url: "http://api.funmi.cn/"};
 localStorage.setItem('config', JSON.stringify(config));
 var user   = JSON.parse(localStorage.getItem('user'));
 var server_err_fn = function(data) { 
