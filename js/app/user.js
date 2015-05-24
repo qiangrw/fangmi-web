@@ -106,7 +106,9 @@ $('#wechat-page').on('pagebeforeshow', function() {
     $.ajax({
         type: 'POST',
         url: config.api_url + "oauth/token",
-        data: {
+        data: { 
+            grant_type: 'password',
+            client_id:  'fangmi-web',
             username: username,
             password: password,
             sns:    'wechat'
