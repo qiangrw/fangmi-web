@@ -100,44 +100,31 @@ $('#signin-page').on('pageinit', function() {
 });
 
 $('#wechat-page').on('pagebeforeshow', function() {
-    var code = getParameter("code");
-    // var appid = "wx9405f71ba4f268ae";
-    // var secret = "99e4f4a3c2daea6ea5cd015e810d26d5";
-    // var url = "https://api.weixin.qq.com/sns/oauth2/access_token?appid=" + appid + 
-    //        "&secret=" + secret + "&code=" + code + "&grant_type=authorization_code";
-    var url = "server/wechat_login.php?state=123&code=" + code;
+    var username = getParameter("username");
+    var password = getParameter("password");
+    show_loading();
     $.ajax({
-            type: 'GET',
-            url: url,
-            success: function(data) {
-                if (data.access_token != null) {
-                    $.ajax({
-                        type: 'POST',
-                      url: config.api_url + "oauth/token",
-                      data: {
-                          access_token: data.access_token,
-                          openid: data.openid
-                      },
-                      success: function(data) {
-                          if (data.access_token != null) {
-                              user = {};
-                              hide_common_error();
-                              console.log(data);
-                              user.access_token = data.access_token;
-                              get_with_auth("api/account", signin_succ, signin_fail);
-                          } else {
-                              show_common_error("用户验证失败");
-                              hide_loading();
-                          }
-                      }, 
-                      error: server_err_fn
-                    });  
-                } else {
-                    alert("validation error");
-                }
-            }, 
-            error: server_err_fn
-    }); 
+        type: 'POST',
+        url: config.api_url + "oauth/token",
+        data: {
+            username: username,
+            password: password,
+            sns:    'wechat'
+        },
+        success: function(data) {
+            if (data.access_token != null) {
+                user = {};
+                hide_common_error();
+                console.log(data);
+                user.access_token = data.access_token;
+                get_with_auth("api/account", signin_succ, signin_fail);
+            } else {
+                show_common_error("用户验证失败");
+                hide_loading();
+            }
+        }, 
+        error: server_err_fn
+    });         
 });
 
 // user.html
@@ -259,9 +246,9 @@ $('#apply-student-page').on('pagebeforeshow', function() {
         var student_id = $("#student_id").val();
         if (real_name == "" || id_number == "" || 
             school == "" || major == "" || student_id == "") {
-            show_common_error("请将表单填写完整");
-            return;
-        }
+                show_common_error("请将表单填写完整");
+                return;
+            }
 
 
         var formData = new FormData($('#apply-student-form')[0]);
@@ -327,7 +314,7 @@ $('#signup-page').on('pagebeforeshow', function() {
             success: function(data) {
                 if (data.message == 'OK') {
                     show_common_error("注册成功，即将跳转到登录页面.");
-					wait_and_redirect_to("signin.html");
+                    wait_and_redirect_to("signin.html");
                 } else {
                     show_common_error(data.message);
                 }
