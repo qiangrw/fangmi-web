@@ -23,10 +23,14 @@
 .home-img-restrict {	width: 100%; max-height: 300px; }
 .home-img-desc {
 	position: relative;
-	margin-top: -170px;
-	margin-bottom: 40px;
+	margin-top: -100px;
+	margin-bottom: 8px;
+	padding-left: 10px;
+	font-weight: normal!important;
 	color: white;
 }
+.home-img-desc h2 {font-weight: normal!important; margin-bottom: 2px; font-size: 1.8em;}
+.home-img-desc a {text-decoration: none!important; color: white;}
 #nav-footer {
 	background-color: white!important;
 	border-color: white!important;
