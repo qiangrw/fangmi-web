@@ -17,8 +17,8 @@
         <div id="signup-page" data-role="page"  style="background-image: url(images/user/bg.jpg); background-size: cover;">
             <!-- HEADER -->
             <div data-role="header">
-                <a href="index.html" class="ui-btn-transparent" data-icon="back" data-iconpos="notext" data-shadow="true" data-iconshadow="true">返回</a>
-                <h2 class="grey-header">注册</h2>
+                <!--<a href="index.html" class="ui-btn-transparent" data-icon="back" data-iconpos="notext" data-shadow="true" data-iconshadow="true">返回</a>
+                <h2 class="grey-header">注册</h2>-->
 				<script src="js/main.js"></script>
 				<script src="js/app/user.js"></script>
             </div>
@@ -33,11 +33,12 @@
 					</center>
 				</div>
 				
-                <div class="ui-grid-solo white-div">
+				<div class="padding-div">
+                <div class="ui-grid-solo white-div"  style="border-radius: 10px;">
                     <form id="signup-form">
-                    <table class="form-table">
-						<tr>
-							<th width=120>手机号</th>
+                    <table class="form-table"  cellspacing="0">
+						<tr class="border_bottom">
+							<th width=80>手机号:</th>
 							<td><input type="text" name="username" id="phone" value=""></td>
                             <td>
                                 <button id="go" href="#" class="ui-btn ui-btn-mini ui-corner-all ui-btn-inline ui-btn-captcha">
@@ -46,21 +47,23 @@
                                 </button>
                             </td>
 						</tr>
-                        <tr>
-							<th width=120>验证码</th>
+                        <tr class="border_bottom">
+							<th>验证码:</th>
 							<td colspan=2><input type="text" name="captcha" id="captcha" value=""></td>
 						</tr>
-						<tr>
-							<th>输入密码</th>
+						<tr class="border_bottom">
+							<th>输入密码:</th>
 							<td colspan=2><input type="password" name="password" id="password" value=""></td>
 						</tr>
 						<tr>
-							<th>密码确认</th>
+							<th>密码确认:</th>
 							<td colspan=2><input type="password" name="password_confirm" id="password_confirm" value=""></td>
 						</tr>
                     </table>
                     </form>
                 </div>
+				</div>
+				
                 <div id="error" class="ui-grid-solo padding-div error" style="display:none;"></div>
 				<br>
 				<div class="ui-grid-solo padding-div">
