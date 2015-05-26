@@ -112,6 +112,25 @@ $(document).on('pagebeforeshow', function() {
     hide_common_error();
 });
 
+$('#index-page').on('pagebeforeshow', function() {
+    console.log("loading");
+	if (user != null && user.access_token != null) {
+		var base_url = "api/apartment/list";
+		var element = "home-houselist";
+		$("#" + element).hide();
+		show_loading();
+		$("#empty-houselist-notice").hide();
+		get_with_auth(base_url, function(data) {
+			if (data.message == 'OK') {
+				tempo_show(element, data.apartments);
+				if (data.apartments == null || data.apartments.length == 0) $("#empty-houselist-notice").show();
+			}  else {
+				hide_loading();
+			} 
+		}, function() {hide_loading();});     
+	}
+});
+
 
 $('#rentlist-page').on('pagebeforeshow', function() {
     var element = "rentlist";

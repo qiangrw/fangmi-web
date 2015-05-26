@@ -10,6 +10,9 @@
         <script src="js/jquery.min.js"></script>
         <script src="js/jquery.mobile-1.4.5.min.js"></script>
         <script src="js/tempo.min.js" type="text/javascript"></script>
+		<link rel="stylesheet" href="owl-carousel/owl.carousel.css">
+		<link rel="stylesheet" href="owl-carousel/owl.theme.css">
+		<script src="owl-carousel/owl.carousel.js"></script>
     </head>
 
     <body>
@@ -84,7 +87,38 @@
 					</a>
                     <br>
                 </div>
-
+				
+				<div id="home-houselist" style="display:none">
+				<p class="padding-div">优秀房源</p>
+                <div data-template>
+                <div class="ui-grid-solo">      
+                    <center>
+                        <a class="link-div" href="detail.html?id={{id}}"><img
+                            class="home-img-restrict" src="images/home/pku.jpg" data-src="http://api.funmi.cn/{{photos[0].photo}}"></img></a>
+					</center>
+                </div>
+                <div class="ui-grid-solo">
+                    <table class="houseinfo-table" width="100%">
+                        <tr>
+                            <td width=30><a class="ui-btn ui-corner-all ui-icon-loc ui-btn-icon-notext ui-btn-inline"></a></td>
+                            <td style="vertical-align: middle!important">
+                                <a href="detail.html?id={{id}}" class="grey-header">{{title}}</a>
+                            </td> 
+                            <td style="vertical-align: middle!important" class="text-right pink">
+                                {{min_price}}元/每月 </td>
+                        </tr>
+                        <tr>
+                            <td> </td>
+                            <td>{{subtitle}} </td>
+                            <td class="text-right">
+                                {% if (type == 0) %} 整租 {% else %} 合租 {% endif %}
+                                /{{num_bedroom}}室{{num_livingroom}}厅
+                            </td>
+                        </tr>
+                    </table>
+				</div>
+				</div>
+				</div>
             </div>  
             <!-- ./MAIN -->
         </div>
