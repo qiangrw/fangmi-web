@@ -200,6 +200,7 @@ $('#edit-profile-page').on('pagebeforeshow', function() {
                             user.avatar = config.api_url + user.avatar;
                             localStorage.setItem('user', JSON.stringify(user));
                             show_common_error("个人信息保存成功");
+							redirect_to("user.html");
                         } else  show_common_error(data.message); 
                     }, server_err_redirect_fn);
     });
@@ -353,7 +354,7 @@ $('#setting-page').on('pagebeforeshow', function() {
                     if (user != null) localStorage.removeItem('user');
                     if (whole_house != null) localStorage.removeItem('whole_house');
                     if (single_house != null) localStorage.removeItem('single_house');
-                    redirect_to("signin.html");
+                    redirect_to("index.html");
                 });      
             }).render(user);
         } else {
