@@ -124,11 +124,9 @@ $('#index-page').on('pagebeforeshow', function() {
 		var element = "home-houselist";
 		$("#" + element).hide();
 		show_loading();
-		$("#empty-houselist-notice").hide();
 		get_with_auth(base_url, function(data) {
 			if (data.message == 'OK') {
 				tempo_show(element, data.apartments);
-				if (data.apartments == null || data.apartments.length == 0) $("#empty-houselist-notice").show();
 			}  else {
 				hide_loading();
 			} 

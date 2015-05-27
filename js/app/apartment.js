@@ -142,7 +142,7 @@ $('#houselist-page').on('pagebeforeshow', function() {
         redirect_to("signin.html");
         return;
     }
-    var base_url = "api/apartment/list?";
+    var base_url = "api/apartment/list?filter_cancelled=true";
     var community_id = getParameter("community_id");
     var school_id = getParameter("school_id");
     var q = getParameter("q");
@@ -153,11 +153,13 @@ $('#houselist-page').on('pagebeforeshow', function() {
     $("#" + element).hide();
     show_loading();
     $("#empty-houselist-notice").hide();
+	console.log(base_url);
     get_with_auth(base_url, function(data) {
         if (data.message == 'OK') {
             tempo_show(element, data.apartments);
-            if (data.apartments == null || data.apartments.length == 0) $("#empty-houselist-notice").show();
-            else $("#empty-houselist-notice").hide();
+            if (data.apartments == null || data.apartments.length == 0) {
+				$("#empty-houselist-notice").show();
+			} else $("#empty-houselist-notice").hide();
         }  else {
             server_err_redirect_fn();
         } 
