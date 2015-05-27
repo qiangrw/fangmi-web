@@ -97,10 +97,15 @@ $(document).on('pagebeforeshow', function() {
     cur_url = $.mobile.activePage.data('url');
     $("#nav-footer li a").removeClass("ui-btn-now");
     console.log("[log] loading " + id);
+	$("[data-role='navbar']").show();
     if (id == "index-page") $("#nav-footer [data-icon='home']").addClass("ui-btn-now");
     if (id == "user-page") $("#nav-footer [data-icon='user']").addClass("ui-btn-now");
     if (id == "about-page") $("#nav-footer [data-icon='info']").addClass("ui-btn-now");
     if (id == "setting-page") $("#nav-footer [data-icon='gear']").addClass("ui-btn-now");
+	if (id == "signin-page")  $("[data-role='navbar']").hide();
+	if (id == "signup-page")  $("[data-role='navbar']").hide();
+	if (id == "forget-password-page")  $("[data-role='navbar']").hide();
+	
     user = JSON.parse(localStorage.getItem('user'));
     if (user != null && user.username != null) {
         $(".ui-btn-signin").hide();
