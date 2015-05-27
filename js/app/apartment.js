@@ -316,9 +316,15 @@ $('#post-whole-page').on('pagebeforeshow', function() {
         if (whole_house.rooms[0].price) $("#price").val(whole_house.rooms[0].price);
         if (whole_house.rooms[0].area) $("#area").val(whole_house.rooms[0].area);
         $("#type").val(whole_house.type);
-        if (whole_house.rooms[0].date_entrance != null)  $("#set-entrance-date-link").html("已经设置"); 
+        if (whole_house.rooms[0].date_entrance != null)  $("#set-entrance-date-link").html(whole_house.rooms[0].date_entrance); 
         if (whole_house.reserve_choices != null)  $("#set-date-link").html("已经设置");
-        if (whole_house.tags != null)  $("#set-keywords-link").html("已经设置");
+        if (whole_house.tags != null)  {
+			var tag_string = "";
+			for (i = 0; i < whole_house.tags.length; i++) {
+				tag_string += whole_house.tags[i].name + " ";
+			}
+			$("#set-keywords-link").html(tag_string);
+		}
         if (whole_house.devices != null)  $("#set-devices-link").html("已经设置");
     }
 
@@ -411,7 +417,13 @@ $('#post-single-page').on('pagebeforeshow', function() {
         $("#type").val(single_house.type);
         if (single_house.rooms != null) $(".set-room-link").html("已经设置");
         if (single_house.reserve_choices != null) $(".set-date-link").html("已经设置");
-        if (single_house.tags != null)  $(".set-keywords-link").html("已经设置"); 
+        if (single_house.tags != null)  {
+			var tag_string = "";
+			for (i = 0; i < single_house.tags.length; i++) {
+				tag_string += single_house.tags[i].name + " ";
+			}
+			$(".set-keywords-link").html(tag_string);
+		}
         if (single_house.devices != null) $(".set-devices-link").html("已经设置");
     }
 

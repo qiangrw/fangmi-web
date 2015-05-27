@@ -297,7 +297,7 @@ table td, table th,  table td *, table th * { vertical-align: top; }
 .form-table th { vertical-align: middle; color: #717171; font-weight: normal;}
 .form-table td { vertical-align: middle;}
 .form-table .ui-btn { border-color: #bbb!important;}
-.sel-table td {text-align: right; line-height: 2;}
+.sel-table td {text-align: right; line-height: 2.8;}
 .sel-table  a {text-decoration: none!important; color:#ff3075!important; font-weight: normal!important; }
 .reserve-table {width: 100%;}
 .reserve-table th, .reserve-table td {text-align: center; vertical-align: middle;}
