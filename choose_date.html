@@ -13,9 +13,10 @@
     </head>
 
     <body>
-        <div id="choose-date-page" data-role="page" data-dialog="true">
+        <div id="choose-date-page" data-role="page">
             <!-- HEADER -->
-            <div data-role="header" data-theme="c">
+            <div data-role="header">
+				<a href="setting.html" class="ui-btn-transparent" data-icon="back" data-iconpos="notext" data-shadow="true" data-iconshadow="true">返回</a>
                 <h2 class="grey-header">选择预约时间</h2>
 				<script src="js/main.js"></script>
 				<script src="js/app/reserve.js"></script>
@@ -24,8 +25,9 @@
 
             <!-- MAIN -->
             <div role="main" class="ui-content">
+				<p class="padding-div">选择合适您的预约时间<p>
                 <div id="choose-date-list" class="ui-grid-solo padding-div white-div">
-                    <fieldset data-role="controlgroup" data-theme="c"> 
+                    <fieldset data-role="controlgroup" data-theme="c"  data-iconpos="right"> 
                     <div data-template>
                         <input type="radio" value="{{id}}" name="radiobox" id="radio-{{_tempo.index}}"> 
                         <label for="radio-{{_tempo.index}}">{{date}} {{time_start}}-{{time_end}}</label> 
@@ -35,7 +37,7 @@
                 
                 <div id="error" class="ui-grid-solo padding-div error" style="display:none;"></div>
 				<div class="ui-grid-solo padding-desc" style="padding: 4px 4px; margin-top:10px;">
-                    <a id="submit-add-reserve" href="#" class="ui-btn ui-corner-all">确定</a>
+                    <a id="submit-add-reserve" href="#" class="ui-btn ui-corner-all">确定预约</a>
                 </div>
                 
             </div>  
