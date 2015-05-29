@@ -47,6 +47,11 @@ $('#house-detail-page').on('pagebeforeshow', function() {
             // mate div
             ajax_without_auth("GET", "api/user/list", function(response) {
                 data.apartment.recommend_user = response.users[0];
+				data.apartment.devices_preview = [];
+				for (i = 0; i < 3 && i < data.apartment.devices.length; i++) {
+					data.apartment.devices_preview.push(data.apartment.devices[i]);
+				}
+				
                 Tempo.prepare(element).when(TempoEvent.Types.RENDER_COMPLETE, function() { 
                     console.log(data.apartment);
                     if (data.apartment.type == 0) {
@@ -113,11 +118,6 @@ $('#house-detail-page').on('pagebeforeshow', function() {
                         slideSpeed : 300,
                         paginationSpeed : 400,
                         singleItem:true,
-                        // "singleItem:true" is a shortcut for:
-                        // items : 1, 
-                        // itemsDesktop : false,
-                        // itemsDesktopSmall : false,
-                        // itemsTablet: false,
                         itemsMobile : true
                     });
 
