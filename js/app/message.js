@@ -51,6 +51,7 @@ $('#message-page').on('pagebeforeshow', function() {
                 error: function(data) { alert_message("网络错误，请稍后再试"); }
             });                 
         });
+		$("#post-message-form").css("bottom", "0px");
     };      
 
     var element = "messagedetail-list";

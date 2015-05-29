@@ -103,7 +103,7 @@ $(document).on('pagebeforeshow', function() {
     if (id == "about-page") $("#nav-footer [data-icon='info']").addClass("ui-btn-now");
     if (id == "setting-page") $("#nav-footer [data-icon='gear']").addClass("ui-btn-now");
 	if (id == "signin-page" || id == "map-page" || id == "signup-page" 
-		|| id == "forget-password-page")  
+		|| id == "forget-password-page" || id == "message-page")  
 		$("[data-role='navbar']").hide();
 	
     user = JSON.parse(localStorage.getItem('user'));
