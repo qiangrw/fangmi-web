@@ -19,6 +19,7 @@
 				<a href="choose_date.html" class="ui-btn-transparent" data-icon="back" data-iconpos="notext" data-shadow="true" data-iconshadow="true">返回</a>
                 <h2 class="grey-header">预约结果</h2>
                 <script src="js/main.js"></script>
+				<script src="js/app/reserve.js"></script>
             </div>
             <!-- ./HEADER -->
 
@@ -27,56 +28,45 @@
                 <div class="ui-grid-solo padding-div" style="background: white!important; padding: 4px 4px; margin-top:10px;">
 				<center>
                     <h2 class="succ-header">恭喜您预约成功</h2>
-					<p>您将于本<span id="my-reserve-time">周六下午</span>前去看房，
-					房东会准时恭候，如有变动，请提前联系房东取消或更改时间，谢谢！</p>
+					<p>
+					您将于如下时间前去看房，房东会准时恭候。
+					</p>
 					
-					<a href="#" class="ui-btn ui-corner-all">在线联系房东</a>
+					<p>
+					<strong style="padding: 8px;" id="my-reserve-time"></strong>
+					</p>
+					<p>
+					如有变动，请提前联系房东取消或更改时间，谢谢！</p>
+					
+					<a id="reserve-mail-to-landloard" href="#" class="ui-btn ui-corner-all">在线联系房东</a>
 				</center>
                 </div>
 				
 				
 				<p class="padding-div">共
-					<span id="person-count" class="pink">8</span>
+					<span id="person-count" class="pink">0</span>
 					个小伙伴将与您一起看房
 				</p>
-                <div class="ui-grid-solo  white-div">
+				<div id="reserve-friends">
+                <div data-template class="ui-grid-solo  white-div">
                     <div class="grid-one-third">
                         <center>
-                            <img src="images/user/user_profile.png" width="80%"></img>
+                            <img src="images/user/user_profile.png" width="70%"></img>
                         </center>
                     </div>
                     <div class="grid-two-third">
                         <div class="pull-right"> 
-                            <a href="#"><span class="keywords-label blue">聊一聊</span></a>
+                            <a href="message.html?from_user={{user.username}}"><span class="keywords-label blue">聊一聊</span></a>
                         </div>
                         <table>
-                            <tr><td>强哥哥</td></tr>
-                            <tr><td>天蝎座</td></tr>
-                            <tr><td>清华计算机技术系</td></tr>
+                            <tr><td>{{user.username}}</td></tr>
+                            <tr><td>{{user.school | default '未知学校'}}</td></tr>
+                            <tr><td>{{user.major | default '未知院系' }}</td></tr>
                         </table>
                     </div>
                 </div>
-				
-				
-				
-                
-                <div class="ui-grid-solo white-div">
-                    <div class="grid-one-third">
-                        <center>
-                            <img src="images/user/user_profile.png" width="80%"></img>
-                        </center>
-                    </div>
-                    <div class="grid-two-third">
-                        <div class="pull-right"> 
-                            <a href="#"><span class="keywords-label blue">聊一聊</span></a>
-                        </div>
-                        <table>
-                            <tr><td>强哥哥</td></tr>
-                            <tr><td>天蝎座</td></tr>
-                            <tr><td>清华计算机技术系</td></tr>
-                        </table>
-                    </div>
-                </div>
+				</div>
+
                            
 
             </div>  
