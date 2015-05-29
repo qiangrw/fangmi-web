@@ -54,7 +54,7 @@ $('#reserve-result-page').on('pagebeforeshow', function() {
 			var reserve0 = data.reserves[0].reserve_choice;
 			console.log(reserve0);
 			$("#my-reserve-time").html(reserve0.date + " " + reserve0.time_start + " - " + reserve0.time_end);
-			$("#reserve-mail-to-landloard").attr("href", "message.html?from_user=" + data.reserves[0].apartment.user.username);
+			$("#reserve-mail-to-landloard").attr("href", "message.html?from_username=" + data.reserves[0].apartment.user.username);
             Tempo.prepare(element).when(TempoEvent.Types.RENDER_COMPLETE, function() {
                 $("#" + element).show();
                 hide_loading();
