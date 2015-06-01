@@ -280,6 +280,7 @@ function check_house(house) {
 }
 
 // post_whole.html
+var w_community_tempo = null;
 $('#post-whole-page').on('pagebeforeshow', function() {
     // get community list  
     var element = "community_id";
@@ -293,8 +294,8 @@ $('#post-whole-page').on('pagebeforeshow', function() {
         success: function(data) {
                      if (data.message == 'OK') {
                          console.log(data);
-                         Tempo.prepare(element).when(TempoEvent.Types.RENDER_COMPLETE, function() {
-                             $('#community_id').selectmenu('refresh', true);
+						 if (w_community_tempo == null) w_community_tempo = Tempo.prepare(element);
+						 w_community_tempo.when(TempoEvent.Types.RENDER_COMPLETE, function() {
                              $("#community_id").val(whole_house.community_id);
                              $('#community_id').selectmenu('refresh', true);
                              hide_loading();
@@ -386,6 +387,7 @@ $('#post-single-page').on('pagebeforehide', function() {
 
 
 // post_single.html
+var s_community_tempo = null;
 $('#post-single-page').on('pagebeforeshow', function() {
     // get community list 
     var element = "community_id";
@@ -398,7 +400,8 @@ $('#post-single-page').on('pagebeforeshow', function() {
         },
         success: function(data) {
                      console.log(data);
-                     Tempo.prepare(element).when(TempoEvent.Types.RENDER_COMPLETE, function() {
+					 if (s_community_tempo == null) s_community_tempo = Tempo.prepare(element);
+					 s_community_tempo.when(TempoEvent.Types.RENDER_COMPLETE, function() {
                          hide_loading();
                          $("#community_id").val(single_house.community_id);
                          $('#community_id').selectmenu('refresh', true);
