@@ -261,6 +261,7 @@ $('#post-whole-page').on('pagebeforehide', function() {
         whole_house.num_livingroom =  $("#num_livingroom").val();
         whole_house.rooms[0].price = $("#price").val();
         whole_house.rooms[0].area =  $("#area").val();
+		whole_house.community_id = $("#community_id").val();
     }
 });
 
@@ -297,6 +298,7 @@ $('#post-whole-page').on('pagebeforeshow', function() {
 						 if (w_community_tempo == null) w_community_tempo = Tempo.prepare(element);
 						 w_community_tempo.when(TempoEvent.Types.RENDER_COMPLETE, function() {
                              $("#community_id").val(whole_house.community_id);
+							 $("#community_id option[value='"+whole_house.community_id+"']").attr('selected', 'selected');
                              $('#community_id').selectmenu('refresh', true);
                              hide_loading();
                          }).render(data.communities);
@@ -382,6 +384,7 @@ $('#post-single-page').on('pagebeforehide', function() {
         single_house.address =  $("#address").val();
         single_house.num_bedroom = $("#num_bedroom").val();
         single_house.num_livingroom =  $("#num_livingroom").val();
+		single_house.community_id = $("#community_id").val();
     }
 });
 
