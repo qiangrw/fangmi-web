@@ -99,20 +99,25 @@ $('#signin-page').on('pageinit', function() {
     });
 });
 
-$('#wechat-page').on('pagebeforeshow', function() {
+$('#wechat-page').on('pageinit', function() {
     var username = getParameter("username");
     var password = getParameter("password");
+	var type = getParameter("type");
     show_loading();
-    $.ajax({
-        type: 'POST',
-        url: config.api_url + "oauth/token",
-        data: { 
+	var formdata = { 
             grant_type: 'password',
             client_id:  'fangmi-web',
             username: username,
             password: password,
-            sns:    'wechat'
-        },
+    };
+	if (type == null || type == "") {
+		formdata.sns = 'wechat';
+	}
+	console.log(formdata);
+    $.ajax({
+        type: 'POST',
+        url: config.api_url + "oauth/token",
+        data: formdata,
         success: function(data) {
             if (data.access_token != null) {
                 user = {};
@@ -316,8 +321,11 @@ $('#signup-page').on('pagebeforeshow', function() {
             data: $("#signup-form").serialize(),
             success: function(data) {
                 if (data.message == 'OK') {
-                    show_common_error("注册成功，即将跳转到登录页面.");
-                    wait_and_redirect_to("signin.html");
+                    show_common_error("注册成功.");
+                    // wait_and_redirect_to("signin.html");
+					// 自动登陆
+					redirect_to("wechat.html?username=" + mobile + "&password=" + password +
+						"&type=normal")
                 } else {
                     show_common_error(data.message);
                 }
