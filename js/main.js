@@ -259,6 +259,12 @@ $('#set-date-page').on('pagebeforeshow', function() {
     });
 });
 
+$('#landlord-page').on('pagebeforeshow', function() {
+	if (user == null || user.is_confirmed == false) {
+		redirect_to("check_id.html");
+	}
+});
+
 
 // set_rooms.html
 $('#set-rooms-page').on('pagebeforeshow', function() {
