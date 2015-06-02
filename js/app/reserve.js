@@ -66,6 +66,11 @@ $('#reserve-result-page').on('pagebeforeshow', function() {
 
 // choose_date.html 
 $('#choose-date-page').on('pagebeforeshow', function() {
+	if (user == null || user.is_student == false) {
+		redirect_to("check_student.html");
+		return;
+	}
+	
     var element = "choose-date-list";
     $("#" + element).hide();
     show_loading();
