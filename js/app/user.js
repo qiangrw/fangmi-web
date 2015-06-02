@@ -113,7 +113,6 @@ $('#wechat-page').on('pageinit', function() {
 	if (type == null || type == "") {
 		formdata.sns = 'wechat';
 	}
-	console.log(formdata);
     $.ajax({
         type: 'POST',
         url: config.api_url + "oauth/token",
