@@ -19,18 +19,18 @@
             <div data-role="header">
                 <a href="#" id="logo" class="ui-btn-left ui-btn ui-btn-inline ui-mini ui-corner-all ui-btn-icon-left">&nbsp;</a>
                 <h6>关于房蜜</h6>
-				<a href="share.html" class="ui-btn-transparent" data-icon="share" data-iconpos="notext" data-shadow="true" data-iconshadow="true">分享</a>
-				<script src="js/main.js"></script>
+                <a href="#share-page" class="ui-btn-transparent" data-icon="share" data-iconpos="notext" data-shadow="true" data-iconshadow="true" data-rel="dialog" data-transition="pop">分享</a>
+                <script src="js/main.js"></script>
             </div>
             <!-- ./HEADER -->
 
             <!-- MAIN -->
             <div role="main" class="ui-content">
-				<div class="ui-grid-solo">
-					<center>
-						<img class="home-img" src="images/about.jpg"></img>
-					</center>
-				</div>
+                <div class="ui-grid-solo">
+                    <center>
+                        <img class="home-img" src="images/about.jpg"></img>
+                    </center>
+                </div>
             </div>  
             <!-- ./MAIN -->
 
@@ -47,6 +47,62 @@
                 </ul>
             </div><!-- /navbar -->
         </div><!-- /footer -->
+
+
+        <!-- START of share page -->
+        <div data-role="page" id="share-page">
+            <div data-role="header" data-theme="c">
+                <h1>分享到社交网络</h1>
+                <script>
+                    $(function(){
+                        $("#share-to-wechat").click(function(){
+                            $(".jiathis_button_weixin").trigger("click");
+                        });
+                        $("#share-to-sina").click(function(){
+                            $(".jiathis_button_tsina").trigger("click");
+                        });
+                        $("#share-to-qq").click(function(){
+                            $(".jiathis_button_qzone").trigger("click");
+                        });
+                    })
+                </script>
+            </div>
+            <div id="share-more-div" class="ui-grid-solo" style="background: white!important; padding: 4px 4px; margin-top:10px;">
+                <table class="share-table" style="width: 100%; text-align: center; background: white;">
+                    <tr>
+                        <td>
+                            <a href="#wechat" id="share-to-wechat"  title="转发至朋友圈">
+                                <img src="images/share/wechat_friends.png"></img>
+                            </a>
+                        </td>
+                        <td>
+                            <a href="#sina" id="share-to-sina"  title="转发至新浪微博">
+                                <img src="images/share/weibo.png"></img>
+                            </a>
+                        </td>
+                        <td>
+                            <a href="#qq" id="share-to-qq" title="转发至QQ空间">
+                                <img src="images/share/qq_space.png"></img>
+                            </a>
+                        </td>
+                    </tr>
+                </table>
+            </div>  
+
+            <!-- JiaThis Button BEGIN -->
+            <div class="jiathis_style" style="background: white; display: none;">
+                <a class="jiathis_button_qzone"></a>
+                <a class="jiathis_button_tsina"></a>
+                <a class="jiathis_button_weixin"></a>
+                <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jtico jtico_jiathis" target="_blank"></a>
+                <a class="jiathis_counter_style"></a>
+            </div>
+            <script type="text/javascript" src="http://v3.jiathis.com/code/jia.js" charset="utf-8"></script>
+            <!-- JiaThis Button END -->
+
+        </div>
+        <!-- END of share page -->
+
 
     </body>
 </html>
