@@ -14,14 +14,17 @@ $('#reservelist-page').on('pagebeforeshow', function() {
                 tempo_object.when(TempoEvent.Types.RENDER_COMPLETE, function() {
                     $(".btn-active-reserve").unbind().click(function(){
                         var reserve_id = $(this).attr('rid');
+                        var apartment_id = $(this).attr('aid');
                         console.log("active reserve with rid=" + reserve_id);
-                        put_with_auth("api/reserve?id=" + reserve_id + "&cancelled=False", function(data) {
+                        console.log("active reserve with aid=" + apartment_id);
+                        redirect_to("choose_date.html?id=" + apartment_id);
+                        /*put_with_auth("api/reserve?id=" + reserve_id + "&cancelled=False", function(data) {
                             if (data.message == "OK") {
                                 refreshPage();
                             } else {
                                 alert_message(data.message);
                             }
-                        });
+                        });*/
                     });
                     $(".btn-cancel-reserve").unbind().click(function(){
                         var reserve_id = $(this).attr('rid');

@@ -41,12 +41,12 @@
 
                     {% if (cancelled) %} 
                     <div class="cancel-div padding-div">
-                        <a rid="{{id}}" class="ui-btn ui-corner-all btn-active-reserve">重新预约</a>
+                        <a aid={{apartment.id}} rid="{{id}}" class="ui-btn ui-corner-all btn-active-reserve">重新预约</a>
                     </div>
                     {% else %} 
                     <div class="cancel-div ui-grid-a">
                         <div class="ui-block-a">
-                            <a class="ui-btn ui-corner-all ui-btn-d btn-cancel-reserve" rid="{{id}}">取消预约</a>
+                            <a class="ui-btn ui-corner-all ui-btn-d btn-cancel-reserve" aid={{apartment.id}} rid="{{id}}">取消预约</a>
                         </div>
                         <div class="ui-block-b">
                             <a href="message.html?from_username={{user.username}}" class="ui-btn ui-corner-all">联系房东</a>
