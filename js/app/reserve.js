@@ -59,7 +59,9 @@ $('#reserve-result-page').on('pagebeforeshow', function() {
 			$("#my-reserve-time").html(reserve0.date + " " + reserve0.time_start + " - " + reserve0.time_end);
 			$("#reserve-mail-to-landloard").attr("href", "message.html?from_username=" + data.reserves[0].apartment.user.username);
             Tempo.prepare(element).when(TempoEvent.Types.RENDER_COMPLETE, function() {
-                $("#" + element).show();
+                $("#with-" + user.username + " div").hide();
+				$("#with-" + user.username).hide();
+				$("#" + element).show();
                 hide_loading();
             }).render(data.reserves);
         } 
