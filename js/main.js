@@ -379,6 +379,15 @@ $('#set-keywords-page').on('pagebeforeshow', function() {
 
 // set_devices.html
 $('#set-device-page').on('pagebeforeshow', function() {
+	var type = getParameter("type");
+	var house_type = type == 0 ? 'whole_house' : 'single_house';
+	var house = type == 0 ? whole_house : single_house;
+	var devices = house["devices"];
+	for (var i = 0; i < devices.length; i += 1) {
+		$('input[name=' + devices[i].name + ']').prop('checked', true).checkboxradio('refresh');
+	}
+	
+	
     $("#set-device").unbind().click(function() {
         var devices = [];
         $('input[data-cacheval="false"]').each(function(index) {
