@@ -215,10 +215,22 @@ $('#set-date-page').on('pagebeforeshow', function() {
         var date = $('#reserve_date').val();
         var start = $('#start_time').val();
         var end = $('#end_time').val();
+		
+		
         if (date.length == 0 || start.length == 0 || end.length == 0) {
             alert("请点击图标选择时间");
             return;
         }
+		
+		
+		var start_eles =  start.split(' ');
+		var end_eles =  end.split(' ');
+		var start_time = to_time(start_eles[0], start_eles[1]);
+		var end_time = to_time(end_eles[0], end_eles[1]);
+		if (start_time >= end_time) {
+			alert("结束时间必须大于开始时间");
+            return;
+		}
 
         $("#my-date-list").append(
             '<li><a href="#">' + date + 
