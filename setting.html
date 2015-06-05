@@ -30,12 +30,29 @@
 				<ul class="navbar-stack padding-div" data-role="listview" data-icon="false" data-theme="c">
 					<li><a href="check_id.html">实名认证
                         <span class="ui-li-count my-list-count">
-                            {% if (is_confirmed) %} 已认证 {% else %} 未认证 {% endif %}
+                            {% if (is_confirmed) %} 
+                            已认证 
+                            {% endif %}
+                            {% if (!is_confirmed && real_name) %} 
+                            审核中
+                            {% endif %}
+                            {% if (!is_confirmed && !real_name) %} 
+                            未认证 
+                            {% endif %}
                         </span>
 					</a></li>
 					<li><a href="check_student.html">学生信息认证
                         <span  class="ui-li-count my-list-count">
-                        {% if (is_student) %} 已认证 {% else %} 未认证 {% endif %} </span>
+                            {% if (is_student) %} 
+                            已认证 
+                            {% endif %} 
+                            {% if (!is_student && student_id) %} 
+                            审核中
+                            {% endif %}
+                            {% if (!is_student && !student_id) %} 
+                            未认证 
+                            {% endif %} 
+                        </span>
 					</a></li>
 					<li><a href="change_password.html">修改密码
 						<span class="ui-li-count my-list-count"></span>

@@ -258,6 +258,7 @@ $('#apply-student-page').on('pagebeforeshow', function() {
             }
 
 
+        show_loading();
         var formData = new FormData($('#apply-student-form')[0]);
         console.log("start updaloding");
         $.ajax({
@@ -274,6 +275,7 @@ $('#apply-student-page').on('pagebeforeshow', function() {
             beforeSend: function (request) { request.setRequestHeader("Authorization", "Bearer " + user.access_token); },
             success: function(data) {
                 console.log(data);
+                hide_loading();
                 if (data.status_code == 200 && data.message == 'OK') show_common_error("审核学生信息申请发送成功，请耐心等待审核."); 
                 else  show_common_error(data.message);
             },
