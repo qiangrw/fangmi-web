@@ -118,7 +118,18 @@ $(document).on('pagebeforeshow', function() {
 });
 
 $('#index-page').on('pagebeforeshow', function() {
-    console.log("loading");
+    get_without_auth("api/school/list", function(data) {
+        var schools = data.schools;
+        var pku = schools[1].num_apartments;
+        var thu = schools[0].num_apartments;
+        var ruc = schools[2].num_apartments;
+        $("#school1").html(thu);
+        $("#school2").html(pku);
+        $("#school3").html(ruc);
+        $("#school0").html(ruc + pku + thu);
+    });
+
+
 	if (user != null && user.access_token != null) {
 		var base_url = "api/apartment/list";
 		var element = "home-houselist";
