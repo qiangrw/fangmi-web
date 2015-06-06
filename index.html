@@ -38,7 +38,7 @@
                     </form>
                 </div>
                 <div class="ui-grid-solo">
-					<a data-ajax="false" href="houselist.html?school_id=1" class="div-link">
+					<a data-ajax="false" href="houselist.html?school_id=2" class="div-link">
                     <center>
                         <img class="home-img" src="images/home/pku.jpg"></img>
 					</center>
@@ -50,7 +50,7 @@
                     <br>
                 </div>
                 <div class="ui-grid-solo">
-					<a data-ajax="false" href="houselist.html?school_id=2" class="div-link">
+					<a data-ajax="false" href="houselist.html?school_id=1" class="div-link">
                     <center>
                         <img class="home-img" src="images/home/thu.jpg"></img>
 					</center>
@@ -91,9 +91,12 @@
 				<p class="padding-div">优秀房源</p>
                 <div data-template>
                 <div class="ui-grid-solo">      
-                    <center>
-                        <a class="link-div" href="detail.html?id={{id}}"><img
-                            class="home-img-restrict" src="images/home/pku.jpg" data-src="http://api.funmi.cn/{{photos[0].photo}}"></img></a>
+                    <center> 
+                        {% if (photos[0]) %}
+                        <a class="link-div" href="detail.html?id={{id}}"><img class="home-img-restrict" src="images/home/pku.jpg" data-src="http://api.funmi.cn/{{photos[0].photo}}"></img></a>
+                        {% else %}   
+                        <a class="link-div" href="detail.html?id={{id}}"><img class="home-img-restrict" src="images/home/pku.jpg"></img></a>
+                        {% endif %}   
 					</center>
                 </div>
                 <div class="ui-grid-solo">
@@ -116,7 +119,8 @@
                         </tr>
                     </table>
 				</div>
-				</div>
+                <br>
+                </div>
 				</div>
             </div>  
             <!-- ./MAIN -->

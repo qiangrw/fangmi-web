@@ -136,6 +136,7 @@ $('#house-detail-page').on('pagebeforeshow', function() {
 });
 
 // houselist.html
+var houselist_tempo = null;
 $('#houselist-page').on('pagebeforeshow', function() {
     console.log("loading");
     if (user == null || user.username == null) {
@@ -154,16 +155,32 @@ $('#houselist-page').on('pagebeforeshow', function() {
     show_loading();
     $("#empty-houselist-notice").hide();
 	console.log(base_url);
+    
+    get_with_auth(base_url, function(data) {
+        if (data.message == 'OK') {
+            $("#" + element).hide();
+            show_loading();
+            if (houselist_tempo == null) houselist_tempo = Tempo.prepare(element);
+            houselist_tempo.when(TempoEvent.Types.RENDER_COMPLETE, function() {
+                tempo_hide(element);
+                if (data.apartments == null || data.apartments.length == 0) {
+                    $("#empty-houselist-notice").show();
+                } else $("#empty-houselist-notice").hide();
+            }).render(data.apartments);
+        }
+    }, server_err_redirect_fn);
+
+    /*
     get_with_auth(base_url, function(data) {
         if (data.message == 'OK') {
             tempo_show(element, data.apartments);
             if (data.apartments == null || data.apartments.length == 0) {
-				$("#empty-houselist-notice").show();
-			} else $("#empty-houselist-notice").hide();
+                $("#empty-houselist-notice").show();
+            } else $("#empty-houselist-notice").hide();
         }  else {
             server_err_redirect_fn();
         } 
-    }, server_err_redirect_fn);     
+    }, server_err_redirect_fn); */
 });
 
 // *-empty.html
@@ -222,10 +239,10 @@ $('#myhouselist-page').on('pagebeforeshow', function() {
             var room_id =$(this).attr("rid");
             var apartment_id = $(this).parent().parent().parent().parent().attr("aid");
             post_with_data_auth("api/rent", {
-                    date_start: "1990-07-20",
-                    date_end:   "2016-07-21",
-                    room_id: room_id
-                }, function(data) { refreshPage(); })
+                date_start: "1990-07-20",
+                date_end:   "2016-07-21",
+                room_id: room_id
+            }, function(data) { refreshPage(); })
             // alert("Taken Apartment:" + apartment_id + " Room:" + room_id);
         });
         $(".set-room-no-taken").unbind().click(function() {
@@ -246,7 +263,6 @@ $('#myhouselist-page').on('pagebeforeshow', function() {
                 tempo_hide(element);
                 bind_myhouse_func();
             }).render(data.apartments);
-
         }
     }, server_err_redirect_fn);
 
@@ -261,7 +277,7 @@ $('#post-whole-page').on('pagebeforehide', function() {
         whole_house.num_livingroom =  $("#num_livingroom").val();
         whole_house.rooms[0].price = $("#price").val();
         whole_house.rooms[0].area =  $("#area").val();
-		whole_house.community_id = $("#community_id").val();
+        whole_house.community_id = $("#community_id").val();
     }
 });
 
@@ -295,10 +311,10 @@ $('#post-whole-page').on('pagebeforeshow', function() {
         success: function(data) {
                      if (data.message == 'OK') {
                          console.log(data);
-						 if (w_community_tempo == null) w_community_tempo = Tempo.prepare(element);
-						 w_community_tempo.when(TempoEvent.Types.RENDER_COMPLETE, function() {
+                         if (w_community_tempo == null) w_community_tempo = Tempo.prepare(element);
+                         w_community_tempo.when(TempoEvent.Types.RENDER_COMPLETE, function() {
                              $("#community_id").val(whole_house.community_id);
-							 $("#community_id option[value='"+whole_house.community_id+"']").attr('selected', 'selected');
+                             $("#community_id option[value='"+whole_house.community_id+"']").attr('selected', 'selected');
                              $('#community_id').selectmenu('refresh', true);
                              hide_loading();
                          }).render(data.communities);
@@ -322,12 +338,12 @@ $('#post-whole-page').on('pagebeforeshow', function() {
         if (whole_house.rooms[0].date_entrance != null)  $("#set-entrance-date-link").html(whole_house.rooms[0].date_entrance); 
         if (whole_house.reserve_choices != null)  $("#set-date-link").html("已经设置");
         if (whole_house.tags != null)  {
-			var tag_string = "";
-			for (i = 0; i < whole_house.tags.length; i++) {
-				tag_string += whole_house.tags[i].name + " ";
-			}
-			$("#set-keywords-link").html(tag_string);
-		}
+            var tag_string = "";
+            for (i = 0; i < whole_house.tags.length; i++) {
+                tag_string += whole_house.tags[i].name + " ";
+            }
+            $("#set-keywords-link").html(tag_string);
+        }
         if (whole_house.devices != null)  $("#set-devices-link").html("已经设置");
     }
 
@@ -384,7 +400,7 @@ $('#post-single-page').on('pagebeforehide', function() {
         single_house.address =  $("#address").val();
         single_house.num_bedroom = $("#num_bedroom").val();
         single_house.num_livingroom =  $("#num_livingroom").val();
-		single_house.community_id = $("#community_id").val();
+        single_house.community_id = $("#community_id").val();
     }
 });
 
@@ -403,8 +419,8 @@ $('#post-single-page').on('pagebeforeshow', function() {
         },
         success: function(data) {
                      console.log(data);
-					 if (s_community_tempo == null) s_community_tempo = Tempo.prepare(element);
-					 s_community_tempo.when(TempoEvent.Types.RENDER_COMPLETE, function() {
+                     if (s_community_tempo == null) s_community_tempo = Tempo.prepare(element);
+                     s_community_tempo.when(TempoEvent.Types.RENDER_COMPLETE, function() {
                          hide_loading();
                          $("#community_id").val(single_house.community_id);
                          $('#community_id').selectmenu('refresh', true);
@@ -424,12 +440,12 @@ $('#post-single-page').on('pagebeforeshow', function() {
         if (single_house.rooms != null) $(".set-room-link").html("已经设置");
         if (single_house.reserve_choices != null) $(".set-date-link").html("已经设置");
         if (single_house.tags != null)  {
-			var tag_string = "";
-			for (i = 0; i < single_house.tags.length; i++) {
-				tag_string += single_house.tags[i].name + " ";
-			}
-			$(".set-keywords-link").html(tag_string);
-		}
+            var tag_string = "";
+            for (i = 0; i < single_house.tags.length; i++) {
+                tag_string += single_house.tags[i].name + " ";
+            }
+            $(".set-keywords-link").html(tag_string);
+        }
         if (single_house.devices != null) $(".set-devices-link").html("已经设置");
     }
 

@@ -117,6 +117,7 @@ $(document).on('pagebeforeshow', function() {
     hide_common_error();
 });
 
+var index_tempo = null;
 $('#index-page').on('pagebeforeshow', function() {
     get_without_auth("api/school/list", function(data) {
         var schools = data.schools;
@@ -135,13 +136,24 @@ $('#index-page').on('pagebeforeshow', function() {
 		var element = "home-houselist";
 		$("#" + element).hide();
 		show_loading();
-		get_with_auth(base_url, function(data) {
+        get_with_auth(base_url, function(data) {
+        if (data.message == 'OK') {
+            $("#" + element).hide();
+            show_loading();
+            if (index_tempo == null) index_tempo = Tempo.prepare(element);
+            index_tempo.when(TempoEvent.Types.RENDER_COMPLETE, function() {
+                tempo_hide(element);
+            }).render(data.apartments);
+        }
+    }, function() {hide_loading();}); 
+    
+		/*get_with_auth(base_url, function(data) {
 			if (data.message == 'OK') {
 				tempo_show(element, data.apartments);
 			}  else {
 				hide_loading();
 			} 
-		}, function() {hide_loading();});     
+		}, function() {hide_loading();});    */ 
 	}
 });
 
