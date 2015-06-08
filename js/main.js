@@ -418,11 +418,13 @@ $('#set-device-page').on('pagebeforeshow', function() {
 	var house_type = type == 0 ? 'whole_house' : 'single_house';
 	var house = type == 0 ? whole_house : single_house;
 	var devices = house["devices"];
-	for (var i = 0; i < devices.length; i += 1) {
-		$('input[name=' + devices[i].name + ']').prop('checked', true).checkboxradio('refresh');
-	}
-	
-	
+    if (devices != null) {
+        for (var i = 0; i < devices.length; i += 1) {
+            $('input[name=' + devices[i].name + ']').prop('checked', true).checkboxradio('refresh');
+        }
+    }
+
+
     $("#set-device").unbind().click(function() {
         var devices = [];
         $('input[data-cacheval="false"]').each(function(index) {
@@ -550,16 +552,16 @@ function post_photo(apartment_id)
             return myXhr;
         },
         beforeSend: function (request) {
-                        console.log("before updalod");
-                        request.setRequestHeader("Authorization", "Bearer " + user.access_token);
-                    },
+            console.log("before updalod");
+            request.setRequestHeader("Authorization", "Bearer " + user.access_token);
+        },
         success: function(data) {
-                     if (data.message == 'OK') { 
-                         show_common_error("文件发送成功."); 
-                         redirect_to("detail.html?id=" + apartment_id);
-                     }
-                     else  show_common_error(data.message);
-                 },
+            if (data.message == 'OK') { 
+                show_common_error("文件发送成功."); 
+                redirect_to("detail.html?id=" + apartment_id);
+            }
+            else  show_common_error(data.message);
+        },
         error: server_err_fn,
         data: formData,
         cache: false,
@@ -614,11 +616,11 @@ function put_with_data_auth(api_name, data, succ_func, error_func) {
       error: error_func
     });  
 }                                 
-          
+
 function post_with_data(api_name, data, succ_func, error_func) {
     if (error_func == null) error_func = server_err_fn;
     $.ajax({
-      type: 'POST',
+        type: 'POST',
       url: config.api_url + api_name,
       data: data,
       success: succ_func,
@@ -668,7 +670,7 @@ function tempo_obj_show(element, obj, data, binding_func) {
     console.log(data);
     $("#" + element).hide();
     show_loading();
-	if (obj == null) obj = Tempo.prepare(element);
+    if (obj == null) obj = Tempo.prepare(element);
     obj.when(TempoEvent.Types.RENDER_COMPLETE, function() {
         tempo_hide(element);
         if (binding_func != null) binding_func();
