@@ -79,8 +79,8 @@
 
     $domainName = "http://h5.funmi.cn";
     $type = "sb";
-    $appid = 'wx9405f71ba4f268ae';
-    $secret = '99e4f4a3c2daea6ea5cd015e810d26d5';
+    $appid = 'yourappid';
+    $secret = 'yourappsecret';
     	
 	$code = $_GET["code"];
     $state = $_GET["state"];
